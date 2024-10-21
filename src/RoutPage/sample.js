@@ -3,6 +3,7 @@ import Loadable from "./Loadable";
 import AuthorHeader from "./AuthorHeader";
 import AddDepartment from '../Pages/AddDepartment';
 import DashBoard from '../Pages/DashBoard';
+import Payments from '../Pages/Payments';
 
 
 
@@ -20,10 +21,10 @@ const sample = [
           path: "/",
           element: <DashBoard/>,
         },
-        // {
-        //   path: "/EmploymentType",
-        //   element: <EmploymentType />,
-        // },
+        {
+          path: "/payments",
+          element: <Payments />,
+        },
         // {
         //   path: "/AddEmploymentType",
         //   element: <AddEmploymentType />,

@@ -174,7 +174,7 @@ export default function ClippedDrawer() {
               <CardActionArea
                 sx={{ paddingTop: 1.5, paddingBottom: 1.5 }}
                 onClick={() => {
-                  navigate("/Departments");
+                  navigate("/payments");
                 }}
               >
                 <div style={{ display: "flex", marginLeft: 15 }}>
