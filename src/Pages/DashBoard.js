@@ -120,19 +120,21 @@ const cardData = (item, index) => (
         sx={{
           borderRadius: 10,
           backgroundColor: "rgb(180, 180, 179, 0.5 )",
-          marginLeft: 4,
-          marginRight: 4,
+          margin: 3,
+          // marginLeft: 4,
+          // marginRight: 4,
         }}
         elevation={2}
       >
+        <h2 style={{ textAlign: 'center', marginTop: 30 }}><b>COURSES</b></h2>
         <Box
           component="main"
           sx={{
             flexGrow: 1,
-            py: 8,
+            // py: 8,
           }}
         >
-          <Container maxWidth="lg" sx={{ padding: 2 }}>
+          <Container maxWidth="lg" sx={{ padding: 0 }}>
             <Stack spacing={2}>
              
                   <Box

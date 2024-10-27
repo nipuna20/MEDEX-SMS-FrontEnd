@@ -7,8 +7,9 @@ import Payments from '../Pages/Payments';
 import Login from '../Pages/Login';
 import MainLogin from '../Pages/MainLogin';
 import EXAMS from '../Pages/EXAMS';
-
-
+import ZoomRecordings from '../Pages/ZoomRecordings';
+import ZoomOnlineSessions from '../Pages/ZoomOnlineSessions';
+import Resources from '../Pages/Resources';
 
 
 const Employee = Loadable(lazy(()=>import( "../Pages/Employee")));
@@ -40,18 +41,18 @@ const sample = [
           path: "/EXAMS",
           element: <EXAMS/>,
         },
-        // {
-        //   path: "/JobPosition",
-        //   element: <JobPosition/>,
-        // },
-        // {
-        //   path: "/AddJobPosition",
-        //   element: <AddJobPosition />,
-        // },
-        // {
-        //   path: "/DepartureEmployee",
-        //   element: <DepartureEmployee />,
-        // },
+        {
+          path: "/ZoomRecordings",
+          element: <ZoomRecordings/>,
+        },
+        {
+          path: "/ZoomOnlineSessions",
+          element: <ZoomOnlineSessions/>,
+        },
+        {
+          path: "/Resources",
+          element: <Resources />,
+        },
         // {
         //   path: "/AddDepartureReason",
         //   element: <AddDepartureReason />,
