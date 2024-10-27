@@ -105,7 +105,7 @@ export default function ClippedDrawer() {
        <Box sx={{ overflow: "auto" }}>
           <List>
             <br />
-            <Card sx={{ borderRadius: 3, marginTop: 0.3, marginBottom: 0.3 }}>
+            <Card sx={{ borderRadius: 3, marginTop: 0.3, marginBottom: 0.3, marginLeft: 1, marginRight: 1 }}>
                <CardActionArea
                 sx={{ paddingTop: 1.5, paddingBottom: 1.5 }}
                 onClick={() => {
@@ -115,7 +115,7 @@ export default function ClippedDrawer() {
                 <div style={{ display: "flex", marginLeft: 15 }}>
                   <Dashboard/>
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <Typography>COUSES</Typography>
+                  <Typography>COURSES</Typography>
                 </div>
               </CardActionArea>
             </Card>
@@ -124,7 +124,7 @@ export default function ClippedDrawer() {
             <Divider />
             <br />
 
-            <Card sx={{ borderRadius: 3, marginTop: 0.3, marginBottom: 0.3 }}>
+            <Card sx={{ borderRadius: 3, marginTop: 0.3, marginBottom: 0.3, marginLeft: 1, marginRight: 1 }}>
               <Card
                 sx={{ paddingTop: 1.5, paddingBottom: 1.5 }}
                 // 
@@ -140,7 +140,7 @@ export default function ClippedDrawer() {
             <CardActionArea
               sx={{ paddingTop: 1.5, paddingBottom: 1.5 }}
               onClick={() => {
-                navigate("/JobPosition");
+                navigate("/ZoomOnlineSessions");
               }}
             >
               <div style={{ display: "flex", marginLeft: 15 }}>
@@ -154,7 +154,7 @@ export default function ClippedDrawer() {
             <CardActionArea
               sx={{ paddingTop: 1.5, paddingBottom: 1.5 }}
               onClick={() => {
-                navigate("/JobPosition");
+                navigate("/ZoomRecordings");
               }}
             >
               <div style={{ display: "flex", marginLeft: 15 }}>
@@ -168,7 +168,7 @@ export default function ClippedDrawer() {
             <Divider />
             <br />
 
-            <Card sx={{ borderRadius: 3, marginTop: 0.3, marginBottom: 0.3 }}>
+            <Card sx={{ borderRadius: 3, marginTop: 0.3, marginBottom: 0.3, marginLeft: 1, marginRight: 1 }}>
               <CardActionArea
                 sx={{ paddingTop: 1.5, paddingBottom: 1.5 }}
                 onClick={() => {
@@ -187,11 +187,11 @@ export default function ClippedDrawer() {
             <Divider />
             <br />
 
-            <Card sx={{ borderRadius: 3, marginTop: 0.3, marginBottom: 0.3 }}>
+            <Card sx={{ borderRadius: 3, marginTop: 0.3, marginBottom: 0.3, marginLeft: 1, marginRight: 1 }}>
               <CardActionArea
                 sx={{ paddingTop: 1.5, paddingBottom: 1.5 }}
                 onClick={() => {
-                  navigate("/WorkingLocation");
+                  navigate("/Resources");
                 }}
               >
                 <div style={{ display: "flex", marginLeft: 15 }}>
@@ -206,7 +206,7 @@ export default function ClippedDrawer() {
             <Divider />
             <br />
 
-            <Card sx={{ borderRadius: 3, marginTop: 0.3, marginBottom: 0.3 }}>
+            <Card sx={{ borderRadius: 3, marginTop: 0.3, marginBottom: 0.3, marginLeft: 1, marginRight: 1 }}>
               <CardActionArea
                 sx={{ paddingTop: 1.5, paddingBottom: 1.5 }}
                 onClick={() => {
