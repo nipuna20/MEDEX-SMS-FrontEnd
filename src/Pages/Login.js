@@ -18,7 +18,7 @@ import { useTheme } from "@mui/material/styles";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { handleLogin } from "./handleLogin";
 import Loade from "../componant/Loader";
 import { services } from "../Services/services"
@@ -26,6 +26,8 @@ import { services } from "../Services/services"
 export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const {role} = location.state || {role : "Error"}
   const [loading, setLoading] = useState(false);
   // const setLoading = (false)
 
@@ -108,8 +110,8 @@ export default function Login() {
               <Grid item sx={{ m: { xs: 1, sm: 3 }, mb: 0 }}>
                 <Paper elevation={10} sx={paperStyle}>
                   <Grid align={"center"} marginTop={4}>
-                    <img alt="" src={AdeonaLogo} height={70} width={110} />
-                    <Typography fontSize="40px">Login</Typography>
+                    <img alt="" src="" height={70} width={110} />
+                    <Typography fontSize="40px">{role}</Typography>
                     <Grid item>
                       <Stack
                         alignItems="center"
@@ -122,14 +124,14 @@ export default function Login() {
                           gutterBottom
                           variant={matchDownSM ? "h3" : "h2"}
                         >
-                          Hi, Welcome
+                          Welcome
                         </Typography>
                         <Typography
                           variant="caption"
-                          fontSize="16px"
+                          fontSize="18px"
                           textAlign={matchDownSM ? "center" : "inherit"}
                         >
-                          Enter your credentials to continue
+                          To Medex Institute
                         </Typography>
                       </Stack>
                     </Grid>
