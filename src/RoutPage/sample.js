@@ -4,6 +4,9 @@ import AuthorHeader from "./AuthorHeader";
 import AddDepartment from '../Pages/AddDepartment';
 import DashBoard from '../Pages/DashBoard';
 import Payments from '../Pages/Payments';
+import Login from '../Pages/Login';
+import MainLogin from '../Pages/MainLogin';
+import EXAMS from '../Pages/EXAMS';
 
 
 
@@ -25,18 +28,18 @@ const sample = [
           path: "/payments",
           element: <Payments />,
         },
-        // {
-        //   path: "/AddEmploymentType",
-        //   element: <AddEmploymentType />,
-        // },
-        // {
-        //   path: "/WorkingLocation",
-        //   element: <WorkingLocation />,
-        // },
-        // {
-        //   path: "/AddWorkingLocation",
-        //   element: <AddWorkingLocation/>,
-        // },
+        {
+          path: "/Login",
+          element: <Login />,
+        },
+        {
+          path: "/MainLogin",
+          element: <MainLogin />,
+        },
+        {
+          path: "/EXAMS",
+          element: <EXAMS/>,
+        },
         // {
         //   path: "/JobPosition",
         //   element: <JobPosition/>,

@@ -125,18 +125,16 @@ export default function ClippedDrawer() {
             <br />
 
             <Card sx={{ borderRadius: 3, marginTop: 0.3, marginBottom: 0.3 }}>
-              <CardActionArea
+              <Card
                 sx={{ paddingTop: 1.5, paddingBottom: 1.5 }}
-                onClick={() => {
-                  navigate("/EmploymentType");
-                }}
+                // 
               >
                 <div style={{ display: "flex", marginLeft: 15 }}>
                   <Dashboard />
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <Typography>ZOOM SESSIONS</Typography>
                 </div>
-              </CardActionArea>
+              </Card>
             </Card>
             <br />
             <CardActionArea
@@ -212,7 +210,7 @@ export default function ClippedDrawer() {
               <CardActionArea
                 sx={{ paddingTop: 1.5, paddingBottom: 1.5 }}
                 onClick={() => {
-                  navigate("/JobPosition");
+                  navigate("/EXAMS");
                 }}
               >
                 <div style={{ display: "flex", marginLeft: 15 }}>
