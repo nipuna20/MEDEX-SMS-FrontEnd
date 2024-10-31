@@ -46,8 +46,8 @@ const ExpandMore = styled((props) => {
 // Sample data for cards
 const CardData = [
   {
-    courseName: "Certificate in Pharmacy Practice",
-    courseDuration: "4 months",
+    CourseName: "Certificate in Pharmacy Practice",
+    CourseDuration: "4 months",
     FullPayment: 18000,
     InstallmentWise: 20000,
     FirstPayment: 5000,
@@ -55,8 +55,8 @@ const CardData = [
     OtherDetails:""
   },
   {
-    courseName: "Pharmacists’ Course",
-    courseDuration: "18 months",
+    CourseName: "Pharmacists’ Course",
+    CourseDuration: "18 months",
     FullPayment: 55000,
     InstallmentWise: 63000,
     FirstPayment: 3500,
@@ -64,8 +64,8 @@ const CardData = [
     OtherDetails:""
   },
   {
-    courseName: "Certificate in Pharmacy Practice",
-    courseDuration: "4 months",
+    CourseName: "Certificate in Pharmacy Practice",
+    CourseDuration: "4 months",
     FullPayment: 18000,
     InstallmentWise: 20000,
     FirstPayment: 5000,
@@ -73,8 +73,8 @@ const CardData = [
     OtherDetails:""
   },
   {
-    courseName: "Certificate in Pharmacy Practice",
-    courseDuration: "4 months",
+    CourseName: "Certificate in Pharmacy Practice",
+    CourseDuration: "4 months",
     FullPayment: 18000,
     InstallmentWise: 20000,
     FirstPayment: 5000,
@@ -109,10 +109,10 @@ export default function Payments() {
           // }
           title={
             <span style={{ fontWeight: "bold", fontSize: "1.2rem" }}>
-              {item.courseName}
+              {item.CourseName}
             </span>
           }
-          subheader={`Duration : ${item.courseDuration}`}
+          subheader={`Duration : ${item.CourseDuration}`}
         />
         <CardMedia
           component="img"
