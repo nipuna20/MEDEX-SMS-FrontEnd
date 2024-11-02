@@ -1,6 +1,9 @@
 import api from "./interceptor";
 
 //////new////
+export const Courses = () => {
+  return api.get("/api/v1/users/course");
+};
 
 ////employee////
 

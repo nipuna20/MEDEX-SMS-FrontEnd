@@ -19,7 +19,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Button } from "bootstrap";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -30,6 +30,7 @@ import EBCM from "../componant/EBCM.png";
 import { Key } from "@mui/icons-material";
 import StarIcon from "@mui/icons-material/Star";
 import ListItemIcon from "@mui/material/ListItemIcon";
+import { services } from "../Services/services";
 
 // Styled component for ExpandMore button
 const ExpandMore = styled((props) => {
@@ -63,28 +64,34 @@ const CardData = [
     RegistrationFee: 2500,
     OtherDetails:""
   },
-  {
-    CourseName: "Certificate in Pharmacy Practice",
-    CourseDuration: "4 months",
-    FullPayment: 18000,
-    InstallmentWise: 20000,
-    FirstPayment: 5000,
-    RegistrationFee: 2500,
-    OtherDetails:""
-  },
-  {
-    CourseName: "Certificate in Pharmacy Practice",
-    CourseDuration: "4 months",
-    FullPayment: 18000,
-    InstallmentWise: 20000,
-    FirstPayment: 5000,
-    RegistrationFee: 2500,
-    OtherDetails:""
-  },
+  
 ];
+
+
 
 export default function Payments() {
   const [expandedCards, setExpandedCards] = useState({}); // State to track which cards are expanded
+  let [allEmpData, setAllEmpData] = useState([]);
+  let [coursesData, setCoursesData] = useState([]);
+
+const CoursesDtailsInDB = () => {
+  // setLoading(true);
+  services.CoursesData().then((Response) => {
+    if (Response.isSuccess) {
+      setCoursesData(Response.data);
+      setAllEmpData(
+        // checkData.filter((checkData) => checkData.delete_status == 0)
+      );
+      console.log("check responssssssss", Response.data);
+    }
+    // setLoading(false);
+  });
+};
+ useEffect(() => {
+  CoursesDtailsInDB();
+    
+  }, []);
+ console.log("data is ",coursesData)
 
   // Function to handle card expand toggle
   const handleExpandClick = (index) => {
@@ -97,7 +104,7 @@ export default function Payments() {
   // Card rendering function
   const cardData = (item, index) => (
     <Grid key={index} item xs={12} sm={12} md={6} lg={6} xl={4}>
-      <Card sx={{ maxWidth: 345, borderRadius: 4 }} elevation={20}>
+      <Card sx={{ maxWidth: 345, minWidth:230, borderRadius: 4 }} elevation={20}>
         <CardHeader
           avatar={
             <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe"></Avatar>
@@ -204,9 +211,11 @@ export default function Payments() {
         sx={{
           borderRadius: 10,
           backgroundColor: "rgb(180, 180, 179, 0.5 )",
-          margin: 3,
+          // margin: 3,
           // marginLeft: 4,
           // marginRight: 4,
+          paddingLeft:20,
+          paddingRight:20
         }}
         elevation={2}
       >
@@ -229,9 +238,10 @@ export default function Payments() {
                   flexDirection: "column",
                 }}
               >
-                <Grid container spacing={3} marginTop={3} marginBottom={3}>
-                  {CardData.map((card, key) => cardData(card, key))}
-                  {/* {data.map((card) => cardData(card, card.card_id))} */}
+                <Grid container spacing={6} marginTop={3} marginBottom={3}>
+                  {/* {CardData.map((card, key) => cardData(card, key))} */}
+                  {coursesData.map((card, key) => cardData(card, key))}
+                 
                 </Grid>
               </Box>
             </Stack>
