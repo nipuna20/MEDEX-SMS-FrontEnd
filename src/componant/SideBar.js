@@ -9,31 +9,15 @@ import {
   Divider,
   Drawer,
   List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
   Toolbar,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
 import { Outlet, useNavigate } from "react-router-dom";
-import Header from "./Header";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { LOGOUT } from "./const";
-import Footer from "./Footer";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import BarChartIcon from "@mui/icons-material/BarChart";
-import DescriptionIcon from "@mui/icons-material/Description";
-import LayersIcon from "@mui/icons-material/Layers";
-import { createTheme } from "@mui/material/styles";
-// import { DashboardLayout } from '@toolpad/core/DashboardLayout';
-// import { AppProvider } from '@toolpad/core/AppProvider';
-import PropTypes from "prop-types";
 import { Dashboard } from '@mui/icons-material';
 
 const drawerWidth = 280;
@@ -42,6 +26,7 @@ const drawerWidth = 280;
 
 export default function ClippedDrawer() {
   const navigate = useNavigate();
+  const [showZoomSessions, setShowZoomSessions] = useState(false);
 
   const dispatch = useDispatch();
   // const user = useSelector((state) => state.auth.authData.data?.email);
@@ -125,44 +110,36 @@ export default function ClippedDrawer() {
             <br />
 
             <Card sx={{ borderRadius: 3, marginTop: 0.3, marginBottom: 0.3, marginLeft: 1, marginRight: 1 }}>
-              <Card
+              <CardActionArea
                 sx={{ paddingTop: 1.5, paddingBottom: 1.5 }}
-                // 
+                onClick={() => setShowZoomSessions((prev) => !prev)} // Toggle visibility of zoom sessions
               >
                 <div style={{ display: "flex", marginLeft: 15 }}>
                   <Dashboard />
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <Typography>ZOOM SESSIONS</Typography>
                 </div>
-              </Card>
+              </CardActionArea>
             </Card>
             <br />
-            <CardActionArea
-              sx={{ paddingTop: 1.5, paddingBottom: 1.5 }}
-              onClick={() => {
-                navigate("/ZoomOnlineSessions");
-              }}
-            >
-              <div style={{ display: "flex", marginLeft: 15 }}>
-                &nbsp;&nbsp; <MailIcon />
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <Typography sx={{ fontSize: "14px" }}>
-                  ONLINE SESSIONS
-                </Typography>
-              </div>
-            </CardActionArea>
-            <CardActionArea
-              sx={{ paddingTop: 1.5, paddingBottom: 1.5 }}
-              onClick={() => {
-                navigate("/ZoomRecordings");
-              }}
-            >
-              <div style={{ display: "flex", marginLeft: 15 }}>
-                &nbsp;&nbsp; <MailIcon />
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <Typography sx={{ fontSize: "14px" }}>RECORDINGS</Typography>
-              </div>
-            </CardActionArea>
+            {/* Conditionally render online sessions and recordings based on showZoomSessions state */}
+            {showZoomSessions && (
+              <>
+                <CardActionArea sx={{ paddingTop: 1.5, paddingBottom: 1.5 }} onClick={() => navigate("/ZoomOnlineSessions")}>
+                  <div style={{ display: "flex", marginLeft: 15 }}>
+                    <MailIcon /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <Typography sx={{ fontSize: "14px" }}>ONLINE SESSIONS</Typography>
+                  </div>
+                </CardActionArea>
+                <CardActionArea sx={{ paddingTop: 1.5, paddingBottom: 1.5 }} onClick={() => navigate("/ZoomRecordings")}>
+                  <div style={{ display: "flex", marginLeft: 15 }}>
+                    <MailIcon /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <Typography sx={{ fontSize: "14px" }}>RECORDINGS</Typography>
+                  </div>
+                </CardActionArea>
+                <Divider />
+              </>
+            )}
 
             <br />
             <Divider />
