@@ -64,24 +64,7 @@ const CardData = [
     RegistrationFee: 2500,
     OtherDetails:""
   },
-  {
-    CourseName: "Certificate in Pharmacy Practice",
-    CourseDuration: "4 months",
-    FullPayment: 18000,
-    InstallmentWise: 20000,
-    FirstPayment: 5000,
-    RegistrationFee: 2500,
-    OtherDetails:""
-  },
-  {
-    CourseName: "Certificate in Pharmacy Practice",
-    CourseDuration: "4 months",
-    FullPayment: 18000,
-    InstallmentWise: 20000,
-    FirstPayment: 5000,
-    RegistrationFee: 2500,
-    OtherDetails:""
-  },
+  
 ];
 
 
@@ -121,7 +104,7 @@ const CoursesDtailsInDB = () => {
   // Card rendering function
   const cardData = (item, index) => (
     <Grid key={index} item xs={12} sm={12} md={6} lg={6} xl={4}>
-      <Card sx={{ maxWidth: 345, borderRadius: 4 }} elevation={20}>
+      <Card sx={{ maxWidth: 345, minWidth:230, borderRadius: 4 }} elevation={20}>
         <CardHeader
           avatar={
             <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe"></Avatar>
@@ -228,9 +211,11 @@ const CoursesDtailsInDB = () => {
         sx={{
           borderRadius: 10,
           backgroundColor: "rgb(180, 180, 179, 0.5 )",
-          margin: 3,
+          // margin: 3,
           // marginLeft: 4,
           // marginRight: 4,
+          paddingLeft:20,
+          paddingRight:20
         }}
         elevation={2}
       >
@@ -253,9 +238,10 @@ const CoursesDtailsInDB = () => {
                   flexDirection: "column",
                 }}
               >
-                <Grid container spacing={3} marginTop={3} marginBottom={3}>
+                <Grid container spacing={6} marginTop={3} marginBottom={3}>
+                  {/* {CardData.map((card, key) => cardData(card, key))} */}
                   {coursesData.map((card, key) => cardData(card, key))}
-                  {/* {data.map((card) => cardData(card, card.card_id))} */}
+                 
                 </Grid>
               </Box>
             </Stack>
