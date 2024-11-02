@@ -40,8 +40,22 @@ export const services = {
   tableDataFeeld,
   tableDataFeeldDetails,
   tableDataDelete,
-  tableDataUpdate
+  tableDataUpdate,
+  CoursesData
 };
+////Courses
+async function CoursesData(){
+  try {
+    const {data} = await api.Courses();
+    console.log("sampleeeeeee", data.CoursesData);
+    return{isSuccess: true, data: data.CoursesData}
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+
+
 ///employee///
 
 async function employeeDetails(){
