@@ -11,6 +11,7 @@ import {
   Select,
   MenuItem,
   TextField,
+  Paper,
 } from "@mui/material";
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 
@@ -34,9 +35,13 @@ const PaymentForm = () => {
     }
   };
 
-  // const handleNext = () => {
-  //   setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  // };
+  const handleSelectedCourse = (event) => {
+    setSelectedCourse(event.target.value);
+  };
+
+  const handleSelectedPlan = (event) => {
+    setSelectedPlan(event.target.value);
+  };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -47,18 +52,10 @@ const PaymentForm = () => {
   };
 
   return (
-    <Container
-      sx={{
-        borderRadius: 3,
-        backgroundColor: "rgb(180, 180, 179, 0.2 )",
-        margin: "2rem",
-        padding: "1rem",
-        width: "75vw",
-        float: "left", 
-        boxSizing: "border-box",
-      }} maxWidth="sm">
-      <Typography sx={{margin:"1rem"}} variant="h4" align="center" gutterBottom>
-        <b>Course Enrollment</b>
+    <Container maxWidth="sm">
+       <Paper elevation={3} sx={{ padding: 4, mt: 4, backgroundColor: "rgb(180, 180, 179, 0.1 )", borderRadius: 3 }}>
+      <Typography variant="h4" align="center" gutterBottom>
+        Course Enrollment
       </Typography>
       <Stepper sx={{marginTop:"2rem"}} activeStep={activeStep} alternativeLabel>
         {steps.map((label) => (
@@ -69,14 +66,17 @@ const PaymentForm = () => {
       </Stepper>
       
       {activeStep === 0 && (
-        <FormControl sx={{marginTop:"2.5rem"}} fullWidth margin="normal">
-          <InputLabel>Select a Course</InputLabel>
-          <Select value={selectedCourse} onChange={(e) => setSelectedCourse(e.target.value)}>
-            <MenuItem value="Course 1">Course 1</MenuItem>
-            <MenuItem value="Course 2">Course 2</MenuItem>
-            <MenuItem value="Course 3">Course 3</MenuItem>
-          </Select>
-        </FormControl>
+        <TextField
+          select
+          label="Select Course"
+          value={selectedCourse}
+          onChange={handleSelectedCourse}
+          fullWidth
+          margin="normal">
+          <MenuItem value="Course 1">Course 1</MenuItem>
+          <MenuItem value="Course 2">Course 2</MenuItem>
+          <MenuItem value="Course 3">Course 3</MenuItem>
+        </TextField>
       )}
 
       {activeStep === 1 && (
@@ -92,14 +92,17 @@ const PaymentForm = () => {
       )}
 
       {activeStep === 2 && (
-        <FormControl  sx={{marginTop:"2.5rem"}} fullWidth margin="normal">
-          <InputLabel>Select a Payment Plan</InputLabel>
-          <Select value={selectedPlan} onChange={(e) => setSelectedPlan(e.target.value)}>
-            <MenuItem value="Plan 1">Plan 1</MenuItem>
-            <MenuItem value="Plan 2">Plan 2</MenuItem>
-            <MenuItem value="Plan 3">Plan 3</MenuItem>
-          </Select>
-        </FormControl>
+        <TextField
+          select
+          label="Select a Payment Plan"
+          value={selectedPlan}
+          onChange={handleSelectedPlan}
+          fullWidth
+          margin="normal">
+          <MenuItem value="Plan 1">Plan 1</MenuItem>
+          <MenuItem value="Plan 2">Plan 2</MenuItem>
+          <MenuItem value="Plan 3">Plan 3</MenuItem>
+        </TextField>
       )}
 
       {activeStep === 3 && (
@@ -137,6 +140,7 @@ const PaymentForm = () => {
           {activeStep === steps.length - 1 ? "Submit" : "Next"}
         </Button>
       </div>
+      </Paper>
     </Container>
   );
 };
