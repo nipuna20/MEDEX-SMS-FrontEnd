@@ -19,7 +19,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Button } from "bootstrap";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -30,6 +30,7 @@ import EBCM from "../componant/EBCM.png";
 import { Key } from "@mui/icons-material";
 import StarIcon from "@mui/icons-material/Star";
 import ListItemIcon from "@mui/material/ListItemIcon";
+import { services } from "../Services/services";
 
 // Styled component for ExpandMore button
 const ExpandMore = styled((props) => {
@@ -83,8 +84,31 @@ const CardData = [
   },
 ];
 
+
+
 export default function Payments() {
   const [expandedCards, setExpandedCards] = useState({}); // State to track which cards are expanded
+  let [allEmpData, setAllEmpData] = useState([]);
+  let [coursesData, setCoursesData] = useState([]);
+
+const CoursesDtailsInDB = () => {
+  // setLoading(true);
+  services.CoursesData().then((Response) => {
+    if (Response.isSuccess) {
+      setCoursesData(Response.data);
+      setAllEmpData(
+        // checkData.filter((checkData) => checkData.delete_status == 0)
+      );
+      console.log("check responssssssss", Response.data);
+    }
+    // setLoading(false);
+  });
+};
+ useEffect(() => {
+  CoursesDtailsInDB();
+    
+  }, []);
+ console.log("data is ",coursesData)
 
   // Function to handle card expand toggle
   const handleExpandClick = (index) => {
@@ -230,7 +254,7 @@ export default function Payments() {
                 }}
               >
                 <Grid container spacing={3} marginTop={3} marginBottom={3}>
-                  {CardData.map((card, key) => cardData(card, key))}
+                  {coursesData.map((card, key) => cardData(card, key))}
                   {/* {data.map((card) => cardData(card, card.card_id))} */}
                 </Grid>
               </Box>
