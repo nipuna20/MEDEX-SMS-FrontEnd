@@ -31,6 +31,9 @@ import { Key } from "@mui/icons-material";
 import StarIcon from "@mui/icons-material/Star";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import { services } from "../Services/services";
+import CloseIcon from "@mui/icons-material/Close";
+import AddIcon from "@mui/icons-material/Add";
+import { useNavigate } from "react-router-dom";
 
 // Styled component for ExpandMore button
 const ExpandMore = styled((props) => {
@@ -66,7 +69,8 @@ const CardData = [
   },
 ];
 
-export default function Payments() {
+export default function AdminDashBoard() {
+    const navigate = useNavigate();
   const [expandedCards, setExpandedCards] = useState({}); // State to track which cards are expanded
   let [allEmpData, setAllEmpData] = useState([]);
   let [coursesData, setCoursesData] = useState([]);
@@ -107,11 +111,11 @@ export default function Payments() {
           avatar={
             <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe"></Avatar>
           }
-          // action={
-          //   <IconButton aria-label="settings">
-          //     <MoreVertIcon />
-          //   </IconButton>
-          // }
+          action={
+            <IconButton aria-label="close">
+              <CloseIcon />
+            </IconButton>
+          }
           title={
             <span style={{ fontWeight: "bold", fontSize: "1.2rem" }}>
               {item.CourseName}
@@ -201,7 +205,6 @@ export default function Payments() {
       </Card>
     </Grid>
   );
-
   return (
     <>
       <Card
@@ -219,6 +222,29 @@ export default function Payments() {
         <h2 style={{ textAlign: "center", marginTop: 30 }}>
           <b>COURSES</b>
         </h2>
+        <Box
+      display="flex"
+      justifyContent="flex-end"
+      style={{ width: '100%' }}
+    >
+      <IconButton
+        size="large"
+        sx={{
+          borderRadius: '50%',
+          backgroundColor: '#007BFF', 
+          padding: 1.5,
+          color: '#FFFFFF', 
+          transition: 'transform 0.2s, background-color 0.2s',
+          '&:hover': {
+            transform: 'scale(1.1)',
+            backgroundColor: '#0056b3', 
+          },
+        }}
+        onClick={() => navigate('/AddCourses')}
+      >
+        <AddIcon  />
+      </IconButton>
+    </Box>
         <Box
           component="main"
           sx={{

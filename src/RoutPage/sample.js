@@ -10,6 +10,8 @@ import EXAMS from '../Pages/EXAMS';
 import ZoomRecordings from '../Pages/ZoomRecordings';
 import ZoomOnlineSessions from '../Pages/ZoomOnlineSessions';
 import Resources from '../Pages/Resources';
+import AdminDashBoard from '../Pages/AdminDashBoard';
+import AddCourses from '../Pages/AddCourses';
 
 
 const Employee = Loadable(lazy(()=>import( "../Pages/Employee")));
@@ -53,14 +55,14 @@ const sample = [
           path: "/Resources",
           element: <Resources />,
         },
-        // {
-        //   path: "/AddDepartureReason",
-        //   element: <AddDepartureReason />,
-        // },
-        // {
-        //   path: "/Employee",
-        //   element: <Employee/>,
-        // },
+        {
+          path: "/AdminDashBoard",
+          element: <AdminDashBoard />,
+        },
+        {
+          path: "/AddCourses",
+          element: <AddCourses/>,
+        },
         // {
         //   path: "/AddEmployee",
         //   element: <AddEmployee />,

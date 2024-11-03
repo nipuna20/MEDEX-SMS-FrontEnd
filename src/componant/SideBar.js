@@ -18,7 +18,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { LOGOUT } from "./const";
-import { Dashboard } from '@mui/icons-material';
+import { Dashboard } from "@mui/icons-material";
 
 const drawerWidth = 280;
 
@@ -87,18 +87,26 @@ export default function ClippedDrawer() {
         }}
       >
         <Toolbar />
-       <Box sx={{ overflow: "auto" }}>
+        <Box sx={{ overflow: "auto" }}>
           <List>
             <br />
-            <Card sx={{ borderRadius: 3, marginTop: 0.3, marginBottom: 0.3, marginLeft: 1, marginRight: 1 }}>
-               <CardActionArea
+            <Card
+              sx={{
+                borderRadius: 3,
+                marginTop: 0.3,
+                marginBottom: 0.3,
+                marginLeft: 1,
+                marginRight: 1,
+              }}
+            >
+              <CardActionArea
                 sx={{ paddingTop: 1.5, paddingBottom: 1.5 }}
                 onClick={() => {
                   navigate("/");
                 }}
               >
                 <div style={{ display: "flex", marginLeft: 15 }}>
-                  <Dashboard/>
+                  <Dashboard />
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <Typography>COURSES</Typography>
                 </div>
@@ -109,7 +117,15 @@ export default function ClippedDrawer() {
             <Divider />
             <br />
 
-            <Card sx={{ borderRadius: 3, marginTop: 0.3, marginBottom: 0.3, marginLeft: 1, marginRight: 1 }}>
+            <Card
+              sx={{
+                borderRadius: 3,
+                marginTop: 0.3,
+                marginBottom: 0.3,
+                marginLeft: 1,
+                marginRight: 1,
+              }}
+            >
               <CardActionArea
                 sx={{ paddingTop: 1.5, paddingBottom: 1.5 }}
                 onClick={() => setShowZoomSessions((prev) => !prev)} // Toggle visibility of zoom sessions
@@ -125,16 +141,26 @@ export default function ClippedDrawer() {
             {/* Conditionally render online sessions and recordings based on showZoomSessions state */}
             {showZoomSessions && (
               <>
-                <CardActionArea sx={{ paddingTop: 1.5, paddingBottom: 1.5 }} onClick={() => navigate("/ZoomOnlineSessions")}>
+                <CardActionArea
+                  sx={{ paddingTop: 1.5, paddingBottom: 1.5 }}
+                  onClick={() => navigate("/ZoomOnlineSessions")}
+                >
                   <div style={{ display: "flex", marginLeft: 15 }}>
                     <MailIcon /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <Typography sx={{ fontSize: "14px" }}>ONLINE SESSIONS</Typography>
+                    <Typography sx={{ fontSize: "14px" }}>
+                      ONLINE SESSIONS
+                    </Typography>
                   </div>
                 </CardActionArea>
-                <CardActionArea sx={{ paddingTop: 1.5, paddingBottom: 1.5 }} onClick={() => navigate("/ZoomRecordings")}>
+                <CardActionArea
+                  sx={{ paddingTop: 1.5, paddingBottom: 1.5 }}
+                  onClick={() => navigate("/ZoomRecordings")}
+                >
                   <div style={{ display: "flex", marginLeft: 15 }}>
                     <MailIcon /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <Typography sx={{ fontSize: "14px" }}>RECORDINGS</Typography>
+                    <Typography sx={{ fontSize: "14px" }}>
+                      RECORDINGS
+                    </Typography>
                   </div>
                 </CardActionArea>
                 <Divider />
@@ -145,7 +171,15 @@ export default function ClippedDrawer() {
             <Divider />
             <br />
 
-            <Card sx={{ borderRadius: 3, marginTop: 0.3, marginBottom: 0.3, marginLeft: 1, marginRight: 1 }}>
+            <Card
+              sx={{
+                borderRadius: 3,
+                marginTop: 0.3,
+                marginBottom: 0.3,
+                marginLeft: 1,
+                marginRight: 1,
+              }}
+            >
               <CardActionArea
                 sx={{ paddingTop: 1.5, paddingBottom: 1.5 }}
                 onClick={() => {
@@ -164,7 +198,15 @@ export default function ClippedDrawer() {
             <Divider />
             <br />
 
-            <Card sx={{ borderRadius: 3, marginTop: 0.3, marginBottom: 0.3, marginLeft: 1, marginRight: 1 }}>
+            <Card
+              sx={{
+                borderRadius: 3,
+                marginTop: 0.3,
+                marginBottom: 0.3,
+                marginLeft: 1,
+                marginRight: 1,
+              }}
+            >
               <CardActionArea
                 sx={{ paddingTop: 1.5, paddingBottom: 1.5 }}
                 onClick={() => {
@@ -183,7 +225,15 @@ export default function ClippedDrawer() {
             <Divider />
             <br />
 
-            <Card sx={{ borderRadius: 3, marginTop: 0.3, marginBottom: 0.3, marginLeft: 1, marginRight: 1 }}>
+            <Card
+              sx={{
+                borderRadius: 3,
+                marginTop: 0.3,
+                marginBottom: 0.3,
+                marginLeft: 1,
+                marginRight: 1,
+              }}
+            >
               <CardActionArea
                 sx={{ paddingTop: 1.5, paddingBottom: 1.5 }}
                 onClick={() => {
