@@ -30,16 +30,16 @@ export default function AddCourses() {
     // setLoading(true);
     console.log("valuse : ", values);
 
-    // services.createAllowance(values).then((response) => {
-    //   if (response.isSuccess) {
-    //     console.log("valuse : ", values);
-    //     navigate("/Allowance");
-    //     alert("your card create successfully");
-    //   } else {
-    //     console.log("add card respons error");
-    //   }
-    //   setLoading(false);
-    // });
+    services.createCourses(values).then((response) => {
+      if (response.isSuccess) {
+        console.log("valuse in respons : ", values);
+        navigate("/AdminDashBoard");
+        alert("your Course create successfully");
+      } else {
+        console.log("add Course respons error");
+      }
+      // setLoading(false);
+    });
   };
 
   const validationSchema = Yup.object().shape({
@@ -119,7 +119,7 @@ export default function AddCourses() {
                   border: "1px solid red",
                 }}
                 onClick={() => {
-                  navigate("/Allowance");
+                  navigate("/AdminDashBoard");
                 }}
               >
                 <b> {" < "} back </b>
@@ -142,7 +142,7 @@ export default function AddCourses() {
                       >
                         <Grid item xs={12} md={7} lg={7} xl={8} margin={2}>
                           <Card sx={{ borderRadius: 6 }} elevation={10}>
-                            <CardHeader title="ADD ALLOWANCE"></CardHeader>
+                            <CardHeader title="ADD Course"></CardHeader>
                             <hr
                               style={{
                                 color: "white",

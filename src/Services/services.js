@@ -41,7 +41,8 @@ export const services = {
   tableDataFeeldDetails,
   tableDataDelete,
   tableDataUpdate,
-  CoursesData
+  CoursesData,
+  createCourses
 };
 ////Courses
 async function CoursesData(){
@@ -51,6 +52,15 @@ async function CoursesData(){
     return{isSuccess: true, data: data.CoursesData}
   } catch (error) {
     console.log(error)
+  }
+}
+
+async function createCourses(formData){
+  try {
+    const result = await api.createNewCourse(formData);
+    return {isSuccess: true, result:result };
+  } catch (error) {
+    return { isSuccess: false, result:error}
   }
 }
 

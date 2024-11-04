@@ -5,6 +5,29 @@ export const Courses = () => {
   return api.get("/api/v1/users/course");
 };
 
+export const createNewCourse = (formData) => {
+  console.log("sample course is", formData);
+
+  const jsonData = {
+    CourseName: formData.CourseName,
+    CourseDuration: formData.CourseDuration,
+    FullPayment: formData.FullPayment,
+    InstallmentWise: formData.InstallmentWise,
+    FirstPayment: formData.FirstPayment,
+    RegistrationFee: formData.RegistrationFee,
+    OtherDetails: formData.OtherDetails,
+    
+  };
+
+  console.log("JSON data sample is:", jsonData);
+
+  return api.post("/api/v1/users/course/save", jsonData, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};
+
 ////employee////
 
 export const Employee = () => {
@@ -45,7 +68,7 @@ export const deleteEmployee = (formData) => {
   console.log("sample employment type is", formData);
 
   const jsonData = {
-    EmpID : formData,
+    EmpID: formData,
   };
 
   console.log("JSON data sample is:", jsonData);
@@ -86,7 +109,6 @@ export const UpdateEmployee = (formData) => {
     },
   });
 };
-
 
 ////employee type/////
 ///          get
@@ -134,7 +156,7 @@ export const UpdateEmploymentType = (formData) => {
   const jsonData = {
     EmploymentTypeTableID: formData.EmploymentTypeTableID,
     EmploymentTypeID: formData.EmploymentTypeID,
-    EmploymentType: formData.EmploymentType
+    EmploymentType: formData.EmploymentType,
   };
 
   console.log("JSON data sample is:", jsonData);
@@ -145,8 +167,6 @@ export const UpdateEmploymentType = (formData) => {
     },
   });
 };
-
-
 
 ////department/////
 
@@ -194,7 +214,7 @@ export const UpdateDepartment = (formData) => {
   const jsonData = {
     // departmentTableID: formData.departmentTableID,
     departmentID: formData.departmentID,
-    department: formData.department
+    department: formData.department,
   };
 
   console.log("JSON data sample is:", jsonData);
@@ -205,7 +225,6 @@ export const UpdateDepartment = (formData) => {
     },
   });
 };
-
 
 ///work location///
 
@@ -253,7 +272,7 @@ export const UpdateworkingLocation = (formData) => {
   const jsonData = {
     // workingLocationTableID: formData.workingLocationTableID,
     workingLocationID: formData.workingLocationID,
-    workingLocation: formData.workingLocation
+    workingLocation: formData.workingLocation,
   };
 
   console.log("JSON data sample is:", jsonData);
@@ -264,7 +283,6 @@ export const UpdateworkingLocation = (formData) => {
     },
   });
 };
-
 
 ///job position///
 
@@ -331,7 +349,6 @@ export const UpdateJobPosition = (formData) => {
   });
 };
 
-
 ///departur reson///
 
 export const employeeDeparture = () => {
@@ -392,14 +409,12 @@ export const UpdateDepartureReson = (formData) => {
   });
 };
 
-
-
 ///saslary///
 
 export const employeeSalary = () => {
   return api.get("/api/v1/users/getSalary");
 };
- 
+
 export const createNewSalary = (formData) => {
   console.log("sample employment type is", formData);
 
@@ -436,7 +451,7 @@ export const deleteSalary = (formData) => {
     },
   });
 };
-///         update 
+///         update
 
 export const UpdateSalary = (formData) => {
   console.log("sample employment type is", formData);
@@ -456,8 +471,6 @@ export const UpdateSalary = (formData) => {
     },
   });
 };
-
-
 
 ///allowance///
 
@@ -547,9 +560,6 @@ export const SalarySlipTwo = (formData) => {
 
   return api.get(`/api/v1/users/SalarySlipTwoData?EmpID=${formData.EmpID}`);
 };
-
-
-
 
 //////// old ///////
 
@@ -716,5 +726,3 @@ export const tableRowUpdate = (formData) => {
 
   return api.post("/api/v1/users/TableDataUpdate", postData);
 };
-
-
