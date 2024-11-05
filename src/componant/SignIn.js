@@ -28,6 +28,24 @@ export const createNewCourse = (formData) => {
   });
 };
 
+
+///         delete
+export const deleteCourse = (formData) => {
+  console.log("sample employment type is", formData);
+
+  const jsonData = {
+    _id: formData,
+  };
+
+  console.log("JSON data sample is:", jsonData);
+
+  return api.delete("/api/v1/users/course/delete/", jsonData, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};
+
 ////employee////
 
 export const Employee = () => {
@@ -657,12 +675,12 @@ export const tableDetail = () => {
 export const tableRowDelete = (formData) => {
   console.log("form data is a", formData);
   let postData = {
-    tableID: formData,
+    ID: formData,
   };
   // postData.append("tableID", formData);
   console.log("post data is a ", postData);
 
-  return api.post("/api/v1/users/tableDataDelete", postData);
+  return api.delete("/api/v1/users/course/delete/", postData);
 };
 
 ///update table data

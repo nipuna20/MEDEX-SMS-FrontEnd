@@ -42,7 +42,8 @@ export const services = {
   tableDataDelete,
   tableDataUpdate,
   CoursesData,
-  createCourses
+  createCourses,
+  courseDataDelete
 };
 ////Courses
 async function CoursesData(){
@@ -61,6 +62,15 @@ async function createCourses(formData){
     return {isSuccess: true, result:result };
   } catch (error) {
     return { isSuccess: false, result:error}
+  }
+}
+
+async function courseDataDelete (formData) {
+  try {
+    const {result} = await api.deleteCourse(formData)
+    return{ isSuccess:true, result:result}
+  } catch (error) {
+    return { isSuccess: false, data: error };
   }
 }
 

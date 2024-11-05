@@ -92,6 +92,19 @@ export default function AdminDashBoard() {
   }, []);
   console.log("data is ", coursesData);
 
+  const couseDelete = async (values) => {
+    console.log("table value is ", values);
+    services.courseDataDelete(values).then((response) => {
+      if (response.isSuccess) {
+        console.log("check table data delete ", values);
+        alert("Services data Row Delete successfully");
+        window.location.reload();
+      } else {
+        console.log("delet row respons error");
+      }
+    });
+  };
+
   // Function to handle card expand toggle
   const handleExpandClick = (index) => {
     setExpandedCards((prev) => ({
@@ -113,7 +126,7 @@ export default function AdminDashBoard() {
           }
           action={
             <IconButton aria-label="close">
-              <CloseIcon />
+              <CloseIcon onClick={() => couseDelete(item._id)} />
             </IconButton>
           }
           title={
