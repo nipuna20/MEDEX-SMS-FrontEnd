@@ -70,7 +70,7 @@ const CardData = [
 ];
 
 export default function AdminDashBoard() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [expandedCards, setExpandedCards] = useState({}); // State to track which cards are expanded
   let [allEmpData, setAllEmpData] = useState([]);
   let [coursesData, setCoursesData] = useState([]);
@@ -124,10 +124,22 @@ export default function AdminDashBoard() {
           avatar={
             <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe"></Avatar>
           }
-          action={
-            <IconButton aria-label="close">
-              <CloseIcon onClick={() => couseDelete(item._id)} />
+          
+          action={<>
+            <IconButton
+              aria-label="close"
+              onClick={() => couseDelete(item._id)}
+            >
+              <CloseIcon />
             </IconButton>
+            {/* <IconButton
+              aria-label="close"
+              onClick={() => navigate(`/AddCourses/${item._id}`)} // Navigate to the update form
+            sx={{ marginRight: "auto" }} // Add styling as needed
+            >
+             <StarIcon />
+            </IconButton> */}
+            </>
           }
           title={
             <span style={{ fontWeight: "bold", fontSize: "1.2rem" }}>
@@ -194,6 +206,8 @@ export default function AdminDashBoard() {
         <IconButton aria-label="share">
           <ShareIcon />
         </IconButton> */}
+
+      
           <ExpandMore
             expand={expandedCards[index] || false}
             onClick={() => handleExpandClick(index)}
@@ -235,29 +249,25 @@ export default function AdminDashBoard() {
         <h2 style={{ textAlign: "center", marginTop: 30 }}>
           <b>COURSES</b>
         </h2>
-        <Box
-      display="flex"
-      justifyContent="flex-end"
-      style={{ width: '100%' }}
-    >
-      <IconButton
-        size="large"
-        sx={{
-          borderRadius: '50%',
-          backgroundColor: '#007BFF', 
-          padding: 1.5,
-          color: '#FFFFFF', 
-          transition: 'transform 0.2s, background-color 0.2s',
-          '&:hover': {
-            transform: 'scale(1.1)',
-            backgroundColor: '#0056b3', 
-          },
-        }}
-        onClick={() => navigate('/AddCourses')}
-      >
-        <AddIcon  />
-      </IconButton>
-    </Box>
+        <Box display="flex" justifyContent="flex-end" style={{ width: "100%" }}>
+          <IconButton
+            size="large"
+            sx={{
+              borderRadius: "50%",
+              backgroundColor: "#007BFF",
+              padding: 1.5,
+              color: "#FFFFFF",
+              transition: "transform 0.2s, background-color 0.2s",
+              "&:hover": {
+                transform: "scale(1.1)",
+                backgroundColor: "#0056b3",
+              },
+            }}
+            onClick={() => navigate("/AddCourses")}
+          >
+            <AddIcon />
+          </IconButton>
+        </Box>
         <Box
           component="main"
           sx={{

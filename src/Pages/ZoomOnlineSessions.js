@@ -77,12 +77,7 @@
 // }
 
 import React, { useEffect, useState } from "react";
-import {
-  Card,
-  Grid,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Card, Grid, Stack, Typography } from "@mui/material";
 
 export default function ZoomRecordings() {
   const [recordings, setRecordings] = useState([]);
@@ -101,14 +96,17 @@ export default function ZoomRecordings() {
               {
                 title: "Lecture One",
                 url: "https://zoom.us/sample-recording-1",
+                description: "Details of session",
               },
               {
                 title: "Lecture Two",
                 url: "https://zoom.us/sample-recording-2",
+                description: "Details of session",
               },
               {
                 title: "Lecture Three",
                 url: "https://zoom.us/sample-recording-3",
+                description: "Details of session",
               },
             ],
           },
@@ -118,14 +116,17 @@ export default function ZoomRecordings() {
               {
                 title: "Lecture One",
                 url: "https://zoom.us/sample-recording-1",
+                description: "Details of session",
               },
               {
                 title: "Lecture Two",
                 url: "https://zoom.us/sample-recording-2",
+                description: "Details of session",
               },
               {
                 title: "Lecture Three",
                 url: "https://zoom.us/sample-recording-3",
+                description: "Details of session",
               },
             ],
           },
@@ -135,14 +136,17 @@ export default function ZoomRecordings() {
               {
                 title: "Lecture One",
                 url: "https://zoom.us/sample-recording-1",
+                description: "Details of session",
               },
               {
                 title: "Lecture Two",
                 url: "https://zoom.us/sample-recording-2",
+                description: "Details of session",
               },
               {
                 title: "Lecture Three",
                 url: "https://zoom.us/sample-recording-3",
+                description: "Details of session",
               },
             ],
           },
@@ -152,14 +156,17 @@ export default function ZoomRecordings() {
               {
                 title: "Lecture One",
                 url: "https://zoom.us/sample-recording-1",
+                description: "Details of session",
               },
               {
                 title: "Lecture Two",
                 url: "https://zoom.us/sample-recording-2",
+                description: "Details of session",
               },
               {
                 title: "Lecture Three",
                 url: "https://zoom.us/sample-recording-3",
+                description: "Details of session",
               },
             ],
           },
@@ -177,7 +184,6 @@ export default function ZoomRecordings() {
 
     fetchRecordings();
   }, []);
-
 
   if (loading) {
     return <div style={{ textAlign: "center" }}>Loading sessions..</div>;
@@ -201,9 +207,9 @@ export default function ZoomRecordings() {
       </Card>
     );
   }
-  
+
   const subjectCards = (item, index) => (
-    <Grid key={index} xs={7} sm={8} md={10} lg={10} xl={10}>
+    <Grid key={index} item xs={7} sm={8} md={10} lg={10} xl={10}>
       <Card
         sx={{
           borderRadius: 3,
@@ -211,19 +217,28 @@ export default function ZoomRecordings() {
           padding: 2,
         }}
       >
-        <Typography sx={{fontSize:"32px"}}>{item.subject}</Typography>
+        <Typography sx={{ fontSize: "32px" }}>{item.subject}</Typography>
         <ul>
-          
-            <Stack spacing={2} key={index}>
+          <Stack spacing={2} key={index}>
             {item.links.map((link, linkIndex) => (
-            <li key={linkIndex}>
-              <a href={link.url} target="_blank" rel="noopener noreferrer">
-                {link.title}
-              </a>
-            </li>
-          ))}
-            </Stack>
-          
+              <ul key={linkIndex}>
+                <a href={link.url} target="_blank" rel="noopener noreferrer">
+                  {link.title}
+                </a>
+                <li>
+                  <Typography
+                    sx={{
+                      fontSize: "13px",
+                      color: "grey",
+                      marginTop: "2px",
+                    }}
+                  >
+                    {link.description}
+                  </Typography>
+                </li>
+              </ul>
+            ))}
+          </Stack>
         </ul>
       </Card>
     </Grid>

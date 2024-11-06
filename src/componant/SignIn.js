@@ -29,6 +29,33 @@ export const createNewCourse = (formData) => {
 };
 
 
+////// Update 
+
+export const updateCourse = (formData, _id) => {
+  console.log("Updating course with ID:", _id);
+  console.log("sample course is", formData);
+
+  const jsonData = {
+    CourseName: formData.CourseName,
+    CourseDuration: formData.CourseDuration,
+    FullPayment: formData.FullPayment,
+    InstallmentWise: formData.InstallmentWise,
+    FirstPayment: formData.FirstPayment,
+    RegistrationFee: formData.RegistrationFee,
+    OtherDetails: formData.OtherDetails,
+    
+  };
+
+  console.log("JSON data sample is:", jsonData);
+
+  return api.put("/api/v1/users/course/update", jsonData, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};
+
+
 ///         delete
 export const deleteCourse = (formData) => {
   console.log("sample employment type is", formData);
@@ -37,9 +64,9 @@ export const deleteCourse = (formData) => {
     _id: formData,
   };
 
-  console.log("JSON data sample is:", jsonData);
+  console.log("JSON data sample is:", `/api/v1/users/course/delete/${formData}`);
 
-  return api.delete("/api/v1/users/course/delete/", jsonData, {
+  return api.delete(`/api/v1/users/course/delete/${formData}`, {
     headers: {
       "Content-Type": "application/json",
     },
