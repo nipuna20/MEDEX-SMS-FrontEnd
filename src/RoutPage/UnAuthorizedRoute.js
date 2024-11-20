@@ -1,6 +1,7 @@
 import React, { lazy } from "react";
 import Loadable from "./Loadable";
 import UnAthor from "./unAthor";
+import MainLogin from "../Pages/MainLogin";
 
 const Login = Loadable(lazy(()=>import("../Pages/Login"))) ;
 // const DigiBill = Loadable(lazy (()=>import("../Pages/DigiBill")));
@@ -21,13 +22,18 @@ const unAuthorizedRoutes = [
     children:[
       {
         path:"/",
-        element:<Login/>
+        element:<MainLogin/>
       },
+      {
+        path:"/Login",
+        element:<Login/>
+      }
       
     ]
-},{
+},
+{
   path:"*",
-  element:<Login/>
+  element:<MainLogin/>
 }
 ];
 

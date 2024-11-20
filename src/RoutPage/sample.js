@@ -36,7 +36,7 @@ const sample = [
           element: <Login />,
         },
         {
-          path: "/MainLogin",
+          path: "/",
           element: <MainLogin />,
         },
         {

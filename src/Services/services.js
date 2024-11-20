@@ -44,8 +44,22 @@ export const services = {
   CoursesData,
   createCourses,
   courseDataDelete,
-  updateDataOfCourses
+  updateDataOfCourses,
+  newUserLogin
 };
+
+////User login
+async function newUserLogin(formData) {
+  console.log("sssssssssssssssssssssssssssssss 111111111",formData)
+  try {
+    const result = await api.newUser(formData);
+    console.log("sssssssssssssssssssssssssssssss")
+    return { isSuccess: true, result: result };
+  } catch (error) {
+    return { isSuccess: false, result: error };
+  }
+}
+
 ////Courses
 async function CoursesData(){
   try {

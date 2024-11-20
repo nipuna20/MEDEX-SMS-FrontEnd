@@ -1,6 +1,14 @@
 import api from "./interceptor";
 
 //////new////
+export const newUser = (formData) => {
+  let postData = {
+    email: formData.username,
+    password: formData.password,
+  };
+  return api.post("/api/v1/users/User/adminLogin", postData);
+};
+
 export const Courses = () => {
   return api.get("/api/v1/users/course");
 };

@@ -50,27 +50,28 @@ export default function Login() {
     setShowPassword(!showPassword);
   };
 
-  // const handleCreating = (values) => {
-  //   setLoading(true);
-  //   services.cardCreat(values).then((response) => {
-  //     if (response.isSuccess) {
-  //       console.log("card Data:", values);
-  //       navigate("/Cards");
-  //       alert("your card create successfully");
-  //     } else {
-  //       console.log("add card respons error");
-  //     }
+  const handleCreating = (values) => {
+    // setLoading(true);
+    console.log("login Data:  11  :", values);
+    services.newUserLogin(values).then((response) => {
+      if (response.isSuccess) {
+        console.log("login Data:", values);
+        // navigate("/Cards");
+        alert("your login successfully");
+      } else {
+        console.log("user loging respons error");
+      }
 
-  //     setLoading(false);
-  //   });
-  // };
+      // setLoading(false);
+    });
+  };
 
 
 
   // const handleLogin = (values, setSubmitting) => {
   //   setSubmitting(false);
   //   console.log("User Data:", values);
-  //   navigate("/Cards");
+  //   // navigate("/Cards");
   // };
 
   const validationSchema = Yup.object().shape({
@@ -92,7 +93,7 @@ export default function Login() {
         onSubmit={(values, { setSubmitting }) => {
           setSubmitting(false);
           setLoading(true);
-          dispatch(handleLogin(values, setSubmitting, navigate, setLoading));
+          dispatch(handleCreating(values, setSubmitting, navigate, setLoading));
     
         }}
       >

@@ -7,9 +7,10 @@ import { useSelector } from 'react-redux'
 import sample from './sample'
 
 export default function Routes() {
-  // const user = useSelector((state) => state.auth.authData)
-// console.log(user) 
+  const user = useSelector((state) => state.auth.authData)
+console.log("my user is aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",user); 
 
+  // return useRoutes (user? UserAuthorizedRoutes:unAuthorizedRoutes )
   // return useRoutes (user? UserAuthorizedRoutes:unAuthorizedRoutes )
   return useRoutes (sample)
   

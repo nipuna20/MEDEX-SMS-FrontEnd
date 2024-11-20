@@ -18,6 +18,13 @@ import AddAllowance from "../Pages/AddAllowance";
 import SalarySlipTemplate from "../Pages/SalarySlipTemplate";
 import SalarySlipTemplateNo01 from "../Pages/SalarySlipTemplateNo01";
 import SalarySlipTemplateNo02 from "../Pages/SalarySlipTemplateNo02";
+import { Dashboard } from "@mui/icons-material";
+import Payments from "../Pages/DashBoard";
+import ZoomRecordings from "../Pages/ZoomRecordings";
+import ResourcesPage from "../Pages/Resources";
+import AdminDashBoard from "../Pages/AdminDashBoard";
+import AddCourses from "../Pages/AddCourses";
+import ExamResultViewer from "../Pages/EXAMS";
 
 
 
@@ -40,95 +47,40 @@ const UserAuthorizedRoutes = [
     children:[
       {
         path: "/",
-        element: <Employee />,
+        element: <Dashboard />,
       },
       {
-        path:"/Departments",
-        element:<Departments />
+        path: "/payments",
+        element: <Payments />,
       },
       {
-        path: "/AddDepartment",
-        element: <AddDepartment/>,
+        path: "/EXAMS",
+        element: <ExamResultViewer />,
       },
       {
-        path: "/EmploymentType",
-        element: <EmploymentType />,
-      },
-      {
-        path: "/AddEmploymentType",
-        element: <AddEmploymentType />,
-      },
-      {
-        path: "/WorkingLocation",
-        element: <WorkingLocation />,
-      },
-      {
-        path: "/AddWorkingLocation",
-        element: <AddWorkingLocation/>,
-      },
-      {
-        path: "/JobPosition",
-        element: <JobPosition/>,
-      },
-      {
-        path: "/AddJobPosition",
-        element: <AddJobPosition />,
-      },
-      {
-        path: "/DepartureEmployee",
-        element: <DepartureEmployee />,
-      },
-      {
-        path: "/AddDepartureReason",
-        element: <AddDepartureReason />,
-      },
-      {
-        path: "/Employee",
-        element: <Employee/>,
-      },
-      {
-        path: "/AddEmployee",
-        element: <AddEmployee />,
-      },
-      {
-        path: "/Salary",
-        element: <Salary />,
-      },
-      {
-        path: "/AddSalary",
-        element: <AddSalary />,
-      },
-      {
-        path: "/Allowance",
-        element: <Allowance />,
-      },
-      {
-        path: "/AddAllowance",
-        element: <AddAllowance />,
-      },
-      {
-        path: "/SalarySlipTemplate",
-        element: <SalarySlipTemplate />,
-      },
-      {
-        path: "/SalarySlipTemplateNo01",
-        element: <SalarySlipTemplateNo01 />,
-      },
-      {
-        path: "/SalarySlipTemplateNo02",
-        element: <SalarySlipTemplateNo02 />,
+        path: "/ZoomRecordings",
+        element: <ZoomRecordings/>,
       },
       // {
-      //   path: "/SlipOne",
-      //   element: <SlipOne />,
+      //   path: "/ZoomOnlineSessions",
+      //   element: <ZoomOnlineSessions />,
       // },
-      // {
-      //   path: "/SlipTwo",
-      //   element: <SlipTwo />,
-      // },
+      {
+        path: "/Resources",
+        element: <ResourcesPage />,
+      },
+      {
+        path: "/AdminDashBoard",
+        element: <AdminDashBoard />,
+      },
+      {
+        path: "/AddCourses",
+        element: <AddCourses/>,
+      },
+      
       {
         path:"*",
-        element:<Employee />
+        element:<Dashboard />
       }
     ]
   }
