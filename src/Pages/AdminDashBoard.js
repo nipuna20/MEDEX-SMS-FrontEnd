@@ -1,6 +1,7 @@
 import {
   Avatar,
   Box,
+  Button,
   Card,
   CardActions,
   CardContent,
@@ -18,7 +19,6 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { Button } from "bootstrap";
 import React, { useState, useEffect } from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import { red } from "@mui/material/colors";
@@ -246,6 +246,9 @@ export default function AdminDashBoard() {
         }}
         elevation={2}
       >
+        <Box>
+        <Button>dxfcgv</Button>
+        </Box>
         <h2 style={{ textAlign: "center", marginTop: 30 }}>
           <b>COURSES</b>
         </h2>
@@ -267,7 +270,10 @@ export default function AdminDashBoard() {
           >
             <AddIcon />
           </IconButton>
+          
         </Box>
+       
+        
         <Box
           component="main"
           sx={{

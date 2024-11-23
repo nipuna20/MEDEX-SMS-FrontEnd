@@ -71,14 +71,14 @@ const UserAuthorizedRoutes = [
         path: "/Resources",
         element: <ResourcesPage />,
       },
-      {
-        path: "/AdminDashBoard",
-        element: <AdminDashBoard />,
-      },
-      {
-        path: "/AddCourses",
-        element: <AddCourses/>,
-      },
+      // {
+      //   path: "/AdminDashBoard",
+      //   element: <AdminDashBoard />,
+      // },
+      // {
+      //   path: "/AddCourses",
+      //   element: <AddCourses/>,
+      // },
       
       {
         path:"*",
@@ -90,3 +90,4 @@ const UserAuthorizedRoutes = [
 ];
 
 export default UserAuthorizedRoutes;
+
