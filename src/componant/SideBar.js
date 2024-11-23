@@ -16,7 +16,7 @@ import React, { useState } from "react";
 import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Outlet, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { LOGOUT } from "./const";
 import { Dashboard } from "@mui/icons-material";
 
@@ -29,7 +29,8 @@ export default function ClippedDrawer() {
   const [showZoomSessions, setShowZoomSessions] = useState(false);
 
   const dispatch = useDispatch();
-  // const user = useSelector((state) => state.auth.authData.data?.email);
+  const user = useSelector((state) => state.auth.authData?.email);
+  console.log("redux User",user)
   const handleChange = () => {
     dispatch({ type: LOGOUT });
     navigate("/");
@@ -63,7 +64,7 @@ export default function ClippedDrawer() {
           {/* <Typography variant="h6" noWrap component="div">
             Clipped drawer
           </Typography> */}
-          {/* <Typography>Welcome {user}</Typography> */}
+          <Typography>Welcome {user}</Typography>
           &nbsp;&nbsp;&nbsp;&nbsp;
           <Button
             variant="contained"

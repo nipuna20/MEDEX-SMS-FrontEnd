@@ -9,6 +9,7 @@ import {
 import React from "react";
 import { useTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
+import MEDEXLogo from "../componant/MEDEXLogo.jpg"
 
 export default function MainLogin() {
   const navigate = useNavigate();
@@ -31,7 +32,7 @@ export default function MainLogin() {
         <Grid item sx={{ m: { xs: 1, sm: 3 }, mb: 0 }}>
           <Paper elevation={10} sx={paperStyle}>
             <Grid align={"center"} marginTop={4}>
-              <img alt="" src="" height={70} width={110} />
+              <img alt="" src={MEDEXLogo} height={70} width={110} />
               <Typography fontSize="40px">Login</Typography>
               <Grid item>
                 <Stack alignItems="center" justifyContent="center" spacing={1}>

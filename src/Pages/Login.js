@@ -22,6 +22,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { handleLogin } from "./handleLogin";
 import Loade from "../componant/Loader";
 import { services } from "../Services/services"
+import { AUTH } from "../componant/const";
+import MEDEXLogo from "../componant/MEDEXLogo.jpg"
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -56,8 +58,14 @@ export default function Login() {
     services.newUserLogin(values).then((response) => {
       if (response.isSuccess) {
         console.log("login Data:", values);
-        // navigate("/Cards");
-        alert("your login successfully");
+        dispatch({
+          type: AUTH,
+          payload:response.result.data
+
+        })
+        navigate("/");
+        // alert("your login successfully");
+
       } else {
         console.log("user loging respons error");
       }
@@ -111,7 +119,7 @@ export default function Login() {
               <Grid item sx={{ m: { xs: 1, sm: 3 }, mb: 0 }}>
                 <Paper elevation={10} sx={paperStyle}>
                   <Grid align={"center"} marginTop={4}>
-                    <img alt="" src="" height={70} width={110} />
+                    <img alt="" src={MEDEXLogo} height={70} width={110} />
                     <Typography fontSize="40px">{role}</Typography>
                     <Grid item>
                       <Stack

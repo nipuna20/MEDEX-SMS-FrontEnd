@@ -53,6 +53,7 @@ async function newUserLogin(formData) {
   console.log("sssssssssssssssssssssssssssssss 111111111",formData)
   try {
     const result = await api.newUser(formData);
+    console.log("API response:", result);
     console.log("sssssssssssssssssssssssssssssss")
     return { isSuccess: true, result: result };
   } catch (error) {

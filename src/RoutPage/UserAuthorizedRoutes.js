@@ -18,13 +18,14 @@ import AddAllowance from "../Pages/AddAllowance";
 import SalarySlipTemplate from "../Pages/SalarySlipTemplate";
 import SalarySlipTemplateNo01 from "../Pages/SalarySlipTemplateNo01";
 import SalarySlipTemplateNo02 from "../Pages/SalarySlipTemplateNo02";
-import { Dashboard } from "@mui/icons-material";
-import Payments from "../Pages/DashBoard";
+import Payments from "../Pages/Payments";
 import ZoomRecordings from "../Pages/ZoomRecordings";
+import ZoomOnlineSessions from "../Pages/ZoomOnlineSessions"
 import ResourcesPage from "../Pages/Resources";
 import AdminDashBoard from "../Pages/AdminDashBoard";
 import AddCourses from "../Pages/AddCourses";
 import ExamResultViewer from "../Pages/EXAMS";
+import DashBoard from '../Pages/DashBoard';
 
 
 
@@ -40,6 +41,7 @@ import ExamResultViewer from "../Pages/EXAMS";
 const Employee = Loadable(lazy(()=>import( "../Pages/Employee")));
 const AddEmployee = Loadable(lazy(()=>import("../Pages/AddEmployee")));
 
+
 const UserAuthorizedRoutes = [
   {
     path: "/",
@@ -47,7 +49,7 @@ const UserAuthorizedRoutes = [
     children:[
       {
         path: "/",
-        element: <Dashboard />,
+        element: <DashBoard />,
       },
       {
         path: "/payments",
@@ -61,10 +63,10 @@ const UserAuthorizedRoutes = [
         path: "/ZoomRecordings",
         element: <ZoomRecordings/>,
       },
-      // {
-      //   path: "/ZoomOnlineSessions",
-      //   element: <ZoomOnlineSessions />,
-      // },
+      {
+        path: "/ZoomOnlineSessions",
+        element: <ZoomOnlineSessions />,
+      },
       {
         path: "/Resources",
         element: <ResourcesPage />,
@@ -80,7 +82,7 @@ const UserAuthorizedRoutes = [
       
       {
         path:"*",
-        element:<Dashboard />
+        element:<DashBoard />
       }
     ]
   }

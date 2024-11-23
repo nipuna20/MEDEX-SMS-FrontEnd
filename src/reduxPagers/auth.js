@@ -4,8 +4,8 @@ import { AUTH, LOGOUT } from "../componant/const";
  const authReducer = ( state = { authData: null }, action) => {
     switch(action.type){
         case AUTH:
-            // console.log(action)
-            let encryptedData = encryption({...action?.data});
+            console.log("auth",action)
+            let encryptedData = encryption({...action?.payload.data});
             localStorage.setItem("profile",JSON.stringify(encryptedData));
 
             let decryptedData = decryption(encryptedData);
