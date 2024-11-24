@@ -34,6 +34,7 @@ import { services } from "../Services/services";
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
 
 // Styled component for ExpandMore button
 const ExpandMore = styled((props) => {
@@ -113,6 +114,8 @@ export default function AdminDashBoard() {
     }));
   };
 
+ 
+
   // Card rendering function
   const cardData = (item, index) => (
     <Grid key={index} item xs={12} sm={12} md={8} lg={6} xl={4}>
@@ -124,15 +127,15 @@ export default function AdminDashBoard() {
           avatar={
             <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe"></Avatar>
           }
-          
-          action={<>
-            <IconButton
-              aria-label="close"
-              onClick={() => couseDelete(item._id)}
-            >
-              <CloseIcon />
-            </IconButton>
-            {/* <IconButton
+          action={
+            <>
+              <IconButton
+                aria-label="close"
+                onClick={() => couseDelete(item._id)}
+              >
+                <CloseIcon />
+              </IconButton>
+              {/* <IconButton
               aria-label="close"
               onClick={() => navigate(`/AddCourses/${item._id}`)} // Navigate to the update form
             sx={{ marginRight: "auto" }} // Add styling as needed
@@ -207,7 +210,6 @@ export default function AdminDashBoard() {
           <ShareIcon />
         </IconButton> */}
 
-      
           <ExpandMore
             expand={expandedCards[index] || false}
             onClick={() => handleExpandClick(index)}
@@ -246,12 +248,20 @@ export default function AdminDashBoard() {
         }}
         elevation={2}
       >
-        <Box>
-        <Button>dxfcgv</Button>
+        <Box display="flex" justifyContent={"flex-start"} paddingTop={5}>
+          <Button
+            variant="contained"
+            startIcon={<AccountBoxIcon />}
+            sx={{ padding: 1 }}
+            onClick={() => navigate("/addNewUser")}
+          >
+            User Creation
+          </Button>
         </Box>
         <h2 style={{ textAlign: "center", marginTop: 30 }}>
           <b>COURSES</b>
         </h2>
+
         <Box display="flex" justifyContent="flex-end" style={{ width: "100%" }}>
           <IconButton
             size="large"
@@ -270,10 +280,8 @@ export default function AdminDashBoard() {
           >
             <AddIcon />
           </IconButton>
-          
         </Box>
-       
-        
+
         <Box
           component="main"
           sx={{

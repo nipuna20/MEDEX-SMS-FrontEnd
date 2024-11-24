@@ -13,6 +13,7 @@ export const Courses = () => {
   return api.get("/api/v1/users/course");
 };
 
+////create new course
 export const createNewCourse = (formData) => {
   console.log("sample course is", formData);
 
@@ -24,7 +25,6 @@ export const createNewCourse = (formData) => {
     FirstPayment: formData.FirstPayment,
     RegistrationFee: formData.RegistrationFee,
     OtherDetails: formData.OtherDetails,
-    
   };
 
   console.log("JSON data sample is:", jsonData);
@@ -36,8 +36,7 @@ export const createNewCourse = (formData) => {
   });
 };
 
-
-////// Update 
+////// Update
 
 export const updateCourse = (formData, _id) => {
   console.log("Updating course with ID:", _id);
@@ -51,7 +50,6 @@ export const updateCourse = (formData, _id) => {
     FirstPayment: formData.FirstPayment,
     RegistrationFee: formData.RegistrationFee,
     OtherDetails: formData.OtherDetails,
-    
   };
 
   console.log("JSON data sample is:", jsonData);
@@ -63,7 +61,6 @@ export const updateCourse = (formData, _id) => {
   });
 };
 
-
 ///         delete
 export const deleteCourse = (formData) => {
   console.log("sample employment type is", formData);
@@ -72,7 +69,10 @@ export const deleteCourse = (formData) => {
     _id: formData,
   };
 
-  console.log("JSON data sample is:", `/api/v1/users/course/delete/${formData}`);
+  console.log(
+    "JSON data sample is:",
+    `/api/v1/users/course/delete/${formData}`
+  );
 
   return api.delete(`/api/v1/users/course/delete/${formData}`, {
     headers: {
@@ -80,6 +80,26 @@ export const deleteCourse = (formData) => {
     },
   });
 };
+
+////create new user
+export const createNewUser = (formData) => {
+  console.log("sample course is", formData);
+
+  const jsonData = {
+    email: formData.username,
+    password: formData.password,
+  };
+
+  console.log("JSON data sample is:", jsonData);
+
+  return api.post("/api/v1/users/AdminUserCreation", jsonData, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};
+
+/////////////////////////////////////////////////////////////////////
 
 ////employee////
 

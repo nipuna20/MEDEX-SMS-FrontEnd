@@ -1,5 +1,7 @@
 import AddCourses from "../Pages/AddCourses";
+import AddNewUser from "../Pages/AddNewUser";
 import AdminDashBoard from "../Pages/AdminDashBoard";
+import ZoomOnlineSessionsAdmin from "../Pages/ZoomOnlineSessionsAdmin";
 import AuthorHeader from "./AuthorHeader";
 
 const UserAuthorizedRoutesAdmin = [
@@ -23,14 +25,8 @@ const UserAuthorizedRoutesAdmin = [
         //     path: "/ZoomRecordings",
         //     element: <ZoomRecordings/>,
         //   },
-        //   {
-        //     path: "/ZoomOnlineSessions",
-        //     element: <ZoomOnlineSessions />,
-        //   },
-        //   {
-        //     path: "/Resources",
-        //     element: <ResourcesPage />,
-        //   },
+        
+        
           {
             path: "/",
             element: <AdminDashBoard />,
@@ -38,6 +34,14 @@ const UserAuthorizedRoutesAdmin = [
           {
             path: "/AddCourses",
             element: <AddCourses/>,
+          },
+            {
+            path: "/addNewUser",
+            element: <AddNewUser />,
+          },
+          {
+            path: "/ZoomOnlineSessions",
+            element: <ZoomOnlineSessionsAdmin />,
           },
           
           {
