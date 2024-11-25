@@ -106,6 +106,13 @@ export const ZoomLinks = () => {
   return api.get("/api/v1/users/OnlineSessions/zoom");
 };
 
+/////////////////////////////////////////////////////////////////
+//////get zoom Recordings
+export const ZoomRecordings = () => {
+  return api.get("/api/v1/users/OnlineRecordings/zoom");
+};
+
+
 /////////////////////////////////////////////////////////////////////
 
 ////employee////

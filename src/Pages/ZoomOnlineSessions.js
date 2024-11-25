@@ -26,12 +26,12 @@ export default function ZoomRecordings() {
     const fetchData = async () => {
       setLoading(true);
       const zoomData = await fetchZoomLinksData();
-      setRecordings(zoomData); 
+      setRecordings(zoomData);
       setLoading(false);
     };
 
     fetchData();
-  }, []); 
+  }, []);
 
   if (loading) {
     return <div style={{ textAlign: "center" }}>Loading sessions..</div>;

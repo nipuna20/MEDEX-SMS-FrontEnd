@@ -1,201 +1,148 @@
-// import React, { useEffect, useState } from 'react';
-// import {
-//     Avatar,
-//     Box,
-//     Card,
-//     CardActions,
-//     CardContent,
-//     CardHeader,
-//     CardMedia,
-//     Collapse,
-//     Container,
-//     Divider,
-//     Grid,
-//     IconButton,
-//     Stack,
-//     Typography,
-//   } from "@mui/material";
-
-
-// export default function ZoomRecordings() {
-//   const [recordings, setRecordings] = useState([]);
-//   const [loading, setLoading] = useState(true);
-
-//   useEffect(() => {
-//     // Simulate an API call to fetch Zoom recordings
-//     const fetchRecordings = async () => {
-//       try {
-//         // Replace this with actual API call
-//         const response = await fetch('/api/zoom/recordings');
-//         const data = await response.json();
-//         setRecordings(data);
-//       } catch (error) {
-//         console.error('Error fetching recordings:', error);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchRecordings();
-//   }, []);
-
-//   if (loading) {
-//     return <div>Loading recordings...</div>;
-//   }
-
-//   if (recordings.length === 1) {
-//     return (
-//         <Card
-//         sx={{
-//           borderRadius: 3,
-//           backgroundColor: "rgb(180, 180, 179, 0.5 )",
-//           margin: 3,
-//           paddingTop:1, paddingBottom: 1, paddingLeft: 2, paddingRight:2,
-//         }}
-//         elevation={2} >
-//         <div>No recordings available.</div>
-//       </Card>
-//     );
-//   }
-
-//   return (
-//     <Card
-//         sx={{
-//           borderRadius: 3,
-//           backgroundColor: "rgb(180, 180, 179, 0.5 )",
-//           margin: 3,
-//           paddingTop:1, paddingBottom: 1, paddingLeft: 2, paddingRight:2,
-//         }}
-//         elevation={2} >
-//         <div>
-//             <h2>Zoom Recordings</h2>
-//             <ul>
-//                 {recordings.map((recording, index) => (
-//                 <li key={index}>
-//                     <a href={recording.url} target="_blank" rel="noopener noreferrer">
-//                     {recording.title}
-//                     </a>
-//                 </li>
-//                 ))}
-//             </ul>
-//         </div>
-//     </Card>
-//   );
-// }
-
 import React, { useEffect, useState } from "react";
 import { Card, Grid, Stack, Typography } from "@mui/material";
+import { services } from "../Services/services";
 
 export default function ZoomRecordings() {
+  // const [recordings, setRecordings] = useState([]);
+  // const [loading, setLoading] = useState(true);
+
+
+
+  // useEffect(() => {
+    
+  //   const fetchRecordings = async () => {
+  //     setLoading(true);
+  //     try {
+        
+  //       const sampleArray = [
+  //         {
+  //           subject: "Subject One",
+  //           links: [
+  //             {
+  //               title: "Lecture One",
+  //               url: "https://www.youtube.com/embed/isJuOHVtXu0",
+  //               description: "Details of session",
+  //             },
+  //             {
+  //               title: "Lecture Two",
+  //               url: "https://www.youtube.com/embed/isJuOHVtXu0",
+  //               description: "Details of session",
+  //             },
+  //             {
+  //               title: "Lecture Three",
+  //               url: "https://www.youtube.com/embed/isJuOHVtXu0",
+  //               description: "Details of session",
+  //             },
+  //           ],
+  //         },
+  //         {
+  //           subject: "Subject Two",
+  //           links: [
+  //             {
+  //               title: "Lecture One",
+  //               url: "https://www.youtube.com/embed/isJuOHVtXu0",
+  //               description: "Details of session",
+  //             },
+  //             {
+  //               title: "Lecture Two",
+  //               url: "https://www.youtube.com/embed/isJuOHVtXu0",
+  //               description: "Details of session",
+  //             },
+  //             {
+  //               title: "Lecture Three",
+  //               url: "https://www.youtube.com/embed/isJuOHVtXu0",
+  //               description: "Details of session",
+  //             },
+  //           ],
+  //         },
+  //         {
+  //           subject: "Subject Tree",
+  //           links: [
+  //             {
+  //               title: "Lecture One",
+  //               url: "https://www.youtube.com/embed/isJuOHVtXu0",
+  //               description: "Details of session",
+  //             },
+  //             {
+  //               title: "Lecture Two",
+  //               url: "https://www.youtube.com/embed/isJuOHVtXu0",
+  //               description: "Details of session",
+  //             },
+  //             {
+  //               title: "Lecture Three",
+  //               url: "https://www.youtube.com/embed/isJuOHVtXu0",
+  //               description: "Details of session",
+  //             },
+  //           ],
+  //         },
+  //         {
+  //           subject: "Subject four",
+  //           links: [
+  //             {
+  //               title: "Lecture One",
+  //               url: "https://www.youtube.com/embed/isJuOHVtXu0",
+  //               description: "Details of session",
+  //             },
+  //             {
+  //               title: "Lecture Two",
+  //               url: "https://www.youtube.com/embed/isJuOHVtXu0",
+  //               description: "Details of session",
+  //             },
+  //             {
+  //               title: "Lecture Three",
+  //               url: "https://www.youtube.com/embed/isJuOHVtXu0",
+  //               description: "Details of session",
+  //             },
+  //           ],
+  //         },
+  //       ];
+
+  //       // Simulate network delay
+  //       await new Promise((resolve) => setTimeout(resolve, 1000));
+  //       setRecordings(sampleArray);
+  //     } catch (error) {
+  //       console.error("Error fetching Recordings:", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchRecordings();
+  // }, []);
+
+  // useEffect(() => {
+  //   const disableRightClick = (event) => event.preventDefault();
+  //   document.addEventListener("contextmenu", disableRightClick);
+  //   return () => document.removeEventListener("contextmenu", disableRightClick);
+  // }, []);
   const [recordings, setRecordings] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    
-    const fetchRecordings = async () => {
-      setLoading(true);
-      try {
-        
-        const sampleArray = [
-          {
-            subject: "Subject One",
-            links: [
-              {
-                title: "Lecture One",
-                url: "https://www.youtube.com/embed/isJuOHVtXu0",
-                description: "Details of session",
-              },
-              {
-                title: "Lecture Two",
-                url: "https://www.youtube.com/embed/isJuOHVtXu0",
-                description: "Details of session",
-              },
-              {
-                title: "Lecture Three",
-                url: "https://www.youtube.com/embed/isJuOHVtXu0",
-                description: "Details of session",
-              },
-            ],
-          },
-          {
-            subject: "Subject Two",
-            links: [
-              {
-                title: "Lecture One",
-                url: "https://www.youtube.com/embed/isJuOHVtXu0",
-                description: "Details of session",
-              },
-              {
-                title: "Lecture Two",
-                url: "https://www.youtube.com/embed/isJuOHVtXu0",
-                description: "Details of session",
-              },
-              {
-                title: "Lecture Three",
-                url: "https://www.youtube.com/embed/isJuOHVtXu0",
-                description: "Details of session",
-              },
-            ],
-          },
-          {
-            subject: "Subject Tree",
-            links: [
-              {
-                title: "Lecture One",
-                url: "https://www.youtube.com/embed/isJuOHVtXu0",
-                description: "Details of session",
-              },
-              {
-                title: "Lecture Two",
-                url: "https://www.youtube.com/embed/isJuOHVtXu0",
-                description: "Details of session",
-              },
-              {
-                title: "Lecture Three",
-                url: "https://www.youtube.com/embed/isJuOHVtXu0",
-                description: "Details of session",
-              },
-            ],
-          },
-          {
-            subject: "Subject four",
-            links: [
-              {
-                title: "Lecture One",
-                url: "https://www.youtube.com/embed/isJuOHVtXu0",
-                description: "Details of session",
-              },
-              {
-                title: "Lecture Two",
-                url: "https://www.youtube.com/embed/isJuOHVtXu0",
-                description: "Details of session",
-              },
-              {
-                title: "Lecture Three",
-                url: "https://www.youtube.com/embed/isJuOHVtXu0",
-                description: "Details of session",
-              },
-            ],
-          },
-        ];
-
-        // Simulate network delay
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        setRecordings(sampleArray);
-      } catch (error) {
-        console.error("Error fetching Recordings:", error);
-      } finally {
-        setLoading(false);
+  const fetchZoomLinksData = async () => {
+    try {
+      const response = await services.ZoomRecordingsData();
+      if (response.isSuccess) {
+        console.log("Response data:", response.data);
+        return response.data;
+      } else {
+        console.error("Failed to fetch course details");
+        return [];
       }
+    } catch (error) {
+      console.error("Error fetching course details:", error);
+      return [];
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      const zoomData = await fetchZoomLinksData();
+      setRecordings(zoomData);
+      setLoading(false);
     };
 
-    fetchRecordings();
-  }, []);
-
-  useEffect(() => {
-    const disableRightClick = (event) => event.preventDefault();
-    document.addEventListener("contextmenu", disableRightClick);
-    return () => document.removeEventListener("contextmenu", disableRightClick);
+    fetchData();
   }, []);
   
   if (loading) {
