@@ -46,7 +46,8 @@ export const services = {
   courseDataDelete,
   updateDataOfCourses,
   newUserLogin,
-  createNewUser
+  createNewUser,
+  ZoomLinksData
 };
 
 ////User login
@@ -112,6 +113,19 @@ async function updateDataOfCourses(formData, _id){
     return {isSuccess: true, result:result };
   } catch (error) {
     return { isSuccess: false, result:error}
+  }
+}
+
+
+//////get zoom links
+
+async function ZoomLinksData(){
+  try {
+    const {data} = await api.ZoomLinks();
+    console.log("sampleeeeeee", data.CoursesData);
+    return{isSuccess: true, data: data.CoursesData}
+  } catch (error) {
+    console.log(error)
   }
 }
 

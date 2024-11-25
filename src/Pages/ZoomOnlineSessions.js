@@ -1,180 +1,33 @@
-// import React, { useEffect, useState } from 'react';
-// import {
-//     Avatar,
-//     Box,
-//     Card,
-//     CardActions,
-//     CardContent,
-//     CardHeader,
-//     CardMedia,
-//     Collapse,
-//     Container,
-//     Divider,
-//     Grid,
-//     IconButton,
-//     Stack,
-//     Typography,
-//   } from "@mui/material";
-
-// export default function ZoomOnlineSessions() {
-//   const [sessions, setSessions] = useState([]);
-//   const [loading, setLoading] = useState(true);
-
-//   useEffect(() => {
-//     // Simulate an API call to fetch Zoom sessions
-//     const fetchSessions = async () => {
-//       try {
-//         // Replace this with an actual API call
-//         const response = await fetch('/api/zoom/sessions');
-//         const data = await response.json();
-//         setSessions(data);
-//       } catch (error) {
-//         console.error('Error fetching sessions:', error);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchSessions();
-//   }, []);
-
-//   if (loading) {
-//     return <div>Loading sessions...</div>;
-//   }
-
-//   if (sessions.length === 0) {
-//     return (
-//         <Card
-//         sx={{
-//           borderRadius: 3,
-//           backgroundColor: "rgb(180, 180, 179, 0.5 )",
-//           margin: 3,
-//           paddingTop:1, paddingBottom: 1, paddingLeft: 2, paddingRight:2,
-//           // marginLeft: 4,
-//           // marginRight: 4,
-//         }}
-//         elevation={2}
-//       >
-//         <div>No online sessions available.</div>
-//       </Card>
-//     );
-//   }
-
-//   return (
-//     <div>
-//       <h2>Zoom Online Sessions</h2>
-//       <ul>
-//         {sessions.map((session, index) => (
-//           <li key={index}>
-//             <a href={session.url} target="_blank" rel="noopener noreferrer">
-//               {session.title}
-//             </a>
-//           </li>
-//         ))}
-//       </ul>
-//     </div>
-//   );
-// }
-
 import React, { useEffect, useState } from "react";
 import { Card, Grid, Stack, Typography } from "@mui/material";
+import { services } from "../Services/services";
 
 export default function ZoomRecordings() {
   const [recordings, setRecordings] = useState([]);
   const [loading, setLoading] = useState(true);
+  let [coursesData, setCoursesData] = useState([]);
 
+  const CoursesDtailsInDB = () => {
+   
+    services.ZoomLinksData().then((Response) => {
+      if (Response.isSuccess) {
+        setCoursesData(Response.data);
+       
+        console.log("check responssssssss", Response.data);
+      }
+      
+    });
+  };
+ 
+ 
   useEffect(() => {
-    // Simulate fetching data with a timeout
-    const fetchRecordings = async () => {
+    CoursesDtailsInDB();
+    const fetchRecordings = async () => { 
+      console.log("respons", coursesData);
       setLoading(true);
       try {
-        // Sample data to simulate an API response
-        const sampleArray = [
-          {
-            subject: "Subject One",
-            links: [
-              {
-                title: "Lecture One",
-                url: "https://zoom.us/sample-recording-1",
-                description: "Details of session",
-              },
-              {
-                title: "Lecture Two",
-                url: "https://zoom.us/sample-recording-2",
-                description: "Details of session",
-              },
-              {
-                title: "Lecture Three",
-                url: "https://zoom.us/sample-recording-3",
-                description: "Details of session",
-              },
-            ],
-          },
-          {
-            subject: "Subject Two",
-            links: [
-              {
-                title: "Lecture One",
-                url: "https://zoom.us/sample-recording-1",
-                description: "Details of session",
-              },
-              {
-                title: "Lecture Two",
-                url: "https://zoom.us/sample-recording-2",
-                description: "Details of session",
-              },
-              {
-                title: "Lecture Three",
-                url: "https://zoom.us/sample-recording-3",
-                description: "Details of session",
-              },
-            ],
-          },
-          {
-            subject: "Subject Tree",
-            links: [
-              {
-                title: "Lecture One",
-                url: "https://zoom.us/sample-recording-1",
-                description: "Details of session",
-              },
-              {
-                title: "Lecture Two",
-                url: "https://zoom.us/sample-recording-2",
-                description: "Details of session",
-              },
-              {
-                title: "Lecture Three",
-                url: "https://zoom.us/sample-recording-3",
-                description: "Details of session",
-              },
-            ],
-          },
-          {
-            subject: "Subject four",
-            links: [
-              {
-                title: "Lecture One",
-                url: "https://zoom.us/sample-recording-1",
-                description: "Details of session",
-              },
-              {
-                title: "Lecture Two",
-                url: "https://zoom.us/sample-recording-2",
-                description: "Details of session",
-              },
-              {
-                title: "Lecture Three",
-                url: "https://zoom.us/sample-recording-3",
-                description: "Details of session",
-              },
-            ],
-          },
-        ];
-
-        // Simulate network delay
         await new Promise((resolve) => setTimeout(resolve, 1000));
-        setRecordings(sampleArray);
+        setRecordings(coursesData);
       } catch (error) {
         console.error("Error fetching sessions:", error);
       } finally {
