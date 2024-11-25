@@ -114,8 +114,6 @@ export default function AdminDashBoard() {
     }));
   };
 
- 
-
   // Card rendering function
   const cardData = (item, index) => (
     <Grid key={index} item xs={12} sm={12} md={8} lg={6} xl={4}>
