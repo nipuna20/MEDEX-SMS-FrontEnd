@@ -5,38 +5,33 @@ import { services } from "../Services/services";
 export default function ZoomRecordings() {
   const [recordings, setRecordings] = useState([]);
   const [loading, setLoading] = useState(true);
-  let [coursesData, setCoursesData] = useState([]);
 
-  const CoursesDtailsInDB = () => {
-   
-    services.ZoomLinksData().then((Response) => {
-      if (Response.isSuccess) {
-        setCoursesData(Response.data);
-       
-        console.log("check responssssssss", Response.data);
+  const fetchZoomLinksData = async () => {
+    try {
+      const response = await services.ZoomLinksData();
+      if (response.isSuccess) {
+        console.log("Response data:", response.data);
+        return response.data;
+      } else {
+        console.error("Failed to fetch course details");
+        return [];
       }
-      
-    });
+    } catch (error) {
+      console.error("Error fetching course details:", error);
+      return [];
+    }
   };
- 
- 
+
   useEffect(() => {
-    CoursesDtailsInDB();
-    const fetchRecordings = async () => { 
-      console.log("respons", coursesData);
+    const fetchData = async () => {
       setLoading(true);
-      try {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        setRecordings(coursesData);
-      } catch (error) {
-        console.error("Error fetching sessions:", error);
-      } finally {
-        setLoading(false);
-      }
+      const zoomData = await fetchZoomLinksData();
+      setRecordings(zoomData); 
+      setLoading(false);
     };
 
-    fetchRecordings();
-  }, []);
+    fetchData();
+  }, []); 
 
   if (loading) {
     return <div style={{ textAlign: "center" }}>Loading sessions..</div>;
@@ -105,9 +100,9 @@ export default function ZoomRecordings() {
           backgroundColor: "rgb(180, 180, 179, 0.5 )",
           margin: "1rem",
           padding: "1rem",
-          width: "75vw", // Set a reasonable width to avoid overflow
-          float: "left", // Align the Card to the left
-          boxSizing: "border-box", // Ensures padding is included in width and height
+          width: "75vw",
+          float: "left",
+          boxSizing: "border-box",
         }}
         elevation={2}
       >
