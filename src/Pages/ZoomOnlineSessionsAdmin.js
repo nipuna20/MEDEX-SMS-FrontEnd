@@ -33,6 +33,21 @@ export default function ZoomOnlineSessionsAdmin() {
       console.error("Error fetching course details:", error);
       return [];
     }
+    
+    
+  };
+
+  const addNewLecture = async (values) => {
+    console.log("table value is ", values);
+    // services.courseDataDelete(values).then((response) => {
+    //   if (response.isSuccess) {
+    //     console.log("check table data delete ", values);
+    //     alert("Services data Row Delete successfully");
+    //     window.location.reload();
+    //   } else {
+    //     console.log("delet row respons error");
+    //   }
+    // });
   };
 
   useEffect(() => {
@@ -145,10 +160,11 @@ export default function ZoomOnlineSessionsAdmin() {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            marginTop: 2, // Adds some space above the button
-            width: "100%", // Ensures the button takes full width for better centering
-            maxWidth: "200px", // Optional: Restrict the max width if needed
+            marginTop: 2, 
+            width: "100%", 
+            maxWidth: "200px", 
           }}
+          onClick={() => navigate(`/AddZoomSessionLecture?cardId=${item._id}`)}
         >
           Add new Lecture
         </Button>

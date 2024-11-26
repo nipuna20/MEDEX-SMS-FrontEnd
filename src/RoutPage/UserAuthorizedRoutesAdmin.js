@@ -1,5 +1,6 @@
 import AddCourses from "../Pages/AddCourses";
 import AddNewUser from "../Pages/AddNewUser";
+import AddZoomSessionLecture from "../Pages/AddZoomSessionLecture";
 import AddZoomSessionSubject from "../Pages/AddZoomSessionSubject";
 import AdminDashBoard from "../Pages/AdminDashBoard";
 import ZoomOnlineSessionsAdmin from "../Pages/ZoomOnlineSessionsAdmin";
@@ -18,10 +19,10 @@ const UserAuthorizedRoutesAdmin = [
         //     path: "/payments",
         //     element: <Payments />,
         //   },
-        //   {
-        //     path: "/EXAMS",
-        //     element: <ExamResultViewer />,
-        //   },
+          {
+            path: "/AddZoomSessionLecture",
+            element: <AddZoomSessionLecture />,
+          },
           {
             path: "/",
             element: <AdminDashBoard />,

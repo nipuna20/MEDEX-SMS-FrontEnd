@@ -44,39 +44,6 @@ export default function AddCourses() {
     });
   };
 
-  // useEffect(() => {
-  //   setLoading(true);
-  //   services.getCourse(courseId).then((response) => {
-  //     if (response.isSuccess) {
-  //       setInitialValues({
-  //         CourseName: response.data.CourseName || "",
-  //         CourseDuration: response.data.CourseDuration || "",
-  //         FullPayment: response.data.FullPayment || 0,
-  //         InstallmentWise: response.data.InstallmentWise || 0,
-  //         FirstPayment: response.data.FirstPayment || 0,
-  //         RegistrationFee: response.data.RegistrationFee || 0,
-  //         OtherDetails: response.data.OtherDetails || "",
-  //       });
-  //     } else {
-  //       console.error("Error fetching course data");
-  //     }
-  //     setLoading(false);
-  //   });
-  // }, [courseId]);
-
-  // const handleUpdating = (values) => {
-  //   setLoading(true);
-  //   services.updateCourse(values, courseId).then((response) => {
-  //     if (response.isSuccess) {
-  //       console.log("Course updated successfully:", values);
-  //       navigate("/AdminDashBoard");
-  //       alert("Course updated successfully");
-  //     } else {
-  //       console.error("Error updating course");
-  //     }
-  //     setLoading(false);
-  //   });
-  // };
 
   const validationSchema = Yup.object().shape({
     // AllowanceID: Yup.string().required("Emplyee ID is required"),

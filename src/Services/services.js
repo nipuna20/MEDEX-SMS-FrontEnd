@@ -48,6 +48,8 @@ export const services = {
   newUserLogin,
   createNewUser,
   ZoomLinksData,
+  createNewZoomSubject,
+  createNewZoomLink,
   ZoomRecordingsData
 };
 
@@ -111,6 +113,26 @@ async function courseDataDelete (formData) {
 async function updateDataOfCourses(formData, _id){
   try {
     const result = await api.createNewCourse(formData);
+    return {isSuccess: true, result:result };
+  } catch (error) {
+    return { isSuccess: false, result:error}
+  }
+}
+///////
+////create new Zoom Subject
+async function createNewZoomSubject(formData){
+  try {
+    const result = await api.createNewZoomSubject(formData);
+    return {isSuccess: true, result:result };
+  } catch (error) {
+    return { isSuccess: false, result:error}
+  }
+}
+////create new Zoom link using subject update
+async function createNewZoomLink(formData){
+  try {
+    const result = await api.createNewZoomLink(formData);
+    console.log("createNewZoomLink in servicesform data ", formData)
     return {isSuccess: true, result:result };
   } catch (error) {
     return { isSuccess: false, result:error}

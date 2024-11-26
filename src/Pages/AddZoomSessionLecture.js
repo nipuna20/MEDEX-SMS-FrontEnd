@@ -22,8 +22,12 @@ import * as Yup from "yup";
 import { useNavigate, useParams } from "react-router-dom";
 import { services } from "../Services/services";
 import Loade from "../componant/Loader";
+import { useSearchParams } from "react-router-dom";
 
-export default function AddZoomSessionSubject() {
+export default function AddZoomSessionLecture() {
+  const [searchParams] = useSearchParams();
+  const cardId = searchParams.get("cardId");
+  console.log("Card ID:", cardId);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const { courseId } = useParams();
@@ -31,32 +35,37 @@ export default function AddZoomSessionSubject() {
 
   const handleCreating = (values) => {
     setLoading(true);
-    console.log("valuse : ", values);
+    
+    const updatedValues = {
+      ...values, 
+      cardId, 
+    };
+    // console.log("valuse : ", updatedValues);
 
-    services.createNewZoomSubject(values).then((response) => {
-      if (response.isSuccess) {
-        console.log("valuse in respons : ", values);
-        navigate("/ZoomOnlineSessions");
-        alert("your Course create successfully");
-      } else {
-        console.log("add Course respons error");
-      }
-      setLoading(false);
-    });
+      services.createNewZoomLink(updatedValues).then((response) => {
+        if (response.isSuccess) {
+          console.log("valuse in respons : ", updatedValues);
+          navigate("/ZoomOnlineSessions");
+          alert("yourLecture create successfully");
+        } else {
+          console.log("Add Lecture respons error");
+        }
+        setLoading(false);
+      });
   };
 
-
   const validationSchema = Yup.object().shape({
-    subject: Yup.string().required("Subject Name is required"),
+    title: Yup.string().required("title is required"),
+    url: Yup.string().required("url is required"),
   });
 
   const initialValues = {
-    subject: "",
-    
+    title: "",
+    url: "",
+    description: "",
   };
 
   if (!initialValues) return <Loade />;
-
   return (
     <>
       <Card
@@ -141,22 +150,49 @@ export default function AddZoomSessionSubject() {
                                 }}
                               >
                                 <Grid container spacing={1}>
+                                  <Grid item xs={12} md={6} padding={1}>
+                                    <ModifiedTextField
+                                      fullWidth
+                                      label="Title of the Lecture"
+                                      name="title"
+                                      value={values.title}
+                                      onBlur={handleBlur}
+                                      helperText={errors.title}
+                                      onChange={handleChange}
+                                      error={Boolean(
+                                        touched.title && errors.title
+                                      )}
+                                      required
+                                    />
+                                  </Grid>
+                                  <Grid item xs={12} md={6} padding={1}>
+                                    <ModifiedTextField
+                                      fullWidth
+                                      label="URL of the Lecture"
+                                      name="url"
+                                      value={values.url}
+                                      onBlur={handleBlur}
+                                      helperText={errors.url}
+                                      onChange={handleChange}
+                                      error={Boolean(touched.url && errors.url)}
+                                      required
+                                    />
+                                  </Grid>{" "}
                                   <Grid item xs={12} md={12} padding={1}>
                                     <ModifiedTextField
                                       fullWidth
-                                      label="subject Name"
-                                      name="subject"
-                                      value={values.subject}
+                                      label="Description of the Lecture"
+                                      name="description"
+                                      value={values.description}
                                       onBlur={handleBlur}
-                                      helperText={errors.subject}
+                                      helperText={errors.description}
                                       onChange={handleChange}
-                                      error={Boolean(
-                                        touched.subject && errors.subject
-                                      )}
+                                      //   error={Boolean(
+                                      //     touched.description && errors.description
+                                      //   )}
                                       // required
                                     />
                                   </Grid>
-                                 
                                   <Divider />
                                   <Button
                                     type="submit"

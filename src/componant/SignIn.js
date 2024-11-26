@@ -101,19 +101,58 @@ export const createNewUser = (formData) => {
 
 
 /////////////////////////////////////////////////////////////////
+////create new Zoom Subject
+export const createNewZoomSubject = (formData) => {
+  console.log("sample course is", formData);
+
+  const jsonData = {
+    subject: formData.subject,
+  };
+
+  console.log("JSON data sample is:", jsonData);
+
+  return api.post("/api/v1/users/OnlineSessions/zoom", jsonData, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};
+
+////create new Zoom Link Using Update Subject
+export const createNewZoomLink = (formData) => {
+  console.log("sample course is", formData);
+
+  const jsonData = {
+    title: formData.title,
+    url: formData.url,
+    description: formData.description,
+  };
+  
+
+  console.log("JSON data sample is:", jsonData);
+  console.log("JSON data sample is ----:", formData.cardId);
+  console.log("JSON data sample is ---1111-:", `/api/v1/users/OnlineSessions/zoom/${formData.cardId}`);
+
+  return api.put(`/api/v1/users/OnlineSessions/zoom/${formData.cardId}`, jsonData, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  
+};
 //////get zoom links
 export const ZoomLinks = () => {
   return api.get("/api/v1/users/OnlineSessions/zoom");
 };
 
-/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////6745ea9df06793442ed80457
 //////get zoom Recordings
 export const ZoomRecordings = () => {
   return api.get("/api/v1/users/OnlineRecordings/zoom");
 };
 
 
-/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////6745ea9df06793442ed80457
 
 ////employee////
 
