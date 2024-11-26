@@ -12,10 +12,12 @@ import {
 import { services } from "../Services/services";
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
+import { useNavigate } from "react-router-dom";
 
 export default function ZoomOnlineSessionsAdmin() {
   const [recordings, setRecordings] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   const fetchZoomLinksData = async () => {
     try {
@@ -194,7 +196,7 @@ export default function ZoomOnlineSessionsAdmin() {
                 backgroundColor: "#0056b3",
               },
             }}
-            // onClick={() => navigate("/AddCourses")}
+            onClick={() => navigate("/AddZoomSessionSubject")}
           >
             <AddIcon />
           </IconButton>
