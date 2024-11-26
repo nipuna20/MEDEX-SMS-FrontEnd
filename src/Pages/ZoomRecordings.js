@@ -3,120 +3,9 @@ import { Card, Grid, Stack, Typography } from "@mui/material";
 import { services } from "../Services/services";
 
 export default function ZoomRecordings() {
-  // const [recordings, setRecordings] = useState([]);
-  // const [loading, setLoading] = useState(true);
-
-
-
-  // useEffect(() => {
-    
-  //   const fetchRecordings = async () => {
-  //     setLoading(true);
-  //     try {
-        
-  //       const sampleArray = [
-  //         {
-  //           subject: "Subject One",
-  //           links: [
-  //             {
-  //               title: "Lecture One",
-  //               url: "https://www.youtube.com/embed/isJuOHVtXu0",
-  //               description: "Details of session",
-  //             },
-  //             {
-  //               title: "Lecture Two",
-  //               url: "https://www.youtube.com/embed/isJuOHVtXu0",
-  //               description: "Details of session",
-  //             },
-  //             {
-  //               title: "Lecture Three",
-  //               url: "https://www.youtube.com/embed/isJuOHVtXu0",
-  //               description: "Details of session",
-  //             },
-  //           ],
-  //         },
-  //         {
-  //           subject: "Subject Two",
-  //           links: [
-  //             {
-  //               title: "Lecture One",
-  //               url: "https://www.youtube.com/embed/isJuOHVtXu0",
-  //               description: "Details of session",
-  //             },
-  //             {
-  //               title: "Lecture Two",
-  //               url: "https://www.youtube.com/embed/isJuOHVtXu0",
-  //               description: "Details of session",
-  //             },
-  //             {
-  //               title: "Lecture Three",
-  //               url: "https://www.youtube.com/embed/isJuOHVtXu0",
-  //               description: "Details of session",
-  //             },
-  //           ],
-  //         },
-  //         {
-  //           subject: "Subject Tree",
-  //           links: [
-  //             {
-  //               title: "Lecture One",
-  //               url: "https://www.youtube.com/embed/isJuOHVtXu0",
-  //               description: "Details of session",
-  //             },
-  //             {
-  //               title: "Lecture Two",
-  //               url: "https://www.youtube.com/embed/isJuOHVtXu0",
-  //               description: "Details of session",
-  //             },
-  //             {
-  //               title: "Lecture Three",
-  //               url: "https://www.youtube.com/embed/isJuOHVtXu0",
-  //               description: "Details of session",
-  //             },
-  //           ],
-  //         },
-  //         {
-  //           subject: "Subject four",
-  //           links: [
-  //             {
-  //               title: "Lecture One",
-  //               url: "https://www.youtube.com/embed/isJuOHVtXu0",
-  //               description: "Details of session",
-  //             },
-  //             {
-  //               title: "Lecture Two",
-  //               url: "https://www.youtube.com/embed/isJuOHVtXu0",
-  //               description: "Details of session",
-  //             },
-  //             {
-  //               title: "Lecture Three",
-  //               url: "https://www.youtube.com/embed/isJuOHVtXu0",
-  //               description: "Details of session",
-  //             },
-  //           ],
-  //         },
-  //       ];
-
-  //       // Simulate network delay
-  //       await new Promise((resolve) => setTimeout(resolve, 1000));
-  //       setRecordings(sampleArray);
-  //     } catch (error) {
-  //       console.error("Error fetching Recordings:", error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchRecordings();
-  // }, []);
-
-  // useEffect(() => {
-  //   const disableRightClick = (event) => event.preventDefault();
-  //   document.addEventListener("contextmenu", disableRightClick);
-  //   return () => document.removeEventListener("contextmenu", disableRightClick);
-  // }, []);
   const [recordings, setRecordings] = useState([]);
   const [loading, setLoading] = useState(true);
+  let audioContext = null; // Declare AudioContext globally to control it
 
   const fetchZoomLinksData = async () => {
     try {
@@ -144,7 +33,53 @@ export default function ZoomRecordings() {
 
     fetchData();
   }, []);
-  
+
+  useEffect(() => {
+    let oscillator; // Declare oscillator outside to control it globally
+
+    const startSound = () => {
+      if (!audioContext) {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      }
+
+      oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+
+      oscillator.type = "sine"; // Use sine wave
+      oscillator.frequency.setValueAtTime(440, audioContext.currentTime); // Set frequency (440 Hz)
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+
+      oscillator.start(); // Start sound
+    };
+
+    const stopSound = () => {
+      if (oscillator) {
+        oscillator.stop(); // Stop sound
+        oscillator.disconnect();
+      }
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        startSound(); // Start the disruptive sound
+      } else {
+        stopSound(); // Stop the sound when user returns
+      }
+    };
+
+    const disableContextMenu = (event) => event.preventDefault();
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    document.addEventListener("contextmenu", disableContextMenu);
+
+    return () => {
+      stopSound(); // Ensure sound stops when the component unmounts
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      document.removeEventListener("contextmenu", disableContextMenu);
+    };
+  }, []);
+
   if (loading) {
     return <div style={{ textAlign: "center" }}>Loading Recordings..</div>;
   }
@@ -154,7 +89,7 @@ export default function ZoomRecordings() {
       <Card
         sx={{
           borderRadius: 3,
-          backgroundColor: "rgb(180, 180, 179, 0.5 )",
+          backgroundColor: "rgb(180, 180, 179, 0.5)",
           margin: 3,
           paddingTop: 1,
           paddingBottom: 1,
@@ -182,9 +117,6 @@ export default function ZoomRecordings() {
           <Stack spacing={2} key={index}>
             {item.links.map((link, linkIndex) => (
               <ul key={linkIndex}>
-                {/* <a href={link.url} target="_blank" rel="noopener noreferrer">
-                  {link.title}
-                </a> */}
                 <iframe
                   width="50%"
                   height="315"
@@ -214,34 +146,32 @@ export default function ZoomRecordings() {
   );
 
   return (
-    <>
-      <Card
-        sx={{
-          borderRadius: 3,
-          backgroundColor: "rgb(180, 180, 179, 0.5 )",
-          margin: "1rem",
-          padding: "1rem",
-          width: "75vw", // Set a reasonable width to avoid overflow
-          float: "left", // Align the Card to the left
-          boxSizing: "border-box", // Ensures padding is included in width and height
-        }}
-        elevation={2}
-      >
-        <div>
-          <h2 style={{ textAlign: "center", marginTop: 10, marginBottom: 30 }}>
-            <b>LECTURE RECORDINGS</b>
-          </h2>
+    <Card
+      sx={{
+        borderRadius: 3,
+        backgroundColor: "rgb(180, 180, 179, 0.5)",
+        margin: "1rem",
+        padding: "1rem",
+        width: "75vw",
+        float: "left",
+        boxSizing: "border-box",
+      }}
+      elevation={2}
+    >
+      <div>
+        <h2 style={{ textAlign: "center", marginTop: 10, marginBottom: 30 }}>
+          <b>LECTURE RECORDINGS</b>
+        </h2>
 
-          <Grid
-            sx={{
-              margin: "1rem",
-              padding: "1rem",
-            }}
-          >
-            {recordings.map((card, key) => subjectCards(card, key))}
-          </Grid>
-        </div>
-      </Card>
-    </>
+        <Grid
+          sx={{
+            margin: "1rem",
+            padding: "1rem",
+          }}
+        >
+          {recordings.map((card, key) => subjectCards(card, key))}
+        </Grid>
+      </div>
+    </Card>
   );
 }
