@@ -133,7 +133,7 @@ export default function ZoomOnlineSessionsAdmin() {
                       variant="outlined"
                       color="error"
                       sx={{
-                        marginLeft: "20px", // Optional: Adds space between link and button
+                        marginLeft: "20px", 
                       }}
                     >
                       Delete

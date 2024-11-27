@@ -1,5 +1,6 @@
 import AddCourses from "../Pages/AddCourses";
 import AddNewUser from "../Pages/AddNewUser";
+import AddZoomRecordingSubject from "../Pages/AddZoomRecordingSubject";
 import AddZoomSessionLecture from "../Pages/AddZoomSessionLecture";
 import AddZoomSessionRecording from "../Pages/AddZoomSessionRecording";
 import AddZoomSessionSubject from "../Pages/AddZoomSessionSubject";
@@ -49,6 +50,10 @@ const UserAuthorizedRoutesAdmin = [
           {
             path: "/AddZoomSessionRecording",
             element: <AddZoomSessionRecording />,
+          },
+          {
+            path: "/AddZoomRecordingSubject",
+            element: <AddZoomRecordingSubject/>
           },
           
           {

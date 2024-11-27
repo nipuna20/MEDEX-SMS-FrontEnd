@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card, Grid, Stack, Typography } from "@mui/material";
+import { Card, Divider, Grid, Stack, Typography } from "@mui/material";
 import { services } from "../Services/services";
 
 export default function ZoomRecordings() {
@@ -74,6 +74,9 @@ export default function ZoomRecordings() {
                 {/* <a href={link.url} target="_blank" rel="noopener noreferrer">
                   {link.title}
                 </a> */}
+                <Typography sx={{ fontSize: 20, color: "rgb(61, 59, 243)" }}>
+                  {link.title}
+                </Typography>
                 <iframe
                   width="50%"
                   height="315"
@@ -93,6 +96,7 @@ export default function ZoomRecordings() {
                   >
                     {link.description}
                   </Typography>
+                  <Divider />
                 </li>
               </ul>
             ))}
