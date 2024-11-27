@@ -40,7 +40,7 @@ export default function AddZoomSessionLecture() {
       ...values, 
       cardId, 
     };
-    // console.log("valuse : ", updatedValues);
+    console.log("valuse is updated : ", updatedValues);
 
       services.createNewZoomLink(updatedValues).then((response) => {
         if (response.isSuccess) {

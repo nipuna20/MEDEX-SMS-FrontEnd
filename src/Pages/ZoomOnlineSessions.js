@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card, Grid, Stack, Typography } from "@mui/material";
+import { Card, Divider, Grid, Stack, Typography } from "@mui/material";
 import { services } from "../Services/services";
 
 export default function ZoomRecordings() {
@@ -83,6 +83,7 @@ export default function ZoomRecordings() {
                   >
                     {link.description}
                   </Typography>
+                  <Divider />
                 </li>
               </ul>
             ))}

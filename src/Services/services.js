@@ -50,7 +50,8 @@ export const services = {
   ZoomLinksData,
   createNewZoomSubject,
   createNewZoomLink,
-  ZoomRecordingsData
+  ZoomRecordingsData,
+  createNewRecordingLink
 };
 
 ////User login
@@ -130,7 +131,9 @@ async function createNewZoomSubject(formData){
 }
 ////create new Zoom link using subject update
 async function createNewZoomLink(formData){
+  console.log("check services form data", formData)
   try {
+    console.log("createNewZoomLink in servicesform data befor ", formData)
     const result = await api.createNewZoomLink(formData);
     console.log("createNewZoomLink in servicesform data ", formData)
     return {isSuccess: true, result:result };
@@ -151,7 +154,19 @@ async function ZoomLinksData(){
     console.log(error)
   }
 }
-
+///////////////
+////create new Recording link using subject update
+async function createNewRecordingLink(formData){
+  console.log("check services form data", formData)
+  try {
+    console.log("createNewZoomLink in servicesform data befor ", formData)
+    const result = await api.createNewRecordingLink(formData);
+    console.log("createNewZoomLink in servicesform data ", formData)
+    return {isSuccess: true, result:result };
+  } catch (error) {
+    return { isSuccess: false, result:error}
+  }
+}
 //////get zoom Recordings
 
 async function ZoomRecordingsData(){

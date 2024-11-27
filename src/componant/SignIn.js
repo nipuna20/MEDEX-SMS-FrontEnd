@@ -126,18 +126,22 @@ export const createNewZoomLink = (formData) => {
     title: formData.title,
     url: formData.url,
     description: formData.description,
+    // id:formData.cardId
   };
   
 
   console.log("JSON data sample is:", jsonData);
   console.log("JSON data sample is ----:", formData.cardId);
-  console.log("JSON data sample is ---1111-:", `/api/v1/users/OnlineSessions/zoom/${formData.cardId}`);
+  // console.log("JSON data sample is ---1111-:", `/api/v1/users/OnlineSessions/zoom/${formData.cardId}`);
+  
 
-  return api.put(`/api/v1/users/OnlineSessions/zoom/${formData.cardId}`, jsonData, {
+  return api.post(`/api/v1/users/OnlineSessions/zoomLink/${formData.cardId}`, jsonData, {
     headers: {
       "Content-Type": "application/json",
     },
   });
+  
+
   
 };
 //////get zoom links
@@ -149,6 +153,33 @@ export const ZoomLinks = () => {
 //////get zoom Recordings
 export const ZoomRecordings = () => {
   return api.get("/api/v1/users/OnlineRecordings/zoom");
+};
+
+////create new recording Link Using Update Subject
+export const createNewRecordingLink = (formData) => {
+  console.log("sample course is", formData);
+
+  const jsonData = {
+    title: formData.title,
+    url: formData.url,
+    description: formData.description,
+    // id:formData.cardId
+  };
+  
+
+  console.log("JSON data sample is:", jsonData);
+  console.log("JSON data sample is ----:", formData.cardId);
+  // console.log("JSON data sample is ---1111-:", `/api/v1/users/OnlineSessions/zoom/${formData.cardId}`);
+  
+
+  return api.post(`/api/v1/users/OnlineSessions/zoomRecording/${formData.cardId}`, jsonData, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  
+
+  
 };
 
 
