@@ -1,24 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Card, Grid, Stack, Typography } from "@mui/material";
+import Plyr from "plyr";
+import "plyr/dist/plyr.css"; // Import Plyr styles
 import { services } from "../Services/services";
 
 export default function ZoomRecordings() {
   const [recordings, setRecordings] = useState([]);
   const [loading, setLoading] = useState(true);
-  let audioContext = null; // Declare AudioContext globally to control it
+  const [isTabActive, setIsTabActive] = useState(true);
+  const playerRefs = useRef([]); // Initialize as an empty array
 
   const fetchZoomLinksData = async () => {
     try {
       const response = await services.ZoomRecordingsData();
       if (response.isSuccess) {
-        console.log("Response data:", response.data);
         return response.data;
       } else {
-        console.error("Failed to fetch course details");
+        console.error("Failed to fetch recordings.");
         return [];
       }
     } catch (error) {
-      console.error("Error fetching course details:", error);
+      console.error("Error fetching recordings:", error);
       return [];
     }
   };
@@ -34,54 +36,49 @@ export default function ZoomRecordings() {
     fetchData();
   }, []);
 
+  // Detect tab visibility and pause videos when inactive
   useEffect(() => {
-    let oscillator; // Declare oscillator outside to control it globally
-
-    const startSound = () => {
-      if (!audioContext) {
-        audioContext = new (window.AudioContext || window.webkitAudioContext)();
-      }
-
-      oscillator = audioContext.createOscillator();
-      const gainNode = audioContext.createGain();
-
-      oscillator.type = "sine"; // Use sine wave
-      oscillator.frequency.setValueAtTime(440, audioContext.currentTime); // Set frequency (440 Hz)
-      oscillator.connect(gainNode);
-      gainNode.connect(audioContext.destination);
-
-      oscillator.start(); // Start sound
-    };
-
-    const stopSound = () => {
-      if (oscillator) {
-        oscillator.stop(); // Stop sound
-        oscillator.disconnect();
-      }
-    };
-
     const handleVisibilityChange = () => {
-      if (document.hidden) {
-        startSound(); // Start the disruptive sound
-      } else {
-        stopSound(); // Stop the sound when user returns
+      setIsTabActive(!document.hidden);
+      if (document.hidden && playerRefs.current.length > 0) {
+        // Pause all active players
+        playerRefs.current.forEach((player) => {
+          if (player && typeof player.pause === "function") {
+            player.pause();
+          }
+        });
       }
     };
-
-    const disableContextMenu = (event) => event.preventDefault();
 
     document.addEventListener("visibilitychange", handleVisibilityChange);
-    document.addEventListener("contextmenu", disableContextMenu);
-
     return () => {
-      stopSound(); // Ensure sound stops when the component unmounts
       document.removeEventListener("visibilitychange", handleVisibilityChange);
-      document.removeEventListener("contextmenu", disableContextMenu);
     };
   }, []);
 
+  useEffect(() => {
+    // Initialize Plyr instances for all video elements
+    playerRefs.current = [];
+    document.querySelectorAll(".plyr").forEach((el) => {
+      const player = new Plyr(el, {
+        controls: [
+          "play-large",
+          "play",
+          "progress",
+          "current-time",
+          "mute",
+          "volume",
+          "settings",
+          "fullscreen",
+        ],
+        disableContextMenu: true,
+      });
+      playerRefs.current.push(player); // Store each Plyr instance in refs
+    });
+  }, [recordings]);
+
   if (loading) {
-    return <div style={{ textAlign: "center" }}>Loading Recordings..</div>;
+    return <div style={{ textAlign: "center" }}>Loading Recordings...</div>;
   }
 
   if (recordings.length === 0) {
@@ -91,10 +88,7 @@ export default function ZoomRecordings() {
           borderRadius: 3,
           backgroundColor: "rgb(180, 180, 179, 0.5)",
           margin: 3,
-          paddingTop: 1,
-          paddingBottom: 1,
-          paddingLeft: 2,
-          paddingRight: 2,
+          padding: 2,
         }}
         elevation={2}
       >
@@ -104,7 +98,7 @@ export default function ZoomRecordings() {
   }
 
   const subjectCards = (item, index) => (
-    <Grid key={index} item xs={7} sm={8} md={10} lg={10} xl={10}>
+    <Grid key={index} item xs={12} sm={10} md={8} lg={6}>
       <Card
         sx={{
           borderRadius: 3,
@@ -112,66 +106,62 @@ export default function ZoomRecordings() {
           padding: 2,
         }}
       >
-        <Typography sx={{ fontSize: "32px" }}>{item.subject}</Typography>
-        <ul>
-          <Stack spacing={2} key={index}>
-            {item.links.map((link, linkIndex) => (
-              <ul key={linkIndex}>
-                <iframe
-                  width="50%"
-                  height="315"
-                  src={link.url}
-                  title={link.title}
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
-                <li>
-                  <Typography
-                    sx={{
-                      fontSize: "13px",
-                      color: "grey",
-                      marginTop: "2px",
-                    }}
-                  >
-                    {link.description}
-                  </Typography>
-                </li>
-              </ul>
-            ))}
-          </Stack>
-        </ul>
+        <Typography sx={{ fontSize: "24px", fontWeight: "bold" }}>
+          {item.subject}
+        </Typography>
+        <Stack spacing={2}>
+          {item.links.map((link, linkIndex) => (
+            <div key={linkIndex}>
+              <video
+                className="plyr" // Initialize Plyr on this video element
+                playsInline
+                controls
+              >
+                <source src={link.url} type="video/mp4" />
+              </video>
+              <Typography
+                sx={{
+                  fontSize: "14px",
+                  color: "gray",
+                  marginTop: "8px",
+                }}
+              >
+                {link.description}
+              </Typography>
+            </div>
+          ))}
+        </Stack>
       </Card>
     </Grid>
   );
 
   return (
-    <Card
-      sx={{
-        borderRadius: 3,
-        backgroundColor: "rgb(180, 180, 179, 0.5)",
-        margin: "1rem",
-        padding: "1rem",
-        width: "75vw",
-        float: "left",
-        boxSizing: "border-box",
-      }}
-      elevation={2}
-    >
-      <div>
-        <h2 style={{ textAlign: "center", marginTop: 10, marginBottom: 30 }}>
+    <div>
+      <Card
+        sx={{
+          borderRadius: 3,
+          backgroundColor: "rgb(180, 180, 179, 0.5)",
+          margin: "1rem",
+          padding: "1rem",
+        }}
+        elevation={2}
+      >
+        <Typography
+          variant="h4"
+          sx={{ textAlign: "center", marginBottom: "1.5rem" }}
+        >
           <b>LECTURE RECORDINGS</b>
-        </h2>
-
+        </Typography>
         <Grid
+          container
+          spacing={3}
           sx={{
-            margin: "1rem",
-            padding: "1rem",
+            justifyContent: "center",
           }}
         >
-          {recordings.map((card, key) => subjectCards(card, key))}
+          {recordings.map((card, index) => subjectCards(card, index))}
         </Grid>
-      </div>
-    </Card>
+      </Card>
+    </div>
   );
 }
