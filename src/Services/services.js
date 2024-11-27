@@ -51,6 +51,7 @@ export const services = {
   createNewZoomSubject,
   createNewZoomLink,
   ZoomRecordingsData,
+  createNewZoomRecordingSubject,
   createNewRecordingLink
 };
 
@@ -155,6 +156,16 @@ async function ZoomLinksData(){
   }
 }
 ///////////////
+////create new Recording Subject
+async function createNewZoomRecordingSubject(formData){
+  try {
+    const result = await api.createNewRecordingSubject(formData);
+    return {isSuccess: true, result:result };
+  } catch (error) {
+    return { isSuccess: false, result:error}
+  }
+}
+
 ////create new Recording link using subject update
 async function createNewRecordingLink(formData){
   console.log("check services form data", formData)

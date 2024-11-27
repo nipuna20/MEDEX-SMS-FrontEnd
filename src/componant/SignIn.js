@@ -155,6 +155,23 @@ export const ZoomRecordings = () => {
   return api.get("/api/v1/users/OnlineRecordings/zoom");
 };
 
+////create new Zoom Subject
+export const createNewRecordingSubject = (formData) => {
+  console.log("sample course is", formData);
+
+  const jsonData = {
+    subject: formData.subject,
+  };
+
+  console.log("JSON data sample is:", jsonData);
+
+  return api.post("/api/v1/users/OnlineRecordings/zoom", jsonData, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};
+
 ////create new recording Link Using Update Subject
 export const createNewRecordingLink = (formData) => {
   console.log("sample course is", formData);

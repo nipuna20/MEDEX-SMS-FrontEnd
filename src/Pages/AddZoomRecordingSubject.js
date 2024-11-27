@@ -33,16 +33,16 @@ export default function AddZoomRecordingSubject() {
       setLoading(true);
       console.log("valuse : ", values);
   
-    //   services.createNewZoomSubject(values).then((response) => {
-    //     if (response.isSuccess) {
-    //       console.log("valuse in respons : ", values);
-    //       navigate("/ZoomOnlineSessions");
-    //       alert("your Course create successfully");
-    //     } else {
-    //       console.log("add Course respons error");
-    //     }
-    //     setLoading(false);
-    //   });
+      services.createNewZoomRecordingSubject(values).then((response) => {
+        if (response.isSuccess) {
+          console.log("valuse in respons : ", values);
+          navigate("/ZoomRecordings");
+          alert("your Course create successfully");
+        } else {
+          console.log("add Course respons error");
+        }
+        setLoading(false);
+      });
     };
   
   
