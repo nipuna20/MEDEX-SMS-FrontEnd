@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import {
   Avatar,
   Box,
@@ -8,29 +9,20 @@ import {
   CardMedia,
   Collapse,
   Container,
-  Divider,
   Grid,
   IconButton,
-  List,
   ListItem,
-  ListItemButton,
+  ListItemIcon,
   ListItemText,
   Stack,
   Typography,
 } from "@mui/material";
-import { Button } from "bootstrap";
-import React, { useState, useEffect } from "react";
-import { styled, useTheme } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import { red } from "@mui/material/colors";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import EBCM from "../componant/EBCM.png";
-import { Key } from "@mui/icons-material";
 import StarIcon from "@mui/icons-material/Star";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import { services } from "../Services/services";
+import EBCM from "../componant/EBCM.png";
 
 // Styled component for ExpandMore button
 const ExpandMore = styled((props) => {
@@ -44,51 +36,22 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-// Sample data for cards
-const CardData = [
-  {
-    CourseName: "Certificate in Pharmacy Practice",
-    CourseDuration: "4 months",
-    FullPayment: 18000,
-    InstallmentWise: 20000,
-    FirstPayment: 5000,
-    RegistrationFee: 2500,
-    OtherDetails: "",
-  },
-  {
-    CourseName: "Pharmacists’ Course",
-    CourseDuration: "18 months",
-    FullPayment: 55000,
-    InstallmentWise: 63000,
-    FirstPayment: 3500,
-    RegistrationFee: 2500,
-    OtherDetails: "",
-  },
-];
-
 export default function Payments() {
   const [expandedCards, setExpandedCards] = useState({}); // State to track which cards are expanded
-  let [allEmpData, setAllEmpData] = useState([]);
-  let [coursesData, setCoursesData] = useState([]);
+  const [coursesData, setCoursesData] = useState([]);
 
-  const CoursesDtailsInDB = () => {
-    // setLoading(true);
-    services.CoursesData().then((Response) => {
-      if (Response.isSuccess) {
-        setCoursesData(Response.data);
-        setAllEmpData();
-        // checkData.filter((checkData) => checkData.delete_status == 0)
-        console.log("check responssssssss", Response.data);
+  const fetchCoursesData = () => {
+    services.CoursesData().then((response) => {
+      if (response.isSuccess) {
+        setCoursesData(response.data);
       }
-      // setLoading(false);
     });
   };
-  useEffect(() => {
-    CoursesDtailsInDB();
-  }, []);
-  console.log("data is ", coursesData);
 
-  // Function to handle card expand toggle
+  useEffect(() => {
+    fetchCoursesData();
+  }, []);
+
   const handleExpandClick = (index) => {
     setExpandedCards((prev) => ({
       ...prev,
@@ -96,87 +59,47 @@ export default function Payments() {
     }));
   };
 
-  // Card rendering function
   const cardData = (item, index) => (
-    <Grid key={index} item xs={12} sm={12} md={8} lg={6} xl={4}>
+    <Grid key={index} item xs={12} sm={6} md={4} lg={4}>
       <Card
-        sx={{ maxWidth: 345, minWidth: 290, borderRadius: 4 }}
-        elevation={20}
+        sx={{
+          borderRadius: 4,
+          boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+          ":hover": {
+            boxShadow: "0 6px 15px rgba(0, 0, 0, 0.2)",
+          },
+          transition: "all 0.3s ease",
+        }}
       >
         <CardHeader
           avatar={
-            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe"></Avatar>
+            <Avatar sx={{ bgcolor: red[500] }} aria-label="course">
+              {item.CourseName.charAt(0).toUpperCase()}
+            </Avatar>
           }
-          // action={
-          //   <IconButton aria-label="settings">
-          //     <MoreVertIcon />
-          //   </IconButton>
-          // }
           title={
-            <span style={{ fontWeight: "bold", fontSize: "1.2rem" }}>
+            <Typography variant="h6" fontWeight="bold">
               {item.CourseName}
-            </span>
+            </Typography>
           }
-          subheader={`Duration : ${item.CourseDuration}`}
+          subheader={<Typography variant="subtitle2">Duration: {item.CourseDuration}</Typography>}
         />
-        <CardMedia
-          component="img"
-          height="194"
-          image={EBCM}
-          alt="Paella dish"
-        />
+        <CardMedia component="img" height="180" image={EBCM} alt={item.CourseName} />
         <CardContent>
           <ListItem disablePadding>
-            {/* <ListItemButton> */}
             <ListItemIcon>
-              <StarIcon />
+              <StarIcon sx={{ color: "gold" }} />
             </ListItemIcon>
             <ListItemText
-              primary={
-                <span style={{ fontWeight: "bold", fontSize: "1.2rem" }}>
-                  Course Fee
-                </span>
-              }
-            />
-            {/* </ListItemButton> */}
-          </ListItem>
-
-          <ListItem
-            disablePadding
-            // sx={{ justifyContent: "center", textAlign: "center" }}
-          >
-            <ListItemText primary={`Full Payment : ${item.FullPayment}`} />
-          </ListItem>
-          <ListItem
-            disablePadding
-            // sx={{ justifyContent: "center", textAlign: "center" }}
-          >
-            <ListItemText
-              primary={`Installment Wise : ${item.InstallmentWise}`}
+              primary={<Typography fontWeight="bold">Course Fee</Typography>}
             />
           </ListItem>
-          <ListItem
-            disablePadding
-            // sx={{ justifyContent: "center", textAlign: "center" }}
-          >
-            <ListItemText primary={`First Payment : ${item.FirstPayment}`} />
-          </ListItem>
-          <ListItem
-            disablePadding
-            // sx={{ justifyContent: 'center', textAlign: 'center' }}
-          >
-            <ListItemText
-              primary={`Registration Fee : ${item.RegistrationFee}`}
-            />
-          </ListItem>
+          <Typography variant="body2">Full Payment: ₹{item.FullPayment}</Typography>
+          <Typography variant="body2">Installment Wise: ₹{item.InstallmentWise}</Typography>
+          <Typography variant="body2">First Payment: ₹{item.FirstPayment}</Typography>
+          <Typography variant="body2">Registration Fee: ₹{item.RegistrationFee}</Typography>
         </CardContent>
-        <CardActions disableSpacing>
-          {/* <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton> */}
+        <CardActions>
           <ExpandMore
             expand={expandedCards[index] || false}
             onClick={() => handleExpandClick(index)}
@@ -186,15 +109,13 @@ export default function Payments() {
             <ExpandMoreIcon />
           </ExpandMore>
         </CardActions>
-        <Collapse
-          in={expandedCards[index] || false}
-          timeout="auto"
-          unmountOnExit
-        >
+        <Collapse in={expandedCards[index] || false} timeout="auto" unmountOnExit>
           <CardContent>
-            <Typography sx={{ marginBottom: 2 }}>Other Details</Typography>
-            <Typography sx={{ marginBottom: 2 }}>
-              {item.OtherDetails}
+            <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
+              Other Details:
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {item.OtherDetails || "No additional details provided for this course."}
             </Typography>
           </CardContent>
         </Collapse>
@@ -203,47 +124,25 @@ export default function Payments() {
   );
 
   return (
-    <>
+    <Box>
       <Card
         sx={{
-          borderRadius: 10,
-          backgroundColor: "rgb(180, 180, 179, 0.5 )",
-          // margin: 3,
-          // marginLeft: 4,
-          // marginRight: 4,
-          paddingLeft: 20,
-          paddingRight: 20,
+          borderRadius: 8,
+          backgroundColor: "rgba(240, 240, 240, 0.8)",
+          padding: 3,
+          marginBottom: 3,
         }}
-        elevation={2}
       >
-        <h2 style={{ textAlign: "center", marginTop: 30 }}>
-          <b>COURSES</b>
-        </h2>
-        <Box
-          component="main"
-          sx={{
-            flexGrow: 1,
-            // py: 8,
-          }}
-        >
-          <Container maxWidth="lg" sx={{ padding: 0 }}>
-            <Stack spacing={2}>
-              <Box
-                sx={{
-                  alignItems: "center",
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                <Grid container spacing={6} marginTop={3} marginBottom={3}>
-                  {/* {CardData.map((card, key) => cardData(card, key))} */}
-                  {coursesData.map((card, key) => cardData(card, key))}
-                </Grid>
-              </Box>
-            </Stack>
-          </Container>
-        </Box>
+        <Typography variant="h4" align="center" gutterBottom fontWeight="bold">
+          Available Courses
+        </Typography>
       </Card>
-    </>
+      <Container>
+        <Grid container spacing={4}>
+          {coursesData.map((card, index) => cardData(card, index))}
+        </Grid>
+      </Container>
+    </Box>
+    
   );
 }

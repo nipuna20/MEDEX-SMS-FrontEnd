@@ -6,15 +6,13 @@ import {
   Step,
   StepLabel,
   Button,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
   TextField,
+  MenuItem,
   Paper,
+  Box,
+  Alert,
 } from "@mui/material";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
-import { ModifiedTextField } from "../Theam/Theam";
 
 const steps = [
   "Select a Course",
@@ -29,6 +27,7 @@ const PaymentForm = () => {
   const [selectedCourse, setSelectedCourse] = useState("");
   const [selectedPlan, setSelectedPlan] = useState("");
   const [paySlip, setPaySlip] = useState(null);
+  const [error, setError] = useState("");
 
   const handleNext = () => {
     if (activeStep === steps.length - 1) {
@@ -38,16 +37,17 @@ const PaymentForm = () => {
       setSelectedPlan("");
       setPaySlip(null);
     } else {
+      if (
+        (activeStep === 0 && !selectedCourse) ||
+        (activeStep === 2 && !selectedPlan) ||
+        (activeStep === 3 && !paySlip)
+      ) {
+        setError("Please complete the required fields.");
+        return;
+      }
+      setError("");
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
     }
-  };
-
-  const handleSelectedCourse = (event) => {
-    setSelectedCourse(event.target.value);
-  };
-
-  const handleSelectedPlan = (event) => {
-    setSelectedPlan(event.target.value);
   };
 
   const handleBack = () => {
@@ -59,13 +59,16 @@ const PaymentForm = () => {
   };
 
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="md">
       <Paper
         elevation={3}
         sx={{
-          padding: 4,
+          paddingX: 6,
+          paddingY: 8, // Set top and bottom padding
           mt: 4,
-          backgroundColor: "rgb(180, 180, 179, 0.1 )",
+          width: "80%", // Increase card width
+          mx: "auto", // Center the card
+          backgroundColor: "rgba(240, 240, 240, 0.8)",
           borderRadius: 3,
         }}
       >
@@ -73,9 +76,13 @@ const PaymentForm = () => {
           Course Enrollment
         </Typography>
         <Stepper
-          sx={{ marginTop: "2rem" }}
           activeStep={activeStep}
           alternativeLabel
+          sx={{
+            marginY: 3,
+            "& .MuiStepIcon-root.Mui-completed": { color: "green" },
+            "& .MuiStepIcon-root.Mui-active": { color: "blue" },
+          }}
         >
           {steps.map((label) => (
             <Step key={label}>
@@ -84,12 +91,19 @@ const PaymentForm = () => {
           ))}
         </Stepper>
 
+        {error && (
+          <Alert severity="error" sx={{ marginBottom: 2 }}>
+            {error}
+          </Alert>
+        )}
+
+        {/* Step 0: Select Course */}
         {activeStep === 0 && (
           <TextField
             select
             label="Select Course"
             value={selectedCourse}
-            onChange={handleSelectedCourse}
+            onChange={(e) => setSelectedCourse(e.target.value)}
             fullWidth
             margin="normal"
           >
@@ -99,18 +113,20 @@ const PaymentForm = () => {
           </TextField>
         )}
 
+        {/* Step 1: View Payment Plans */}
         {activeStep === 1 && (
           <Typography
             sx={{
-              marginTop: "1.5rem",
-              marginLeft: "2rem",
-              marginBottom: "2rem",
+              marginY: 2,
+              padding: 2,
+              backgroundColor: "rgba(200, 200, 255, 0.2)",
+              borderRadius: 2,
             }}
             variant="h6"
             gutterBottom
           >
             Available Payment Plans:
-            <ul style={{ fontSize: "0.875rem", marginLeft: "1rem" }}>
+            <ul>
               <li>Plan 1 - $200 per month</li>
               <li>Plan 2 - $500 upfront</li>
               <li>Plan 3 - $100 per week</li>
@@ -118,12 +134,13 @@ const PaymentForm = () => {
           </Typography>
         )}
 
+        {/* Step 2: Select a Plan */}
         {activeStep === 2 && (
           <TextField
             select
             label="Select a Payment Plan"
             value={selectedPlan}
-            onChange={handleSelectedPlan}
+            onChange={(e) => setSelectedPlan(e.target.value)}
             fullWidth
             margin="normal"
           >
@@ -133,58 +150,63 @@ const PaymentForm = () => {
           </TextField>
         )}
 
-       <br/>
-
+        {/* Step 3: Attach Pay Slip */}
         {activeStep === 3 && (
           <>
-            <ModifiedTextField
+            <TextField
+              label="Student ID"
               fullWidth
-              label="student ID"
-              name="FirstPayment"
-              // value={values.FirstPayment}
-              // onBlur={handleBlur}
-              // helperText={errors.FirstPayment}
-              // onChange={handleChange}
-              // error={Boolean(touched.FirstPayment && errors.FirstPayment)}
-              // required
+              margin="normal"
+              required
             />
             <Button
-              sx={{
-                marginTop: "2.5rem",
-                marginLeft: "2rem",
-                marginBottom: "1rem",
-              }}
               variant="outlined"
               component="label"
               startIcon={<UploadFileIcon />}
+              fullWidth
+              sx={{ marginTop: 2 }}
             >
               Attach Pay Slip
               <input type="file" hidden onChange={handleFileUpload} />
             </Button>
+            {paySlip && (
+              <Typography
+                sx={{
+                  marginTop: 1,
+                  color: "green",
+                  fontSize: "0.9rem",
+                  fontStyle: "italic",
+                }}
+              >
+                {paySlip.name} uploaded successfully.
+              </Typography>
+            )}
           </>
         )}
 
+        {/* Step 4: Submit */}
         {activeStep === 4 && (
           <Typography
             sx={{
-              marginTop: "1.5rem",
-              marginBottom: "1.5rem",
-              backgroundColor: "rgb(100, 180, 179, 0.2 )",
-              padding: "0.5rem",
+              marginY: 2,
+              padding: 2,
+              backgroundColor: "rgba(100, 180, 100, 0.2)",
+              borderRadius: 2,
             }}
             variant="h6"
             align="center"
-            color="primary"
           >
-            Thank you! Your application has been submitted.
+            Thank you! Your application has been submitted successfully.
           </Typography>
         )}
 
-        <div style={{ marginTop: 20 }}>
+        {/* Navigation Buttons */}
+        <Box display="flex" justifyContent="space-between" marginTop={4}>
           <Button
             disabled={activeStep === 0}
             onClick={handleBack}
             variant="contained"
+            color="secondary"
           >
             Back
           </Button>
@@ -192,7 +214,6 @@ const PaymentForm = () => {
             onClick={handleNext}
             variant="contained"
             color="primary"
-            style={{ marginLeft: 8 }}
             disabled={
               (activeStep === 0 && !selectedCourse) ||
               (activeStep === 2 && !selectedPlan) ||
@@ -201,7 +222,7 @@ const PaymentForm = () => {
           >
             {activeStep === steps.length - 1 ? "Submit" : "Next"}
           </Button>
-        </div>
+        </Box>
       </Paper>
     </Container>
   );
