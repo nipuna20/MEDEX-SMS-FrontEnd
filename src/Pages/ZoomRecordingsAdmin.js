@@ -35,6 +35,19 @@ export default function ZoomRecordingsAdmin() {
     }
   };
 
+  const subjectDelete = async (values) => {
+    console.log("table value is ", values);
+    services.recordingSubjectDelete(values).then((response) => {
+      if (response.isSuccess) {
+        console.log("check table data delete ", values);
+        alert("Services data Row Delete successfully");
+        window.location.reload();
+      } else {
+        console.log("delet row respons error");
+      }
+    });
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -87,7 +100,7 @@ export default function ZoomRecordingsAdmin() {
             right: "8px",
             zIndex: 1,
           }}
-          // onClick={() => couseDelete(item._id)}
+          onClick={() => subjectDelete(item._id)}
         >
           <CloseIcon />
         </IconButton>

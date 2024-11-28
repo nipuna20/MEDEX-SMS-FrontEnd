@@ -37,17 +37,17 @@ export default function ZoomOnlineSessionsAdmin() {
     
   };
 
-  const addNewLecture = async (values) => {
+  const subjectDelete = async (values) => {
     console.log("table value is ", values);
-    // services.courseDataDelete(values).then((response) => {
-    //   if (response.isSuccess) {
-    //     console.log("check table data delete ", values);
-    //     alert("Services data Row Delete successfully");
-    //     window.location.reload();
-    //   } else {
-    //     console.log("delet row respons error");
-    //   }
-    // });
+    services.zoomSubjectDelete(values).then((response) => {
+      if (response.isSuccess) {
+        console.log("check table data delete ", values);
+        alert("Services data Row Delete successfully");
+        window.location.reload();
+      } else {
+        console.log("delet row respons error");
+      }
+    });
   };
 
   useEffect(() => {
@@ -101,7 +101,7 @@ export default function ZoomOnlineSessionsAdmin() {
             top: 8,
             right: 8,
           }}
-          // onClick={() => couseDelete(item._id)}
+          onClick={() => subjectDelete(item._id)}
         >
           <CloseIcon />
         </IconButton>
