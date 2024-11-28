@@ -1,0 +1,273 @@
+#main{ 
+    text-align: center;
+   
+}
+#heading{
+    text-align: center;
+    color:rgb(0, 1, 0);
+    text-shadow: 2px 2px 3px rgb(0, 0, 0);
+    font-size: 330%;
+    font-weight: bold;
+    margin-bottom: 50px;
+    font-family: EB Garamond;
+}
+
+#fieldsetLogin{
+    height: 30%;
+    width: 45%;
+    margin: auto;
+    border-radius: 20px;
+    /* background-color:#5f305923; */
+    background-color: #d9d9d971;
+    box-shadow: 4px 4px 20px 2px #0d000bbe;
+}
+
+#login-btn{
+    color: #DB15C1;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 160%;
+    font-weight: bold;
+    margin: 30px 20px 20px;
+    box-shadow: 2px 2px px  rgb(10, 0, 0);
+}
+#login-btn:hover{
+    /* background-color: rgba(0, 0, 255, 0.974); */
+    color: black;
+    transform: scale(1.1);
+    transition: background-color 0.3s ease;
+    
+
+}
+
+ #Login-form{
+    margin: 40px 10px 10px;
+ }
+
+ #input{
+    margin: 15px;
+    font-size: 180%;
+    
+ }
+
+ 
+
+ /* #inputf{
+    font-size: 65%;
+    border-radius: 20px;
+    padding: 10px;
+    background-color: #D9D9D9;
+ } */
+
+ #outlined-basic{
+    border-radius: 40px;
+ }
+
+
+    /* Server page  */
+
+
+
+
+
+
+
+ 
+
+#main-Services{
+    align-items: center;
+    justify-content: center;
+    height: 82rem;
+    width: 76rem;
+    margin: auto;
+    margin-top: 4rem;
+    
+}
+
+#line1-Server{
+    height: 26rem;
+    width: 76rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+#line1-single-Server-Digibill{
+    height: 24rem;
+    width: 17.5rem;
+    background-color:rgb(251, 251, 251);
+    border-radius: 20px;
+    box-shadow: 0px 0px 2px 3px  rgb(10, 0, 0);
+    display: block;
+    
+}
+
+
+
+#line1-single-Server-Digibill:hover{
+    transition: 0.5s;
+    background-color: #635d6247;
+    transform: scale(1.1);
+    z-index: 2;
+}
+
+
+#line1-single-Server{
+    height: 24rem;
+    width: 17.5rem;
+    background-color: rgb(250, 251, 251);
+    border-radius: 20px;
+    box-shadow: 0px 0px 2px 3px  rgb(10, 0, 0);
+}
+
+#line1-single-Server:hover{
+    transition: 0.5s;
+    background-color: #635d6247;
+    transform: scale(1.1);
+    z-index: 2;
+}
+
+
+
+
+#Server-DigiBill-Image{
+    height: 17rem;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+#Server-Text{
+    font-size: 3.2rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    font-weight: 400;
+}
+#Server-TextS{
+    font-size: 2.3rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    font-weight: 500;
+}
+
+#Server-SmartPose-Image{
+    height: 17rem;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+#Server-SartMsg-Image{
+    height: 17rem;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+#Server-CocaCola-Image{
+    height: 17rem;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+
+#line2-Server{
+    height: 26rem;
+    width: 76rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+#Server-InnApp-Image{
+    height: 17rem;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+#Server-EBCM-Image{
+    height: 18rem;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+#Server-VCart-Image{
+    height: 18rem;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+#Server-SmartCnt-Image{
+    
+    height: 13.5rem;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+
+
+#line3-Server{
+    height: 26rem;
+    width: 76rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+#Server-Add-Image{
+    height: 8rem;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    opacity: 25%;
+    
+}
+
+
+
+
+
+     /*  DigiBill  */
+
+
+
+
+/* #back-btn{
+    padding: 2rem;
+    font-size: 1.7rem;
+    background-color: transparent;
+} */
+
+
+#tabel{
+    height: 30rem;
+    width: 50rem;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    /* background-color: #db15c106; */
+    margin: auto;
+    margin-top: 10rem;
+}

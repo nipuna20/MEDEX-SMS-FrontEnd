@@ -1,0 +1,51 @@
+@font-face{
+    font-family: 'Great Vibes';
+    src :url('../fonts/GreatVibes-Regular.ttf') format('truetype');
+}
+
+#NavBar{
+    height: 6rem;
+    width: auto;
+    background-color:#0C132D;
+}
+
+
+#NavBar-Data{
+    display: flex;
+    
+}
+
+#NavBar img{
+    width: 8rem; 
+    height: 5rem; 
+    padding-top: 8px;
+    padding-left: 100px;
+}
+
+#NavBar-Text{
+    color: #DB15C1;
+    font-family: 'Great Vibes', cursive;
+    font-size: 3rem;
+    margin-top: 30px;
+    
+}
+
+#NavBar-Btn{
+   margin-top: 2.5rem;
+   margin-left: 50rem;
+   padding:0.5rem 2rem ;
+    border-radius: 20px;
+    color: #DB15C1;
+    font-weight: 1000;
+    /* position: fixed; */
+    
+}
+ #NavBar-Btn:hover{
+    /* background-color: rgba(0, 0, 255, 0.974); */
+    transition: background-color 0.3s ease;
+    color: black;
+    /* transform: scale(1.01); */
+    font-size: larger;
+
+ }
+
