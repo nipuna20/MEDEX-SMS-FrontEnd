@@ -1,13 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Card,
-  Grid,
-  Stack,
-  Typography,
-  CircularProgress,
-  Divider,
-  Box,
-} from "@mui/material";
+import { Card, Divider, Grid, Stack, Typography } from "@mui/material";
 import { services } from "../Services/services";
 
 export default function ZoomRecordings() {
@@ -18,6 +10,7 @@ export default function ZoomRecordings() {
     try {
       const response = await services.ZoomLinksData();
       if (response.isSuccess) {
+        console.log("Response data:", response.data);
         return response.data;
       } else {
         console.error("Failed to fetch course details");
@@ -41,11 +34,7 @@ export default function ZoomRecordings() {
   }, []);
 
   if (loading) {
-    return (
-      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
-        <CircularProgress />
-      </Box>
-    );
+    return <div style={{ textAlign: "center" }}>Loading sessions..</div>;
   }
 
   if (recordings.length === 0) {
@@ -53,69 +42,86 @@ export default function ZoomRecordings() {
       <Card
         sx={{
           borderRadius: 3,
-          backgroundColor: "rgba(240, 240, 240, 0.9)",
+          backgroundColor: "rgb(180, 180, 179, 0.5 )",
           margin: 3,
-          padding: 3,
-          textAlign: "center",
+          paddingTop: 1,
+          paddingBottom: 1,
+          paddingLeft: 2,
+          paddingRight: 2,
         }}
-        elevation={3}
+        elevation={2}
       >
-        <Typography variant="h6" color="text.secondary">
-          No online sessions available.
-        </Typography>
+        <div style={{ textAlign: "center" }}>No online sessions available.</div>
       </Card>
     );
   }
 
   const subjectCards = (item, index) => (
-    <Grid key={index} item xs={12} sm={12} md={10} lg={8}>
+    <Grid key={index} item xs={7} sm={8} md={10} lg={10} xl={10}>
       <Card
         sx={{
           borderRadius: 3,
-          marginBottom: 3,
-          padding: 3,
-          boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
-          ":hover": {
-            boxShadow: "0 6px 15px rgba(0, 0, 0, 0.15)",
-          },
+          marginTop: 1,
+          padding: 2,
         }}
       >
-        <Typography variant="h5" fontWeight="bold" gutterBottom>
-          {item.subject}
-        </Typography>
-        <Stack spacing={3}>
-          {item.links.map((link, linkIndex) => (
-            <Box key={linkIndex} component="div" sx={{ padding: 2 }}>
-              <Typography
-                variant="subtitle1"
-                component="a"
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                color="primary"
-                sx={{ textDecoration: "none", fontWeight: "bold" }}
-              >
-                {link.title}
-              </Typography>
-              <Typography variant="body2" color="text.secondary" mt={1}>
-                {link.description}
-              </Typography>
-              <Divider sx={{ marginTop: 2 }} />
-            </Box>
-          ))}
-        </Stack>
+        <Typography sx={{ fontSize: "32px" }}>{item.subject}</Typography>
+        <ul>
+          <Stack spacing={2} key={index}>
+            {item.links.map((link, linkIndex) => (
+              <ul key={linkIndex}>
+                <a href={link.url} target="_blank" rel="noopener noreferrer">
+                  {link.title}
+                </a>
+                <li>
+                  <Typography
+                    sx={{
+                      fontSize: "13px",
+                      color: "grey",
+                      marginTop: "2px",
+                    }}
+                  >
+                    {link.description}
+                  </Typography>
+                  <Divider />
+                </li>
+              </ul>
+            ))}
+          </Stack>
+        </ul>
       </Card>
     </Grid>
   );
 
   return (
-    <Box sx={{ padding: 3 }}>
-      <Typography variant="h4" align="center" gutterBottom fontWeight="bold">
-        Lecture Online Sessions
-      </Typography>
-      <Grid container spacing={4} justifyContent="center">
-        {recordings.map((card, key) => subjectCards(card, key))}
-      </Grid>
-    </Box>
+    <>
+      <Card
+        sx={{
+          borderRadius: 3,
+          backgroundColor: "rgb(180, 180, 179, 0.5 )",
+          margin: "1rem",
+          padding: "1rem",
+          width: "75vw",
+          float: "left",
+          boxSizing: "border-box",
+        }}
+        elevation={2}
+      >
+        <div>
+          <h2 style={{ textAlign: "center", marginTop: 10, marginBottom: 30 }}>
+            <b>LECTURE ONLINE SESSIONS</b>
+          </h2>
+
+          <Grid
+            sx={{
+              margin: "1rem",
+              padding: "1rem",
+            }}
+          >
+            {recordings.map((card, key) => subjectCards(card, key))}
+          </Grid>
+        </div>
+      </Card>
+    </>
   );
 }
