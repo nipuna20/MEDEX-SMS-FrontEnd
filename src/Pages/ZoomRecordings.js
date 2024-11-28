@@ -1,14 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Card, Grid, Stack, Typography } from "@mui/material";
-import Plyr from "plyr";
-import "plyr/dist/plyr.css"; // Import Plyr styles
+import videojs from "video.js";
+import "video.js/dist/video-js.css"; // Import Video.js styles
 import { services } from "../Services/services";
 
 export default function ZoomRecordings() {
   const [recordings, setRecordings] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [isTabActive, setIsTabActive] = useState(true);
-  const playerRefs = useRef([]); // To store Plyr instances
+  const playerRefs = useRef([]); // Store references to video players
 
   const fetchZoomLinksData = async () => {
     try {
@@ -36,45 +35,36 @@ export default function ZoomRecordings() {
     fetchData();
   }, []);
 
-  // Detect tab visibility and pause videos when inactive
   useEffect(() => {
-    const handleVisibilityChange = () => {
-      setIsTabActive(!document.hidden);
-      if (document.hidden) {
-        // Pause all active players
-        playerRefs.current.forEach((player) => {
-          if (player && typeof player.pause === "function") {
-            player.pause();
-          }
-        });
-      }
-    };
-
-    document.addEventListener("visibilitychange", handleVisibilityChange);
+    // Clean up video.js players when the component unmounts
     return () => {
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      playerRefs.current.forEach((player) => {
+        if (player) {
+          player.dispose(); // Dispose of the video.js player instance
+        }
+      });
     };
   }, []);
 
-  useEffect(() => {
-    // Initialize Plyr instances for all video elements after rendering
-    playerRefs.current = document.querySelectorAll(".plyr").forEach((el) => {
-      const player = new Plyr(el, {
-        controls: [
-          "play-large",
-          "play",
-          "progress",
-          "current-time",
-          "mute",
-          "volume",
-          "settings",
-          "fullscreen",
+  const initializePlayer = (el, index, url) => {
+    if (el && !playerRefs.current[index]) {
+      playerRefs.current[index] = videojs(el, {
+        autoplay: false,
+        controls: true,
+        responsive: true,
+        fluid: true,
+        sources: [
+          {
+            src: url,
+            type: "video/mp4",
+          },
         ],
-        disableContextMenu: true,
+        controlBar: {
+          volumePanel: { inline: false },
+        },
       });
-      return player;
-    });
-  }, [recordings]);
+    }
+  };
 
   if (loading) {
     return <div style={{ textAlign: "center" }}>Loading Recordings...</div>;
@@ -97,42 +87,65 @@ export default function ZoomRecordings() {
   }
 
   const subjectCards = (item, index) => (
-    <Grid key={index} item xs={12} sm={10} md={8} lg={6}>
+    <Grid key={index} item xs={12} sm={12} md={12} lg={10} xl={10}>
       <Card
         sx={{
           borderRadius: 3,
-          marginTop: 1,
-          padding: 2,
+          margin: 2,
+          padding: 3,
+          boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+          ":hover": {
+            boxShadow: "0 6px 15px rgba(0, 0, 0, 0.15)",
+          },
         }}
       >
-        <Typography sx={{ fontSize: "24px", fontWeight: "bold" }}>
+        <Typography variant="h5" fontWeight="bold" gutterBottom>
           {item.subject}
         </Typography>
-        <Stack spacing={2}>
+        <Stack spacing={3}>
           {item.links.map((link, linkIndex) => (
-            <div key={linkIndex}>
-              <video
-                className="plyr" // Initialize Plyr on this video element
-                playsInline
-                controls
-              >
-                <source src={link.url} type="video/mp4" />
-              </video>
+            <Card
+              key={linkIndex}
+              sx={{
+                padding: 4,
+                border: "1px solid #e0e0e0",
+                borderRadius: 2,
+                ":hover": {
+                  borderColor: "primary.main",
+                },
+              }}
+            >
               <Typography
-                sx={{
-                  fontSize: "14px",
-                  color: "gray",
-                  marginTop: "8px",
-                }}
+                variant="subtitle1"
+                color="primary"
+                component="a"
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={{ textDecoration: "none" }}
               >
+                {link.title}
+              </Typography>
+              <iframe
+                width="100%"
+                height="315"
+                src={link.url}
+                title={link.title}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                style={{ marginTop: "10px", borderRadius: "8px" }}
+              ></iframe>
+              <Typography variant="body2" color="text.secondary" mt={1}>
                 {link.description}
               </Typography>
-            </div>
+            </Card>
           ))}
         </Stack>
       </Card>
     </Grid>
   );
+  
 
   return (
     <div>

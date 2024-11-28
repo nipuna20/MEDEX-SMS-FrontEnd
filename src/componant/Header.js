@@ -38,6 +38,7 @@ export default function Header() {
               aria-label="recipe"
               src="https://dsuabgmmtxmj1.cloudfront.net/companyweb/adeona_new_logo_circle.png"
             />
+            
             &nbsp;&nbsp;
             <Typography
               variant="h6"
