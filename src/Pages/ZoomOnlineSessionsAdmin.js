@@ -50,6 +50,23 @@ export default function ZoomOnlineSessionsAdmin() {
     });
   };
 
+  const lectureDelete = async (subjectId, lectureId) => {
+    const value = {
+      subjectId: subjectId,
+      lectureId:lectureId
+  };
+    console.log("table value is ", value);
+    services.zoomLectureDelete(value).then((response) => {
+      if (response.isSuccess) {
+        console.log("check table data delete ", value);
+        alert("Services data Row Delete successfully");
+        window.location.reload();
+      } else {
+        console.log("delet row respons error");
+      }
+    });
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -135,6 +152,7 @@ export default function ZoomOnlineSessionsAdmin() {
                       sx={{
                         marginLeft: "20px", 
                       }}
+                      onClick={() => lectureDelete(item._id, link._id)}
                     >
                       Delete
                     </Button>

@@ -138,6 +138,22 @@ export const deleteZoomSubject = (formData) => {
   });
 };
 
+///////    zoom Lecture delete
+export const deleteZoomLecture = (formData) => {
+  console.log("sample employment type is", formData);
+
+  console.log(
+    "JSON data sample is:",
+    `/api/v1/users/zoomSession/subject/delete/${formData.subjectId}/${formData.lectureId}`
+  );
+
+  return api.delete(`/api/v1/users/zoomSession/lecture/delete/${formData.subjectId}/${formData.lectureId}`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};
+
 ////create new Zoom Link Using Update Subject
 export const createNewZoomLink = (formData) => {
   console.log("sample course is", formData);
@@ -209,6 +225,22 @@ export const deleteRecordingSubject = (formData) => {
   );
 
   return api.delete(`/api/v1/users/recording/subject/delete/${formData}`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};
+
+///////    recording Lecture delete
+export const deleteRecordingLecture = (formData) => {
+  console.log("sample employment type is", formData);
+
+  console.log(
+    "JSON data sample is:",
+    `/api/v1/users/zoomSession/subject/delete/${formData.subjectId}/${formData.lectureId}`
+  );
+
+  return api.delete(`/api/v1/users/recording/lecture/delete/${formData.subjectId}/${formData.lectureId}`, {
     headers: {
       "Content-Type": "application/json",
     },

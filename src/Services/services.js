@@ -50,10 +50,12 @@ export const services = {
   ZoomLinksData,
   createNewZoomSubject,
   zoomSubjectDelete,
+  zoomLectureDelete,
   createNewZoomLink,
   ZoomRecordingsData,
   createNewZoomRecordingSubject,
   recordingSubjectDelete,
+  recordingLectureDelete,
   createNewRecordingLink
 };
 
@@ -142,6 +144,16 @@ async function zoomSubjectDelete (formData) {
     return { isSuccess: false, data: error };
   }
 }
+/////    Delete zoom lectur
+
+async function zoomLectureDelete (formData) {
+  try {
+    const {result} = await api.deleteZoomLecture(formData)
+    return{ isSuccess:true, result:result}
+  } catch (error) {
+    return { isSuccess: false, data: error };
+  }
+}
 
 ////create new Zoom link using subject update
 async function createNewZoomLink(formData){
@@ -184,6 +196,17 @@ async function createNewZoomRecordingSubject(formData){
 async function recordingSubjectDelete (formData) {
   try {
     const {result} = await api.deleteRecordingSubject(formData)
+    return{ isSuccess:true, result:result}
+  } catch (error) {
+    return { isSuccess: false, data: error };
+  }
+}
+
+/////    Delete recording lectur
+
+async function recordingLectureDelete (formData) {
+  try {
+    const {result} = await api.deleteRecordingLecture(formData)
     return{ isSuccess:true, result:result}
   } catch (error) {
     return { isSuccess: false, data: error };

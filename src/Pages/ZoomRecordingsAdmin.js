@@ -48,6 +48,23 @@ export default function ZoomRecordingsAdmin() {
     });
   };
 
+  const lectureDelete = async (subjectId, lectureId) => {
+    const value = {
+      subjectId: subjectId,
+      lectureId:lectureId
+  };
+    console.log("table value is ", value);
+    services.recordingLectureDelete(value).then((response) => {
+      if (response.isSuccess) {
+        console.log("check table data delete ", value);
+        alert("Services data Row Delete successfully");
+        window.location.reload();
+      } else {
+        console.log("delet row respons error");
+      }
+    });
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -132,6 +149,7 @@ export default function ZoomRecordingsAdmin() {
                     marginLeft: "20px",
                     height: "fit-content", // Align height with the iframe
                   }}
+                  onClick={() => lectureDelete(item._id, link._id)}
                 >
                   Delete
                 </Button>
