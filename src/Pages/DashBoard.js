@@ -143,5 +143,6 @@ export default function Payments() {
         </Grid>
       </Container>
     </Box>
+    
   );
 }
