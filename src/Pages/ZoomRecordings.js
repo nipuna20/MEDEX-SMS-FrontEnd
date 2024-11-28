@@ -158,7 +158,6 @@ export default function ZoomRecordings() {
         }}
         elevation={2}
       >
-        
         <Typography
           variant="h4"
           sx={{ textAlign: "center", marginBottom: "1.5rem" }}
