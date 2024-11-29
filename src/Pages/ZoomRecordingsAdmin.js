@@ -15,7 +15,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
 
 export default function ZoomRecordingsAdmin() {
-  const [recordings, setRecordings] = useState([]);
+  const [record, setRecordings] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -23,7 +23,7 @@ export default function ZoomRecordingsAdmin() {
     try {
       const response = await services.ZoomRecordingsData();
       if (response.isSuccess) {
-        console.log("Response data:", response.data);
+        console.log("Response data:aaaaaaaaaaaaaaa", response.data);
         return response.data;
       } else {
         console.error("Failed to fetch course details");
@@ -69,9 +69,11 @@ export default function ZoomRecordingsAdmin() {
     const fetchData = async () => {
       setLoading(true);
       const zoomData = await fetchZoomLinksData();
+      console.log("sample zoom data ???",zoomData)
       setRecordings(zoomData);
       setLoading(false);
     };
+
 
     fetchData();
   }, []);
@@ -80,7 +82,7 @@ export default function ZoomRecordingsAdmin() {
     return <div style={{ textAlign: "center" }}>Loading Recordings..</div>;
   }
 
-  if (recordings.length === 0) {
+  if (record.length === 0) {
     return (
       <Card
         sx={{
@@ -215,7 +217,7 @@ export default function ZoomRecordingsAdmin() {
               padding: "1rem",
             }}
           >
-            {recordings.map((card, key) => subjectCards(card, key))}
+            {record.map((card, key) => subjectCards(card, key))}
             <Box display="flex" justifyContent="center" marginTop={8} style={{ width: "100%" }}>
           <IconButton
             size="large"
