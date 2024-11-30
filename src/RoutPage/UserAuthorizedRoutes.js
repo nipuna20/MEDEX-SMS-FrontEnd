@@ -26,6 +26,7 @@ import AdminDashBoard from "../Pages/AdminDashBoard";
 import AddCourses from "../Pages/AddCourses";
 import ExamResultViewer from "../Pages/EXAMS";
 import DashBoard from '../Pages/DashBoard';
+import Courses from "../Pages/Courses";
 
 
 
@@ -71,10 +72,10 @@ const UserAuthorizedRoutes = [
         path: "/Resources",
         element: <ResourcesPage />,
       },
-      // {
-      //   path: "/AdminDashBoard",
-      //   element: <AdminDashBoard />,
-      // },
+      {
+        path: "/Courses",
+        element: <Courses />,
+      },
       // {
       //   path: "/AddCourses",
       //   element: <AddCourses/>,

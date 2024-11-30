@@ -35,7 +35,7 @@ export default function AddCourses() {
     services.createCourses(values).then((response) => {
       if (response.isSuccess) {
         console.log("valuse in respons : ", values);
-        navigate("/AdminDashBoard");
+        navigate("/Courses");
         alert("your Course create successfully");
       } else {
         console.log("add Course respons error");
@@ -125,7 +125,7 @@ export default function AddCourses() {
                   border: "1px solid red",
                 }}
                 onClick={() => {
-                  navigate("/AdminDashBoard");
+                  navigate("/Courses");
                 }}
               >
                 <b> {" < "} back </b>

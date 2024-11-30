@@ -20,6 +20,7 @@ import {
   VideoLibrary,
   Payment,
   Book,
+  Person,
 } from "@mui/icons-material";
 import { useNavigate, Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -99,6 +100,19 @@ export default function LMSApp() {
           <Typography>Welcome, {user}</Typography>
           <Button
             variant="contained"
+            onClick={() => navigate("/")}
+            sx={{
+              marginLeft: 3,
+              borderRadius: 2,
+              textTransform: "none",
+              backgroundColor: "secondary.main",
+              ":hover": { backgroundColor: "secondary.dark" },
+            }}
+          >
+            <Person sx={{ marginRight: 0.5 }} /> Profile
+          </Button>
+          <Button
+            variant="contained"
             onClick={handleLogout}
             sx={{
               marginLeft: 3,
@@ -133,7 +147,7 @@ export default function LMSApp() {
             <MenuItem
               icon={<Dashboard />}
               label="Courses"
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/Courses")}
               iconColor="blue"
             />
 

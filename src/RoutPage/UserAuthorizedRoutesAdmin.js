@@ -5,6 +5,7 @@ import AddZoomSessionLecture from "../Pages/AddZoomSessionLecture";
 import AddZoomSessionRecording from "../Pages/AddZoomSessionRecording";
 import AddZoomSessionSubject from "../Pages/AddZoomSessionSubject";
 import AdminDashBoard from "../Pages/AdminDashBoard";
+import CoursesAdmin from "../Pages/CoursesAdmin";
 import ZoomOnlineSessionsAdmin from "../Pages/ZoomOnlineSessionsAdmin";
 import ZoomRecordingsAdmin from "../Pages/ZoomRecordingsAdmin";
 import AuthorHeader from "./AuthorHeader";
@@ -14,7 +15,11 @@ const UserAuthorizedRoutesAdmin = [
         path: "/",
         element: <AuthorHeader/>,
         children:[
-        
+
+          {
+            path:"/Courses",
+            element:<CoursesAdmin/>
+          },
           {
             path: "/ZoomRecordings",
             element: <ZoomRecordingsAdmin />,

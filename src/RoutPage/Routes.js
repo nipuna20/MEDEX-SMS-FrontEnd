@@ -8,7 +8,7 @@ import sample from './sample'
 import UserAuthorizedRoutesAdmin from './UserAuthorizedRoutesAdmin'
 
 export default function Routes() {
-  const user = useSelector((state) => state.auth.authData)
+   const user = useSelector((state) => state.auth.authData)
 // console.log("my user is a",user.role); 
 // console.log("my user role is a",user.data.role); 
 
