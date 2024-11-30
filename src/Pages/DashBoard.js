@@ -1,148 +1,197 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Avatar,
   Box,
+  Button,
   Card,
-  CardActions,
-  CardContent,
-  CardHeader,
-  CardMedia,
-  Collapse,
-  Container,
+  Divider,
   Grid,
-  IconButton,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
+  Paper,
   Stack,
   Typography,
+  useMediaQuery,
 } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import { red } from "@mui/material/colors";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import StarIcon from "@mui/icons-material/Star";
-import { services } from "../Services/services";
-import EBCM from "../componant/EBCM.png";
-
-// Styled component for ExpandMore button
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  marginLeft: "auto",
-  transform: expand ? "rotate(180deg)" : "rotate(0deg)",
-  transition: theme.transitions.create("transform", {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
+import { useTheme } from "@mui/material/styles";
+import { Formik } from "formik";
+import * as Yup from "yup";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import MEDEXLogo from "../componant/MEDEXLogo.jpg";
+import { useSelector } from "react-redux";
+import { ModifiedTextField } from "../Theam/Theam";
+import { useNavigate } from "react-router-dom";
 
 export default function Payments() {
-  const [expandedCards, setExpandedCards] = useState({}); // State to track which cards are expanded
-  const [coursesData, setCoursesData] = useState([]);
+  const navigate = useNavigate();
+  const theme = useTheme();
+  const matchDownSM = useMediaQuery(theme.breakpoints.down("md"));
+  const user = useSelector((state) => state.auth.authData?.email);
+  const userId = useSelector((state) => state.auth.authData);
+console.log(userId)
+  const [showPasswordForm, setShowPasswordForm] = useState(false); // Visibility state
 
-  const fetchCoursesData = () => {
-    services.CoursesData().then((response) => {
-      if (response.isSuccess) {
-        setCoursesData(response.data);
-      }
-    });
+  const paperStyle = {
+    padding: 5,
+    maxWidth: { xs: 500, lg: 575 },
+    margin: { xs: 2.5, md: 3 },
+    borderRadius: 8,
+    "& > *": {
+      flexGrow: 1,
+      flexBasis: "50%",
+    },
   };
 
-  useEffect(() => {
-    fetchCoursesData();
-  }, []);
+  const validationSchema = Yup.object().shape({
+    password: Yup.string()
+      .max(255)
+      .required("Password is required")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
+        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+      ),
+  });
 
-  const handleExpandClick = (index) => {
-    setExpandedCards((prev) => ({
-      ...prev,
-      [index]: !prev[index],
-    }));
+  const initialValues = {
+    password: "",
   };
 
-  const cardData = (item, index) => (
-    <Grid key={index} item xs={12} sm={6} md={4} lg={4}>
-      <Card
-        sx={{
-          borderRadius: 4,
-          boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
-          ":hover": {
-            boxShadow: "0 6px 15px rgba(0, 0, 0, 0.2)",
-          },
-          transition: "all 0.3s ease",
-        }}
-      >
-        <CardHeader
-          avatar={
-            <Avatar sx={{ bgcolor: red[500] }} aria-label="course">
-              {item.CourseName.charAt(0).toUpperCase()}
-            </Avatar>
-          }
-          title={
-            <Typography variant="h6" fontWeight="bold">
-              {item.CourseName}
-            </Typography>
-          }
-          subheader={<Typography variant="subtitle2">Duration: {item.CourseDuration}</Typography>}
-        />
-        <CardMedia component="img" height="180" image={EBCM} alt={item.CourseName} />
-        <CardContent>
-          <ListItem disablePadding>
-            <ListItemIcon>
-              <StarIcon sx={{ color: "gold" }} />
-            </ListItemIcon>
-            <ListItemText
-              primary={<Typography fontWeight="bold">Course Fee</Typography>}
-            />
-          </ListItem>
-          <Typography variant="body2">Full Payment: ₹{item.FullPayment}</Typography>
-          <Typography variant="body2">Installment Wise: ₹{item.InstallmentWise}</Typography>
-          <Typography variant="body2">First Payment: ₹{item.FirstPayment}</Typography>
-          <Typography variant="body2">Registration Fee: ₹{item.RegistrationFee}</Typography>
-        </CardContent>
-        <CardActions>
-          <ExpandMore
-            expand={expandedCards[index] || false}
-            onClick={() => handleExpandClick(index)}
-            aria-expanded={expandedCards[index] || false}
-            aria-label="show more"
-          >
-            <ExpandMoreIcon />
-          </ExpandMore>
-        </CardActions>
-        <Collapse in={expandedCards[index] || false} timeout="auto" unmountOnExit>
-          <CardContent>
-            <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-              Other Details:
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {item.OtherDetails || "No additional details provided for this course."}
-            </Typography>
-          </CardContent>
-        </Collapse>
-      </Card>
-    </Grid>
-  );
+  const handleCreating = (values) => {
+    console.log("Values:", values);
+  };
 
   return (
-    <Box>
+    <>
       <Card
         sx={{
-          borderRadius: 8,
-          backgroundColor: "rgba(240, 240, 240, 0.8)",
-          padding: 3,
-          marginBottom: 3,
+          borderRadius: 10,
+          backgroundColor: "rgb(180, 180, 179, 0.5 )",
+          paddingLeft: 20,
+          paddingRight: 20,
         }}
+        elevation={2}
       >
-        <Typography variant="h4" align="center" gutterBottom fontWeight="bold">
-          Available Courses
-        </Typography>
+        <h2 style={{ textAlign: "center", marginTop: 30, marginBottom: 30 }}>
+          <b>USER PROFILE</b>
+        </h2>
       </Card>
-      <Container>
-        <Grid container spacing={4}>
-          {coursesData.map((card, index) => cardData(card, index))}
+      <Box display="flex" justifyContent={"flex-start"} paddingTop={5}>
+        <Grid item sx={{ m: { xs: 1, sm: 3 }, mb: 0 }}>
+          <Paper elevation={10} sx={paperStyle}>
+            <Grid align={"center"} marginTop={4}>
+              <img alt="" src={MEDEXLogo} height={70} width={110} />
+              <Typography
+                variant="h4"
+                gutterBottom
+                sx={{
+                  display: "flex",
+                  marginTop: 5,
+                  fontSize: {
+                    xs: "1.25rem",
+                    sm: "1.5rem",
+                    md: "1.75rem",
+                  },
+                  wordWrap: "break-word",
+                  textAlign: "center",
+                  justifyContent: "center",
+                }}
+              >
+                {user}
+              </Typography>
+              <Grid item>
+                <Stack alignItems="center" justifyContent="center" spacing={1}>
+                  <Typography
+                    fontWeight="bold"
+                    color={theme.palette.primary.main}
+                    gutterBottom
+                    variant={matchDownSM ? "h3" : "h2"}
+                  >
+                    Welcome
+                  </Typography>
+                  <Typography
+                    variant="caption"
+                    fontSize="18px"
+                    textAlign={matchDownSM ? "center" : "inherit"}
+                  >
+                    To Medex Institute
+                  </Typography>
+                  <br />
+                  <Button
+                    color="secondary"
+                    sx={{
+                      display: "flex",
+                      marginTop: 5,
+                      fontSize: "1.1rem",
+                      wordWrap: "break-word",
+                      textAlign: "center",
+                    }}
+                    onClick={() => setShowPasswordForm(!showPasswordForm)}
+                  >
+                    Edit User Password
+                  </Button>
+
+                  {/* Conditionally Render Password Form */}
+                  {showPasswordForm && (
+                    <Formik
+                      initialValues={initialValues}
+                      validationSchema={validationSchema}
+                      onSubmit={(values) => handleCreating(values)}
+                    >
+                      {({
+                        errors,
+                        touched,
+                        values,
+                        isSubmitting,
+                        handleBlur,
+                        handleChange,
+                        handleSubmit,
+                        isValid,
+                      }) => (
+                        <form noValidate onSubmit={handleSubmit}>
+                          <Box>
+                            <Grid container spacing={1}>
+                              <Grid item xs={12} md={12} padding={1}>
+                                <ModifiedTextField
+                                  fullWidth
+                                  label="New Password"
+                                  name="password"
+                                  value={values.password}
+                                  onBlur={handleBlur}
+                                  helperText={errors.password}
+                                  onChange={handleChange}
+                                  error={Boolean(
+                                    touched.password && errors.password
+                                  )}
+                                />
+                              </Grid>
+                              <Divider />
+                              <Button
+                                type="submit"
+                                variant="contained"
+                                disabled={!(isValid || isSubmitting)}
+                                sx={{
+                                  flexDirection: "column",
+                                  justifyContent: "center",
+                                  textAlign: "center",
+                                  margin: "auto",
+                                  borderRadius: 3,
+                                }}
+                              >
+                                Create New Password
+                              </Button>
+                            </Grid>
+                          </Box>
+                        </form>
+                      )}
+                    </Formik>
+                  )}
+
+                 
+                </Stack>
+              </Grid>
+              <br />
+            </Grid>
+          </Paper>
         </Grid>
-      </Container>
-    </Box>
-    
+      </Box>
+    </>
   );
 }
