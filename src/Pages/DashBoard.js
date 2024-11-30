@@ -19,14 +19,15 @@ import MEDEXLogo from "../componant/MEDEXLogo.jpg";
 import { useSelector } from "react-redux";
 import { ModifiedTextField } from "../Theam/Theam";
 import { useNavigate } from "react-router-dom";
+import Loade from "../componant/Loader";
+import { services } from "../Services/services";
 
 export default function Payments() {
   const navigate = useNavigate();
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down("md"));
   const user = useSelector((state) => state.auth.authData?.email);
-  const userId = useSelector((state) => state.auth.authData);
-console.log(userId)
+  const [loading, setLoading] = useState(false);
   const [showPasswordForm, setShowPasswordForm] = useState(false); // Visibility state
 
   const paperStyle = {
@@ -55,17 +56,34 @@ console.log(userId)
   };
 
   const handleCreating = (values) => {
+    setLoading(true);
     console.log("Values:", values);
-  };
+    const updatedValues = {
+      ...values,
+      user,
+    };
+    console.log("updatedValues:", updatedValues);
 
+    services.updateUserPassword(updatedValues).then((response) => {
+      if (response.isSuccess) {
+        console.log("valuse in respons : ", updatedValues);
+        window.location.reload();
+        alert("Update New Password successfully");
+      } else {
+        console.log("add Course respons error");
+      }
+      setLoading(false);
+    });
+  };
   return (
-    <>
+    <Box sx={{marginLeft:60, marginRight:60,}}>
       <Card
         sx={{
           borderRadius: 10,
           backgroundColor: "rgb(180, 180, 179, 0.5 )",
           paddingLeft: 20,
           paddingRight: 20,
+          
         }}
         elevation={2}
       >
@@ -183,8 +201,7 @@ console.log(userId)
                       )}
                     </Formik>
                   )}
-
-                 
+                  {loading && <Loade />}
                 </Stack>
               </Grid>
               <br />
@@ -192,6 +209,6 @@ console.log(userId)
           </Paper>
         </Grid>
       </Box>
-    </>
+    </Box>
   );
 }

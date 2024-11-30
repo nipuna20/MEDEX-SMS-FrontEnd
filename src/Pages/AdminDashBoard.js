@@ -19,15 +19,16 @@ import MEDEXLogo from "../componant/MEDEXLogo.jpg";
 import { useSelector } from "react-redux";
 import { ModifiedTextField } from "../Theam/Theam";
 import { useNavigate } from "react-router-dom";
+import { services } from "../Services/services";
+import Loade from "../componant/Loader";
 
 export default function AdminDashBoard() {
   const navigate = useNavigate();
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down("md"));
   const user = useSelector((state) => state.auth.authData?.email);
-  const userId = useSelector((state) => state.auth.authData);
-console.log(userId)
   const [showPasswordForm, setShowPasswordForm] = useState(false); // Visibility state
+  const [loading, setLoading] = useState(false);
 
   const paperStyle = {
     padding: 5,
@@ -55,11 +56,28 @@ console.log(userId)
   };
 
   const handleCreating = (values) => {
+    setLoading(true);
     console.log("Values:", values);
+    const updatedValues = {
+      ...values,
+      user,
+    };
+    console.log("updatedValues:", updatedValues);
+
+    services.updateUserPassword(updatedValues).then((response) => {
+      if (response.isSuccess) {
+        console.log("valuse in respons : ", updatedValues);
+        window.location.reload();
+        alert("Update New Password successfully");
+      } else {
+        console.log("add Course respons error");
+      }
+      setLoading(false);
+    });
   };
 
   return (
-    <>
+    <Box sx={{marginLeft:60, marginRight:60,}}>
       <Card
         sx={{
           borderRadius: 10,
@@ -183,9 +201,9 @@ console.log(userId)
                       )}
                     </Formik>
                   )}
-
+                  {loading && <Loade />}
                   <br />
-                  
+
                   <br />
 
                   <Button
@@ -203,6 +221,6 @@ console.log(userId)
           </Paper>
         </Grid>
       </Box>
-    </>
+    </Box>
   );
 }

@@ -46,6 +46,7 @@ export const services = {
   courseDataDelete,
   updateDataOfCourses,
   newUserLogin,
+  updateUserPassword,
   createNewUser,
   ZoomLinksData,
   createNewZoomSubject,
@@ -69,6 +70,16 @@ async function newUserLogin(formData) {
     return { isSuccess: true, result: result };
   } catch (error) {
     return { isSuccess: false, result: error };
+  }
+}
+
+////user password update 
+async function updateUserPassword(formData){
+  try {
+    const result = await api.UpdatePassword(formData);
+    return {isSuccess: true, result:result };
+  } catch (error) {
+    return { isSuccess: false, result:error}
   }
 }
 

@@ -1,6 +1,6 @@
 import api from "./interceptor";
 
-//////new////
+////// check admin////
 export const newUser = (formData) => {
   let postData = {
     email: formData.username,
@@ -9,9 +9,23 @@ export const newUser = (formData) => {
   return api.post("/api/v1/users/User/adminLogin", postData);
 };
 
+////// update password////
+export const UpdatePassword = (formData) => {
+  let postData = {
+    email: formData.user,
+    password: formData.password,
+  };
+  console.log("aaaaaaaaaaaaaaaaaaaaa",postData)
+  return api.post("/api/v1/users/User/passwordUpdate", postData);
+};
+
+
+////courses get
 export const Courses = () => {
   return api.get("/api/v1/users/course");
 };
+
+
 
 ////create new course
 export const createNewCourse = (formData) => {
