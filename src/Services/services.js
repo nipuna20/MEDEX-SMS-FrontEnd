@@ -43,6 +43,7 @@ export const services = {
   tableDataUpdate,
   CoursesData,
   createCourses,
+  updateCourses,
   courseDataDelete,
   updateDataOfCourses,
   newUserLogin,
@@ -113,6 +114,16 @@ async function createCourses(formData){
     return { isSuccess: false, result:error}
   }
 }
+////create new course
+async function updateCourses(formData){
+  try {
+    const result = await api.updateCourseData(formData);
+    return {isSuccess: true, result:result };
+  } catch (error) {
+    return { isSuccess: false, result:error}
+  }
+}
+
 ///create new user
 async function createNewUser(formData){
   try {

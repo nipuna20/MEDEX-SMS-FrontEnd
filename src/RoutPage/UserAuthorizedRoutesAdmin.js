@@ -5,6 +5,7 @@ import AddZoomSessionLecture from "../Pages/AddZoomSessionLecture";
 import AddZoomSessionRecording from "../Pages/AddZoomSessionRecording";
 import AddZoomSessionSubject from "../Pages/AddZoomSessionSubject";
 import AdminDashBoard from "../Pages/AdminDashBoard";
+import CourseDataUpdate from "../Pages/CourseDataupdate";
 import CoursesAdmin from "../Pages/CoursesAdmin";
 import DeleteUser from "../Pages/DeleteUser";
 import ZoomOnlineSessionsAdmin from "../Pages/ZoomOnlineSessionsAdmin";
@@ -64,6 +65,11 @@ const UserAuthorizedRoutesAdmin = [
         path: "/deleteUser",
         element: <DeleteUser />,
       },
+      {
+        path:"/courseDataUpdate",
+        element: <CourseDataUpdate />
+      },
+      
 
       {
         path: "*",

@@ -57,6 +57,30 @@ export const createNewCourse = (formData) => {
   });
 };
 
+///////// update course data using post data
+////create new course
+export const updateCourseData = (formData) => {
+  console.log("sample course is", formData);
+
+  const jsonData = {
+    CourseName: formData.CourseName,
+    CourseDuration: formData.CourseDuration,
+    FullPayment: formData.FullPayment,
+    InstallmentWise: formData.InstallmentWise,
+    FirstPayment: formData.FirstPayment,
+    RegistrationFee: formData.RegistrationFee,
+    OtherDetails: formData.OtherDetails,
+  };
+
+  console.log("JSON data sample is:", jsonData);
+
+  return api.post(`/api/v1/users/courseData/update/${formData.cardId}`, jsonData, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};
+
 ////// Update
 
 export const updateCourse = (formData, _id) => {

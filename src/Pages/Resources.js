@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Typography,
@@ -7,100 +7,180 @@ import {
   Button,
   Paper,
   Box,
+  Grid,
+  Divider,
 } from "@mui/material";
+import { ModifiedTextField } from "../Theam/Theam";
+import * as Yup from "yup";
+import { Formik } from "formik";
+import { services } from "../Services/services";
 
 const courseResources = {
-  "Course 1": ["Resource 1.1 - PDF Guide", "Resource 1.2 - Video Tutorial", "Resource 1.3 - Practice Quiz"],
-  "Course 2": ["Resource 2.1 - PDF Guide", "Resource 2.2 - Video Tutorial", "Resource 2.3 - Practice Quiz"],
-  "Course 3": ["Resource 3.1 - PDF Guide", "Resource 3.2 - Video Tutorial", "Resource 3.3 - Practice Quiz"],
+  "Course 1": [
+    "Resource 1.1 - PDF Guide",
+    "Resource 1.2 - Video Tutorial",
+    "Resource 1.3 - Practice Quiz",
+  ],
+  "Course 2": [
+    "Resource 2.1 - PDF Guide",
+    "Resource 2.2 - Video Tutorial",
+    "Resource 2.3 - Practice Quiz",
+  ],
+  "Course 3": [
+    "Resource 3.1 - PDF Guide",
+    "Resource 3.2 - Video Tutorial",
+    "Resource 3.3 - Practice Quiz",
+  ],
 };
 
 const ResourcesPage = () => {
-  const [selectedCourse, setSelectedCourse] = useState('');
   const [resources, setResources] = useState(null);
+  const [showResources, setShowResources] = useState(false);
+  const [coursesData, setCoursesData] = useState([]);
 
-  const exams = [
-    { id: 'Course 1', name: 'Course 1' },
-    { id: 'Course 2', name: 'Course 2' },
-    { id: 'Course 3', name: 'Course 3' },
-    // Add more exams as needed
-  ];
-
-  const handleCourseChange = (event) => {
-    setSelectedCourse(event.target.value);
+  const fetchCoursesData = () => {
+    services.CoursesData().then((response) => {
+      if (response.isSuccess) {
+        setCoursesData(response.data);
+      }
+    });
   };
 
-  const handleViewResources = () => {
-    setResources(courseResources[selectedCourse]);
-  };
+  useEffect(() => {
+    fetchCoursesData();
+  }, []);
 
   const handleClear = () => {
-    setSelectedCourse('');
     setResources(null);
+    setShowResources(false);
+  };
+
+  const handleCreating = (values) => {
+    console.log("Form values: ", values);
+    const selectedResources = courseResources[values.selectedCourse] || [];
+    setResources(selectedResources);
+    setShowResources(true);
+  };
+
+  const validationSchema = Yup.object().shape({
+    ID: Yup.string().required("ID is required"),
+    selectedCourse: Yup.string().required("Course selection is required"),
+  });
+
+  const initialValues = {
+    ID: "",
+    selectedCourse: "",
   };
 
   return (
     <Container maxWidth="sm">
-      <Paper elevation={3} sx={{ padding: 4, mt: 4, backgroundColor: "rgb(180, 180, 179, 0.1 )", borderRadius: 3 }}>
+      <Paper
+        elevation={3}
+        sx={{
+          padding: 4,
+          mt: 4,
+          backgroundColor: "rgb(180, 180, 179, 0.1 )",
+          borderRadius: 3,
+        }}
+      >
         <Typography variant="h5" align="center" gutterBottom>
           View Available Resources
         </Typography>
-        
-        <TextField
-          select
-          label="Select Course"
-          value={selectedCourse}
-          onChange={handleCourseChange}
-          fullWidth
-          margin="normal"
-        >
-          {exams.map((exam) => (
-            <MenuItem key={exam.id} value={exam.id}>
-              {exam.name}
-            </MenuItem>
-          ))}
-        </TextField>
 
-        <TextField
-          label="Reference ID"
-          fullWidth
-          margin="normal"
-        />
-        
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleViewResources}
-          fullWidth
-          sx={{ mt: 2 }}
-          disabled={!selectedCourse}
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={(values) => handleCreating(values)}
         >
-          View Resources
-        </Button>
-        
-        {resources && (
-          <Box sx={{ mt: 4, p: 2, border: '1px solid #ddd', borderRadius: 1 }}>
-            <Typography variant="h6" gutterBottom>
-              Available Resources for {selectedCourse}:
-            </Typography>
-            {resources.map((resource, index) => (
-              <Typography key={index} variant="body1">
-                {resource}
-              </Typography>
-            ))}
-          </Box>
-        )}
-        
-        {resources && (
-          <Button
-            variant="outlined"
-            color="secondary"
-            onClick={handleClear}
-            fullWidth
-            sx={{ mt: 2 }}
-          >
-            Clear
-          </Button>
+          {({
+            errors,
+            touched,
+            values,
+            handleBlur,
+            handleChange,
+            handleSubmit,
+            isValid,
+            isSubmitting,
+          }) => (
+            <form noValidate onSubmit={handleSubmit}>
+              <Grid container spacing={2}>
+                {/* Course Selection Field */}
+                <Grid item xs={12}>
+                  <TextField
+                    select
+                    label="Select Course"
+                    name="selectedCourse"
+                    value={values.selectedCourse}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    fullWidth
+                    margin="normal"
+                    helperText={
+                      touched.selectedCourse && errors.selectedCourse
+                        ? errors.selectedCourse
+                        : ""
+                    }
+                    error={Boolean(
+                      touched.selectedCourse && errors.selectedCourse
+                    )}
+                  >
+                    {coursesData.map((course) => (
+                      <MenuItem key={course._id} value={course._id}>
+                        {course.CourseName}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </Grid>
+
+                {/* ID Field */}
+                <Grid item xs={12}>
+                  <ModifiedTextField
+                    fullWidth
+                    label="ID"
+                    name="ID"
+                    value={values.ID}
+                    onBlur={handleBlur}
+                    helperText={touched.ID && errors.ID ? errors.ID : ""}
+                    onChange={handleChange}
+                    error={Boolean(touched.ID && errors.ID)}
+                  />
+                </Grid>
+
+                {/* Submit Button */}
+                <Grid item xs={12}>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    disabled={!(isValid || isSubmitting)}
+                    fullWidth
+                    sx={{
+                      mt: 2,
+                      borderRadius: 3,
+                    }}
+                  >
+                    Resources
+                  </Button>
+                </Grid>
+              </Grid>
+            </form>
+          )}
+        </Formik>
+
+        {/* Resources Section */}
+        {showResources && (
+          <>
+            <Typography>dwefaerfegfer</Typography>
+
+            <Button
+              variant="outlined"
+              color="secondary"
+              onClick={handleClear}
+              fullWidth
+              sx={{ mt: 2 }}
+            >
+              Clear
+            </Button>
+          </>
         )}
       </Paper>
     </Container>

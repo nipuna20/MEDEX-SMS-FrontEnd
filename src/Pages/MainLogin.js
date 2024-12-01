@@ -82,9 +82,9 @@ export default function MainLogin() {
                       fontSize: "16px",
                       fontWeight: "bold",
                     }}
-                    onClick={() => {
-                      navigate("/Login", {state: {role:"Certificates"}});
-                    }}
+                    // onClick={() => {
+                    //   navigate("/Login", {state: {role:"Certificates"}});
+                    // }}
                   >
                     Certificates
                   </Button>

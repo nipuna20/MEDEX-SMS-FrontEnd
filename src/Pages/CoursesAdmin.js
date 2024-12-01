@@ -35,6 +35,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import UpdateIcon from '@mui/icons-material/Update';
 
 // Styled component for ExpandMore button
 const ExpandMore = styled((props) => {
@@ -85,6 +86,8 @@ export default function CoursesAdmin() {
     });
   };
 
+  
+
   // Function to handle card expand toggle
   const handleExpandClick = (index) => {
     setExpandedCards((prev) => ({
@@ -106,6 +109,12 @@ export default function CoursesAdmin() {
           }
           action={
             <>
+             <IconButton
+                aria-label="close"
+                onClick={() => navigate(`/courseDataUpdate?cardId=${item._id}`)}
+              >
+                <UpdateIcon />
+              </IconButton>
               <IconButton
                 aria-label="close"
                 onClick={() => couseDelete(item._id)}
@@ -225,7 +234,7 @@ export default function CoursesAdmin() {
         }}
         elevation={2}
       >
-        <Box display="flex" justifyContent={"flex-start"} paddingTop={5}>
+        {/* <Box display="flex" justifyContent={"flex-start"} paddingTop={5}>
           <Button
             variant="contained"
             startIcon={<AccountBoxIcon />}
@@ -234,7 +243,7 @@ export default function CoursesAdmin() {
           >
             User Creation
           </Button>
-        </Box>
+        </Box> */}
         <h2 style={{ textAlign: "center", marginTop: 30 }}>
           <b>COURSES</b>
         </h2>
