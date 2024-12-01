@@ -77,7 +77,7 @@ export default function AdminDashBoard() {
   };
 
   return (
-    <Box sx={{marginLeft:60, marginRight:60,}}>
+    <Box sx={{ marginLeft: 60, marginRight: 60 }}>
       <Card
         sx={{
           borderRadius: 10,
@@ -213,6 +213,12 @@ export default function AdminDashBoard() {
                     onClick={() => navigate("/addNewUser")}
                   >
                     User Creation
+                  </Button>
+                  <br/>
+                  <br/>
+                  <Button variant="outlined" color="error"
+                  onClick={() => navigate("/deleteUser")} >
+                    Delete User
                   </Button>
                 </Stack>
               </Grid>

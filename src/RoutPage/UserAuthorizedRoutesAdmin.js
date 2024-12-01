@@ -6,68 +6,71 @@ import AddZoomSessionRecording from "../Pages/AddZoomSessionRecording";
 import AddZoomSessionSubject from "../Pages/AddZoomSessionSubject";
 import AdminDashBoard from "../Pages/AdminDashBoard";
 import CoursesAdmin from "../Pages/CoursesAdmin";
+import DeleteUser from "../Pages/DeleteUser";
 import ZoomOnlineSessionsAdmin from "../Pages/ZoomOnlineSessionsAdmin";
 import ZoomRecordingsAdmin from "../Pages/ZoomRecordingsAdmin";
 import AuthorHeader from "./AuthorHeader";
 
 const UserAuthorizedRoutesAdmin = [
-    {
+  {
+    path: "/",
+    element: <AuthorHeader />,
+    children: [
+      {
+        path: "/Courses",
+        element: <CoursesAdmin />,
+      },
+      {
+        path: "/ZoomRecordings",
+        element: <ZoomRecordingsAdmin />,
+      },
+      {
+        path: "/AddZoomSessionLecture",
+        element: <AddZoomSessionLecture />,
+      },
+      {
         path: "/",
-        element: <AuthorHeader/>,
-        children:[
+        element: <AdminDashBoard />,
+      },
+      {
+        path: "/AddCourses",
+        element: <AddCourses />,
+      },
+      {
+        path: "/addNewUser",
+        element: <AddNewUser />,
+      },
+      {
+        path: "/ZoomOnlineSessions",
+        element: <ZoomOnlineSessionsAdmin />,
+      },
+      {
+        path: "/AddZoomSessionSubject",
+        element: <AddZoomSessionSubject />,
+      },
+      {
+        path: "/ZoomRecordings",
+        element: <ZoomRecordingsAdmin />,
+      },
+      {
+        path: "/AddZoomSessionRecording",
+        element: <AddZoomSessionRecording />,
+      },
+      {
+        path: "/AddZoomRecordingSubject",
+        element: <AddZoomRecordingSubject />,
+      },
+      {
+        path: "/deleteUser",
+        element: <DeleteUser />,
+      },
 
-          {
-            path:"/Courses",
-            element:<CoursesAdmin/>
-          },
-          {
-            path: "/ZoomRecordings",
-            element: <ZoomRecordingsAdmin />,
-          },
-          {
-            path: "/AddZoomSessionLecture",
-            element: <AddZoomSessionLecture />,
-          },
-          {
-            path: "/",
-            element: <AdminDashBoard />,
-          },
-          {
-            path: "/AddCourses",
-            element: <AddCourses/>,
-          },
-            {
-            path: "/addNewUser",
-            element: <AddNewUser />,
-          },
-          {
-            path: "/ZoomOnlineSessions",
-            element: <ZoomOnlineSessionsAdmin />,
-          },
-          {
-            path: "/AddZoomSessionSubject",
-            element: <AddZoomSessionSubject/>,
-          },
-          {
-            path: "/ZoomRecordings",
-            element: <ZoomRecordingsAdmin />,
-          },
-          {
-            path: "/AddZoomSessionRecording",
-            element: <AddZoomSessionRecording />,
-          },
-          {
-            path: "/AddZoomRecordingSubject",
-            element: <AddZoomRecordingSubject/>
-          },
-          
-          {
-            path:"*",
-            element:<AdminDashBoard />
-          }
-        ]
-      }
-      
-    ];
-    
-    export default UserAuthorizedRoutesAdmin;
+      {
+        path: "*",
+        element: <AdminDashBoard />,
+      },
+    ],
+  },
+];
+
+export default UserAuthorizedRoutesAdmin;

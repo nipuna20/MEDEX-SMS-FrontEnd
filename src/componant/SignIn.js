@@ -15,17 +15,24 @@ export const UpdatePassword = (formData) => {
     email: formData.user,
     password: formData.password,
   };
-  console.log("aaaaaaaaaaaaaaaaaaaaa",postData)
+  console.log("aaaaaaaaaaaaaaaaaaaaa", postData);
   return api.post("/api/v1/users/User/passwordUpdate", postData);
 };
+
+///         delete user
+export const deleteUser = (formData) => {
+  console.log("Request data to delete user:", formData);
+  return api.delete("/api/v1/users/User/delete", {
+    data: formData, // Ensure data is sent as the body
+  });
+};;
+
 
 
 ////courses get
 export const Courses = () => {
   return api.get("/api/v1/users/course");
 };
-
-
 
 ////create new course
 export const createNewCourse = (formData) => {
@@ -113,7 +120,6 @@ export const createNewUser = (formData) => {
   });
 };
 
-
 /////////////////////////////////////////////////////////////////
 ////create new Zoom Subject
 export const createNewZoomSubject = (formData) => {
@@ -161,11 +167,14 @@ export const deleteZoomLecture = (formData) => {
     `/api/v1/users/zoomSession/subject/delete/${formData.subjectId}/${formData.lectureId}`
   );
 
-  return api.delete(`/api/v1/users/zoomSession/lecture/delete/${formData.subjectId}/${formData.lectureId}`, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  return api.delete(
+    `/api/v1/users/zoomSession/lecture/delete/${formData.subjectId}/${formData.lectureId}`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
 };
 
 ////create new Zoom Link Using Update Subject
@@ -178,21 +187,20 @@ export const createNewZoomLink = (formData) => {
     description: formData.description,
     // id:formData.cardId
   };
-  
 
   console.log("JSON data sample is:", jsonData);
   console.log("JSON data sample is ----:", formData.cardId);
   // console.log("JSON data sample is ---1111-:", `/api/v1/users/OnlineSessions/zoom/${formData.cardId}`);
-  
 
-  return api.post(`/api/v1/users/OnlineSessions/zoomLink/${formData.cardId}`, jsonData, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  
-
-  
+  return api.post(
+    `/api/v1/users/OnlineSessions/zoomLink/${formData.cardId}`,
+    jsonData,
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
 };
 //////get zoom links
 export const ZoomLinks = () => {
@@ -204,8 +212,6 @@ export const ZoomLinks = () => {
 export const ZoomRecordings = () => {
   return api.get("/api/v1/users/OnlineRecordings/zoom");
 };
-
-
 
 ////create new Zoom Subject
 export const createNewRecordingSubject = (formData) => {
@@ -223,7 +229,6 @@ export const createNewRecordingSubject = (formData) => {
     },
   });
 };
-
 
 ///////    recording Subject delete
 export const deleteRecordingSubject = (formData) => {
@@ -254,11 +259,14 @@ export const deleteRecordingLecture = (formData) => {
     `/api/v1/users/zoomSession/subject/delete/${formData.subjectId}/${formData.lectureId}`
   );
 
-  return api.delete(`/api/v1/users/recording/lecture/delete/${formData.subjectId}/${formData.lectureId}`, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  return api.delete(
+    `/api/v1/users/recording/lecture/delete/${formData.subjectId}/${formData.lectureId}`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
 };
 
 ////create new recording Link Using Update Subject
@@ -271,23 +279,21 @@ export const createNewRecordingLink = (formData) => {
     description: formData.description,
     // id:formData.cardId
   };
-  
 
   console.log("JSON data sample is:", jsonData);
   console.log("JSON data sample is ----:", formData.cardId);
   // console.log("JSON data sample is ---1111-:", `/api/v1/users/OnlineSessions/zoom/${formData.cardId}`);
-  
 
-  return api.post(`/api/v1/users/OnlineSessions/zoomRecording/${formData.cardId}`, jsonData, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  
-
-  
+  return api.post(
+    `/api/v1/users/OnlineSessions/zoomRecording/${formData.cardId}`,
+    jsonData,
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
 };
-
 
 /////////////////////////////////////////////////////////////////////6745ea9df06793442ed80457
 

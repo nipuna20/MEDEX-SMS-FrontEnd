@@ -47,6 +47,7 @@ export const services = {
   updateDataOfCourses,
   newUserLogin,
   updateUserPassword,
+  userDelete,
   createNewUser,
   ZoomLinksData,
   createNewZoomSubject,
@@ -80,6 +81,16 @@ async function updateUserPassword(formData){
     return {isSuccess: true, result:result };
   } catch (error) {
     return { isSuccess: false, result:error}
+  }
+}
+
+////// user delete
+async function userDelete (formData) {
+  try {
+    const {result} = await api.deleteUser(formData)
+    return{ isSuccess:true, result:result}
+  } catch (error) {
+    return { isSuccess: false, data: error };
   }
 }
 
