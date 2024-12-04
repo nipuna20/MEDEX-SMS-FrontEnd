@@ -24,13 +24,19 @@ const courseResources = [
         materialDescription: "A beginner's guide to snorkeling techniques.",
         materialLink: "path/to/snorkeling_basics.pdf",
       },
+      {
+        materialName: "Snorkeling Basics",
+        materialType: "pdf",
+        materialDescription: "A beginner's guide to snorkeling techniques.",
+        materialLink: "path/to/snorkeling_basics.pdf",
+      },
     ],
     paidStudents: [
       {
         studentId: 101,
         studentName: "Alice Johnson",
         email: "alice@example.com",
-        paidDate: "2024-12-01",
+       
       },
     ],
   },
