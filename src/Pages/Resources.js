@@ -14,38 +14,48 @@ import * as Yup from "yup";
 import { Formik } from "formik";
 import { services } from "../Services/services";
 
-const courseResources = [
-  {
-    courseName: "course name 1",
-    lectureMaterials: [
-      {
-        materialName: "Snorkeling Basics",
-        materialType: "pdf",
-        materialDescription: "A beginner's guide to snorkeling techniques.",
-        materialLink: "path/to/snorkeling_basics.pdf",
-      },
-      {
-        materialName: "Snorkeling Basics",
-        materialType: "pdf",
-        materialDescription: "A beginner's guide to snorkeling techniques.",
-        materialLink: "path/to/snorkeling_basics.pdf",
-      },
-    ],
-    paidStudents: [
-      {
-        studentId: 101,
-        studentName: "Alice Johnson",
-        email: "alice@example.com",
-       
-      },
-    ],
-  },
-];
+// const courseResources = [
+//   {
+//     courseName: "course name 1",
+//     lectureMaterials: [
+//       {
+//         materialName: "Snorkeling Basics",
+//         materialType: "pdf",
+//         materialDescription: "A beginner's guide to snorkeling techniques.",
+//         materialLink: "path/to/snorkeling_basics.pdf",
+//       },
+//       {
+//         materialName: "Snorkeling Basics",
+//         materialType: "pdf",
+//         materialDescription: "A beginner's guide to snorkeling techniques.",
+//         materialLink: "path/to/snorkeling_basics.pdf",
+//       },
+//     ],
+//     paidStudents: [
+//       {
+//         studentId: 101,
+//         studentName: "Alice Johnson",
+//         email: "alice@example.com",
+
+//       },
+//     ],
+//   },
+// ];
 
 const ResourcesPage = () => {
   const [resources, setResources] = useState(null);
   const [showResources, setShowResources] = useState(false);
   const [coursesData, setCoursesData] = useState([]);
+  const [courseResources, setCourseResources] = useState({});
+
+  const fetchLectureMaterial = () => {
+    services.lectureMaterialData().then((response) => {
+      if (response.isSuccess) {
+        setCourseResources(response.data);
+        //  console.log("Aaaaaaaaaaaaaaaaaaaa",response)
+      }
+    });
+  };
 
   const fetchCoursesData = () => {
     services.CoursesData().then((response) => {
@@ -57,7 +67,10 @@ const ResourcesPage = () => {
 
   useEffect(() => {
     fetchCoursesData();
+    fetchLectureMaterial();
   }, []);
+
+  console.log("courseResources sample final array :", courseResources);
 
   const handleClear = () => {
     setResources(null);
@@ -90,6 +103,9 @@ const ResourcesPage = () => {
         setShowResources(true);
       } else {
         console.error("ID not found in the selected course.");
+        alert("Your ID is incorrect, give me correct Paid User ID")
+        window.location.reload()
+
       }
     } else {
       console.error("Course name not found in local resources.");

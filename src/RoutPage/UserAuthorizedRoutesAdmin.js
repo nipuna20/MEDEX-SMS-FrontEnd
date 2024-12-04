@@ -1,5 +1,7 @@
 import AddCourses from "../Pages/AddCourses";
+import AddLectureMaterial from "../Pages/AddLectureMaterial";
 import AddNewUser from "../Pages/AddNewUser";
+import AddPayedStudent from "../Pages/AddPayedStudent";
 import AddZoomRecordingSubject from "../Pages/AddZoomRecordingSubject";
 import AddZoomSessionLecture from "../Pages/AddZoomSessionLecture";
 import AddZoomSessionRecording from "../Pages/AddZoomSessionRecording";
@@ -8,6 +10,7 @@ import AdminDashBoard from "../Pages/AdminDashBoard";
 import CourseDataUpdate from "../Pages/CourseDataupdate";
 import CoursesAdmin from "../Pages/CoursesAdmin";
 import DeleteUser from "../Pages/DeleteUser";
+import ResourcesAdmin from "../Pages/ResourcesAdmin";
 import ZoomOnlineSessionsAdmin from "../Pages/ZoomOnlineSessionsAdmin";
 import ZoomRecordingsAdmin from "../Pages/ZoomRecordingsAdmin";
 import AuthorHeader from "./AuthorHeader";
@@ -66,10 +69,21 @@ const UserAuthorizedRoutesAdmin = [
         element: <DeleteUser />,
       },
       {
-        path:"/courseDataUpdate",
-        element: <CourseDataUpdate />
+        path: "/courseDataUpdate",
+        element: <CourseDataUpdate />,
       },
-      
+      {
+        path: "/Resources",
+        element: <ResourcesAdmin />,
+      },
+      {
+        path:"/AddLectureMaterial",
+        element:<AddLectureMaterial/>
+      },
+      {
+        path:"/AddPayedStudent",
+        element:<AddPayedStudent/>
+      },
 
       {
         path: "*",

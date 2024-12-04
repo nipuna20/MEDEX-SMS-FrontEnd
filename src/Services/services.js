@@ -59,7 +59,8 @@ export const services = {
   createNewZoomRecordingSubject,
   recordingSubjectDelete,
   recordingLectureDelete,
-  createNewRecordingLink
+  createNewRecordingLink,
+  lectureMaterialData
 };
 
 ////User login
@@ -105,6 +106,19 @@ async function CoursesData(){
     console.log(error)
   }
 }
+
+//////////resource data
+async function lectureMaterialData(){
+  try {
+    const {data} = await api.lectureResources();
+    console.log("sampleeeeeee", data.lectureMaterial);
+    return{isSuccess: true, data: data.lectureMaterial}
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+
 ////create new course
 async function createCourses(formData){
   try {
@@ -267,11 +281,19 @@ async function ZoomRecordingsData(){
     return{isSuccess: true, data: data.CoursesData}
   } catch (error) {
     console.log(error)
+   
   }
 }
+/////////////////////
+///resources data get
 
 
 
+
+
+
+
+///////////////////////////////////////
 ///employee///
 
 async function employeeDetails(){
