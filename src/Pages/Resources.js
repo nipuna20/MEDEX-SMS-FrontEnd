@@ -10,28 +10,31 @@ import {
   Grid,
   Divider,
 } from "@mui/material";
-import { ModifiedTextField } from "../Theam/Theam";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import { services } from "../Services/services";
 
-const courseResources = {
-  "Course 1": [
-    "Resource 1.1 - PDF Guide",
-    "Resource 1.2 - Video Tutorial",
-    "Resource 1.3 - Practice Quiz",
-  ],
-  "Course 2": [
-    "Resource 2.1 - PDF Guide",
-    "Resource 2.2 - Video Tutorial",
-    "Resource 2.3 - Practice Quiz",
-  ],
-  "Course 3": [
-    "Resource 3.1 - PDF Guide",
-    "Resource 3.2 - Video Tutorial",
-    "Resource 3.3 - Practice Quiz",
-  ],
-};
+const courseResources = [
+  {
+    courseName: "course name 1",
+    lectureMaterials: [
+      {
+        materialName: "Snorkeling Basics",
+        materialType: "pdf",
+        materialDescription: "A beginner's guide to snorkeling techniques.",
+        materialLink: "path/to/snorkeling_basics.pdf",
+      },
+    ],
+    paidStudents: [
+      {
+        studentId: 101,
+        studentName: "Alice Johnson",
+        email: "alice@example.com",
+        paidDate: "2024-12-01",
+      },
+    ],
+  },
+];
 
 const ResourcesPage = () => {
   const [resources, setResources] = useState(null);
@@ -57,9 +60,34 @@ const ResourcesPage = () => {
 
   const handleCreating = (values) => {
     console.log("Form values: ", values);
-    const selectedResources = courseResources[values.selectedCourse] || [];
-    setResources(selectedResources);
-    setShowResources(true);
+
+    const selectedCourseFromAPI = coursesData.find(
+      (course) => course.CourseName === values.selectedCourse
+    );
+
+    if (!selectedCourseFromAPI) {
+      console.error("Course name not found in fetched data.");
+      return;
+    }
+
+    const matchedCourse = courseResources.find(
+      (resource) => resource.courseName === selectedCourseFromAPI.CourseName
+    );
+
+    if (matchedCourse) {
+      const matchedStudent = matchedCourse.paidStudents.find(
+        (student) => student.studentId.toString() === values.ID
+      );
+
+      if (matchedStudent) {
+        setResources(matchedCourse);
+        setShowResources(true);
+      } else {
+        console.error("ID not found in the selected course.");
+      }
+    } else {
+      console.error("Course name not found in local resources.");
+    }
   };
 
   const validationSchema = Yup.object().shape({
@@ -74,15 +102,7 @@ const ResourcesPage = () => {
 
   return (
     <Container maxWidth="sm">
-      <Paper
-        elevation={3}
-        sx={{
-          padding: 4,
-          mt: 4,
-          backgroundColor: "rgb(180, 180, 179, 0.1 )",
-          borderRadius: 3,
-        }}
-      >
+      <Paper elevation={3} sx={{ padding: 4, mt: 4 }}>
         <Typography variant="h5" align="center" gutterBottom>
           View Available Resources
         </Typography>
@@ -104,7 +124,6 @@ const ResourcesPage = () => {
           }) => (
             <form noValidate onSubmit={handleSubmit}>
               <Grid container spacing={2}>
-                {/* Course Selection Field */}
                 <Grid item xs={12}>
                   <TextField
                     select
@@ -124,17 +143,16 @@ const ResourcesPage = () => {
                       touched.selectedCourse && errors.selectedCourse
                     )}
                   >
-                    {coursesData.map((course) => (
-                      <MenuItem key={course._id} value={course._id}>
+                    {coursesData.map((course, index) => (
+                      <MenuItem key={index} value={course.CourseName}>
                         {course.CourseName}
                       </MenuItem>
                     ))}
                   </TextField>
                 </Grid>
 
-                {/* ID Field */}
                 <Grid item xs={12}>
-                  <ModifiedTextField
+                  <TextField
                     fullWidth
                     label="ID"
                     name="ID"
@@ -146,7 +164,6 @@ const ResourcesPage = () => {
                   />
                 </Grid>
 
-                {/* Submit Button */}
                 <Grid item xs={12}>
                   <Button
                     type="submit"
@@ -166,11 +183,26 @@ const ResourcesPage = () => {
           )}
         </Formik>
 
-        {/* Resources Section */}
-        {showResources && (
-          <>
-            <Typography>dwefaerfegfer</Typography>
+        {showResources && resources && (
+          <Box sx={{ mt: 4 }}>
+            <Typography variant="h6" gutterBottom>
+              Course Name: {resources.courseName}
+            </Typography>
+            <Divider sx={{ mb: 2 }} />
 
+            <Typography variant="subtitle1">Lecture Materials:</Typography>
+            {resources.lectureMaterials.map((material, index) => (
+              <Box key={index} sx={{ mb: 2 }}>
+                <Typography variant="body1">
+                  <strong>Name:</strong> {material.materialName}
+                </Typography>
+                <Typography variant="body2">
+                  <strong>Description:</strong> {material.materialDescription}
+                </Typography>
+              </Box>
+            ))}
+
+            {/* Clear Button */}
             <Button
               variant="outlined"
               color="secondary"
@@ -180,7 +212,7 @@ const ResourcesPage = () => {
             >
               Clear
             </Button>
-          </>
+          </Box>
         )}
       </Paper>
     </Container>
