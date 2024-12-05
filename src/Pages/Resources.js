@@ -207,22 +207,42 @@ const ResourcesPage = () => {
 
         {showResources && resources && (
           <Box sx={{ mt: 4 }}>
-            <Typography variant="h6" gutterBottom>
-              Course Name: {resources.courseName}
-            </Typography>
-            <Divider sx={{ mb: 2 }} />
-
-            <Typography variant="subtitle1">Lecture Materials:</Typography>
-            {resources.lectureMaterials.map((material, index) => (
-              <Box key={index} sx={{ mb: 2 }}>
-                <Typography variant="body1">
-                  <strong>Name:</strong> {material.materialName}
-                </Typography>
-                <Typography variant="body2">
-                  <strong>Description:</strong> {material.materialDescription}
-                </Typography>
-              </Box>
-            ))}
+          <Typography variant="h6" gutterBottom>
+            Course Name: {resources.courseName}
+          </Typography>
+          <Divider sx={{ mb: 2 }} />
+        
+          <Typography variant="subtitle1">Lecture Materials:</Typography>
+          {resources.lectureMaterials.map((material, index) => (
+            <Box key={index} sx={{ mb: 4 }}>
+              <Typography variant="body1">
+                <strong>Name:</strong> {material.materialName}
+              </Typography>
+              <Typography variant="body2">
+                <strong>Description:</strong> {material.materialDescription}
+              </Typography>
+              {/* Embed the material */}
+              {material.materialLink && (
+                <Box sx={{ mt: 2}}>
+                  {material.materialType === "pdf" ? (
+                    <iframe
+                      src={`${process.env.REACT_APP_IMAGE_URL}${material.materialLink}`}
+                      title={material.materialName}
+                      style={{ width: "100%", height: "500px", border: "1px solid #ccc" }}
+                    />
+                  ) : (
+                    <img
+                      src={`${process.env.REACT_APP_IMAGE_URL}${material.materialLink}`}
+                      alt={material.materialName}
+                      style={{ width: "100%", maxHeight: "500px", objectFit: "contain" }}
+                    />
+                  )}
+                </Box>
+              )}
+            </Box>
+          ))}
+       
+        
 
             {/* Clear Button */}
             <Button
