@@ -22,7 +22,7 @@ export default function AddLectureMaterial() {
   const [loading, setLoading] = useState(false);
 
   const handleCreating = (values) => {
-    // setLoading(true);
+    setLoading(true);
     console.log("Submitted values:", values);
 
     // Example for file upload
@@ -31,15 +31,15 @@ export default function AddLectureMaterial() {
       formData.append(key, value);
     });
 
-    // services.createNewLectureMaterial(formData).then((response) => {
-    //   if (response.isSuccess) {
-    //     navigate("/Resources");
-    //     alert("Your Course was created successfully!");
-    //   } else {
-    //     console.error("Error creating course");
-    //   }
-    //   setLoading(false);
-    // });
+    services.addMaterialsForCourse(formData).then((response) => {
+      if (response.isSuccess) {
+        navigate("/Resources");
+        alert("Your Course was created successfully!");
+      } else {
+        console.error("Error creating course");
+      }
+      setLoading(false);
+    });
   };
 
   const validationSchema = Yup.object().shape({

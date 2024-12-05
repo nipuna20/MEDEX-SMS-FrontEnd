@@ -332,6 +332,28 @@ export const lectureResources = () => {
 
 
 ////////// material creation update resources
+// export const addLectureMaterialUpdatingResources = (formData) => {
+//   console.log("form data ia a ", formData);
+//   let postData = new FormData();
+//   postData.append("file", formData.file);
+//   postData.append("materialName", formData.materialName);
+//   postData.append("materialType", formData.materialType);
+//   postData.append("materialDescription", formData.materialDescription);
+//   postData.append("courseName", formData.courseName);
+
+//   console.log("form data ia a (material upload)", postData);
+//   return api.post("/api/v1/users/resources/upload", postData);
+// };
+
+export const addLectureMaterialUpdatingResources = (formData) => {
+  console.log("form data is:", [...formData.entries()]);
+  return api.post("/api/v1/users/resources/upload", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
+
 
 //////// Add paid student is lecture resources
 ////create new Zoom Subject

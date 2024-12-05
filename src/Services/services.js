@@ -61,8 +61,8 @@ export const services = {
   recordingLectureDelete,
   createNewRecordingLink,
   lectureMaterialData,
-  addPaidStudentInLectureMaterial
-  
+  addPaidStudentInLectureMaterial,
+  addMaterialsForCourse
 };
 
 ////User login
@@ -288,6 +288,14 @@ async function lectureMaterialData(){
 }
 
 ////create new lecture material update resource data
+async function addMaterialsForCourse(formData) {
+  try {
+    const result = await api.addLectureMaterialUpdatingResources(formData);
+    return { isSuccess: true, result: result };
+  } catch (error) {
+    return { isSuccess: false, result: error };
+  }
+}
 
 ///// add new payed student for lecture material updating resources
 async function addPaidStudentInLectureMaterial(formData){
