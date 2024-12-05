@@ -333,6 +333,26 @@ export const lectureResources = () => {
 
 ////////// material creation update resources
 
+//////// Add paid student is lecture resources
+////create new Zoom Subject
+export const addStudentInResources = (formData) => {
+  console.log("sample course is", formData);
+
+  const jsonData = {
+    courseName: formData.courseName,
+    studentId: formData.studentId,
+    email: formData.email
+  };
+
+  console.log("JSON data sample is:", jsonData);
+
+  return api.post("/api/v1/users/resources/paid-students", jsonData, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};
+
 
 /////////////////////////////////////////////////////////////////////6745ea9df06793442ed80457
 

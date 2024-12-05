@@ -61,6 +61,7 @@ export const services = {
   recordingLectureDelete,
   createNewRecordingLink,
   lectureMaterialData,
+  addPaidStudentInLectureMaterial
   
 };
 
@@ -239,7 +240,7 @@ async function recordingSubjectDelete (formData) {
   }
 }
 
-/////    Delete recording lectur
+/////    Delete recording lecture
 
 async function recordingLectureDelete (formData) {
   try {
@@ -288,8 +289,15 @@ async function lectureMaterialData(){
 
 ////create new lecture material update resource data
 
-
-
+///// add new payed student for lecture material updating resources
+async function addPaidStudentInLectureMaterial(formData){
+  try {
+    const result = await api.addStudentInResources(formData);
+    return {isSuccess: true, result:result };
+  } catch (error) {
+    return { isSuccess: false, result:error}
+  }
+}
 
 ///////////////////////////////////////
 ///employee///
