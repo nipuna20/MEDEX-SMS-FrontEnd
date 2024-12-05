@@ -34,12 +34,7 @@ export const Courses = () => {
   return api.get("/api/v1/users/course");
 };
 
-/////////////get material data
-////courses get
-export const lectureResources = () => {
-  console.log("check matirial respons")
-  return api.get("api/v1/users/resources");
-};
+
 ////create new course
 export const createNewCourse = (formData) => {
   console.log("sample course is", formData);
@@ -329,7 +324,14 @@ export const createNewRecordingLink = (formData) => {
 //////////////////////////////////////////
 /////resources data get 
 
+export const lectureResources = () => {
+  console.log("check matirial respons")
+  return api.get("api/v1/users/resources");
+};
 
+
+
+////////// material creation update resources
 
 
 /////////////////////////////////////////////////////////////////////6745ea9df06793442ed80457

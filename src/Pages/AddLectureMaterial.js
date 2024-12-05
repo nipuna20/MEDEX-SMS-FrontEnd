@@ -15,6 +15,7 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import Loade from "../componant/Loader";
+import { services } from "../Services/services";
 
 export default function AddLectureMaterial() {
   const navigate = useNavigate();
@@ -30,10 +31,9 @@ export default function AddLectureMaterial() {
       formData.append(key, value);
     });
 
-    // Submit formData to the backend
-    // services.createNewZoomRecordingSubject(formData).then((response) => {
+    // services.createNewLectureMaterial(formData).then((response) => {
     //   if (response.isSuccess) {
-    //     navigate("/ZoomRecordings");
+    //     navigate("/Resources");
     //     alert("Your Course was created successfully!");
     //   } else {
     //     console.error("Error creating course");

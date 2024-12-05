@@ -60,7 +60,8 @@ export const services = {
   recordingSubjectDelete,
   recordingLectureDelete,
   createNewRecordingLink,
-  lectureMaterialData
+  lectureMaterialData,
+  
 };
 
 ////User login
@@ -102,17 +103,6 @@ async function CoursesData(){
     const {data} = await api.Courses();
     console.log("sampleeeeeee", data.CoursesData);
     return{isSuccess: true, data: data.CoursesData}
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-//////////resource data
-async function lectureMaterialData(){
-  try {
-    const {data} = await api.lectureResources();
-    console.log("sampleeeeeee", data.lectureMaterial);
-    return{isSuccess: true, data: data.lectureMaterial}
   } catch (error) {
     console.log(error)
   }
@@ -286,9 +276,17 @@ async function ZoomRecordingsData(){
 }
 /////////////////////
 ///resources data get
+async function lectureMaterialData(){
+  try {
+    const {data} = await api.lectureResources();
+    console.log("sampleeeeeee", data.lectureMaterial);
+    return{isSuccess: true, data: data.lectureMaterial}
+  } catch (error) {
+    console.log(error)
+  }
+}
 
-
-
+////create new lecture material update resource data
 
 
 
