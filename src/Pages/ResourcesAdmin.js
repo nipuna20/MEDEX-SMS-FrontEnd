@@ -201,6 +201,23 @@ export default function ResourcesAdmin() {
                   <Typography variant="body2">
                     <strong>Description:</strong> {material.materialDescription}
                   </Typography>
+                  {material.materialLink && (
+                <Box sx={{ mt: 2,}}>
+                  {material.materialType === "pdf" ? (
+                    <iframe
+                      src={`${process.env.REACT_APP_IMAGE_URL}${material.materialLink}`}
+                      title={material.materialName}
+                      style={{ width: "100%", height: "500px", border: "1px solid #ccc" }}
+                    />
+                  ) : (
+                    <img
+                      src={`${process.env.REACT_APP_IMAGE_URL}${material.materialLink}`}
+                      alt={material.materialName}
+                      style={{ width: "100%", maxHeight: "500px", objectFit: "contain" }}
+                    />
+                  )}
+                </Box>
+              )}
                 </Box>
               ))}
   
