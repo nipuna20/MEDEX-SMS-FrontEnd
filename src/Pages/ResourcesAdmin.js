@@ -103,7 +103,7 @@ export default function ResourcesAdmin() {
         <Button variant="outlined" onClick={() =>navigate("/AddLectureMaterial")}>Add Lecture Material</Button>
         <Button variant="outlined" onClick={()=> navigate("/AddPayedStudent")}>Add Payed Student</Button>
         </Box>
-      <Container maxWidth="sm">
+      <Container maxWidth="xl">
         <Paper elevation={3} sx={{ padding: 4, mt: 4 }}>
           <Typography variant="h5" align="center" gutterBottom>
             View Available Resources

@@ -104,7 +104,7 @@ export default function AddPayedStudent() {
                     border: "1px solid red",
                   }}
                   onClick={() => {
-                    navigate("/ZoomRecordings");
+                    navigate("/Resources");
                   }}
                 >
                   <b> {" < "} back </b>
@@ -127,7 +127,7 @@ export default function AddPayedStudent() {
                         >
                           <Grid item xs={12} md={7} lg={7} xl={8} margin={2}>
                             <Card sx={{ borderRadius: 6 }} elevation={10}>
-                              <CardHeader title="ADD New Recording Subject"></CardHeader>
+                              <CardHeader title="ADD New Paid Student"></CardHeader>
                               <hr
                                 style={{
                                   color: "white",

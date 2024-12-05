@@ -123,7 +123,7 @@ const ResourcesPage = () => {
   };
 
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="xl">
       <Paper elevation={3} sx={{ padding: 4, mt: 4 }}>
         <Typography variant="h5" align="center" gutterBottom>
           View Available Resources
@@ -207,18 +207,18 @@ const ResourcesPage = () => {
 
         {showResources && resources && (
           <Box sx={{ mt: 4 }}>
-          <Typography variant="h6" gutterBottom>
-            Course Name: {resources.courseName}
+          <Typography variant="h4" gutterBottom sx={{display:"flex",justifyContent:"center"}}>
+            {resources.courseName}
           </Typography>
           <Divider sx={{ mb: 2 }} />
         
           <Typography variant="subtitle1">Lecture Materials:</Typography>
           {resources.lectureMaterials.map((material, index) => (
             <Box key={index} sx={{ mb: 4 }}>
-              <Typography variant="body1">
-                <strong>Name:</strong> {material.materialName}
+              <Typography variant="h5" sx={{display:"flex", justifyContent:"center", paddingBottom:4}}>
+                <strong> {material.materialName}</strong>
               </Typography>
-              <Typography variant="body2">
+              <Typography variant="h7">
                 <strong>Description:</strong> {material.materialDescription}
               </Typography>
               {/* Embed the material */}
@@ -237,6 +237,8 @@ const ResourcesPage = () => {
                       style={{ width: "100%", maxHeight: "500px", objectFit: "contain" }}
                     />
                   )}
+                  <br/><br/>
+                  <Divider/>
                 </Box>
               )}
             </Box>

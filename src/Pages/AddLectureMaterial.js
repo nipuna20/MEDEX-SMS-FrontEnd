@@ -124,7 +124,7 @@ export default function AddLectureMaterial() {
                     >
                       <Grid item xs={12} md={7} lg={7} xl={8} margin={2}>
                         <Card sx={{ borderRadius: 6 }} elevation={10}>
-                          <CardHeader title="Add New Recording Subject" />
+                          <CardHeader title="Add New Lecture Material" />
                           <hr
                             style={{
                               color: "white",
