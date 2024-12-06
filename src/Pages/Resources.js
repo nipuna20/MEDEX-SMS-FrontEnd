@@ -103,9 +103,8 @@ const ResourcesPage = () => {
         setShowResources(true);
       } else {
         console.error("ID not found in the selected course.");
-        alert("Your ID is incorrect, give me correct Paid User ID")
-        window.location.reload()
-
+        alert("Your ID is incorrect, give me correct Paid User ID");
+        window.location.reload();
       }
     } else {
       console.error("Course name not found in local resources.");
@@ -207,44 +206,65 @@ const ResourcesPage = () => {
 
         {showResources && resources && (
           <Box sx={{ mt: 4 }}>
-          <Typography variant="h4" gutterBottom sx={{display:"flex",justifyContent:"center"}}>
-            {resources.courseName}
-          </Typography>
-          <Divider sx={{ mb: 2 }} />
-        
-          <Typography variant="subtitle1">Lecture Materials:</Typography>
-          {resources.lectureMaterials.map((material, index) => (
-            <Box key={index} sx={{ mb: 4 }}>
-              <Typography variant="h5" sx={{display:"flex", justifyContent:"center", paddingBottom:4}}>
-                <strong> {material.materialName}</strong>
-              </Typography>
-              <Typography variant="h7">
-                <strong>Description:</strong> {material.materialDescription}
-              </Typography>
-              {/* Embed the material */}
-              {material.materialLink && (
-                <Box sx={{ mt: 2}}>
-                  {material.materialType === "pdf" ? (
-                    <iframe
-                      src={`${process.env.REACT_APP_IMAGE_URL}${material.materialLink}`}
-                      title={material.materialName}
-                      style={{ width: "100%", height: "500px", border: "1px solid #ccc" }}
-                    />
-                  ) : (
-                    <img
-                      src={`${process.env.REACT_APP_IMAGE_URL}${material.materialLink}`}
-                      alt={material.materialName}
-                      style={{ width: "100%", maxHeight: "500px", objectFit: "contain" }}
-                    />
-                  )}
-                  <br/><br/>
-                  <Divider/>
-                </Box>
-              )}
-            </Box>
-          ))}
-       
-        
+            <Typography
+              variant="h4"
+              gutterBottom
+              sx={{ display: "flex", justifyContent: "center" }}
+            >
+              {resources.courseName}
+            </Typography>
+            <Divider sx={{ mb: 2 }} />
+
+            <Typography variant="subtitle1">Lecture Materials:</Typography>
+            {resources.lectureMaterials.map((material, index) => (
+              <Box key={index} sx={{ mb: 4 }}>
+                <Typography
+                  variant="h5"
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    paddingBottom: 4,
+                  }}
+                >
+                  <strong> {material.materialName}</strong>
+                </Typography>
+                <Typography variant="h7">
+                  <strong>Description:</strong> {material.materialDescription}
+                </Typography>
+                {/* Embed the material */}
+                {material.materialLink && (
+                  <Box sx={{ mt: 2 }}>
+                    {material.materialType === "pdf" ? (
+                      <iframe
+                        src={`${process.env.REACT_APP_IMAGE_URL}${material.materialLink}`}
+                        title={material.materialName}
+                        style={{
+                          width: "100%",
+                          height: "500px",
+                          border: "1px solid #ccc",
+                        }}
+                        sandbox="allow-scripts allow-same-origin"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      />
+                    ) : (
+                      <img
+                        src={`${process.env.REACT_APP_IMAGE_URL}${material.materialLink}`}
+                        alt={material.materialName}
+                        style={{
+                          width: "100%",
+                          maxHeight: "500px",
+                          objectFit: "contain",
+                        }}
+                      />
+                    )}
+                    <br />
+                    <br />
+                    <Divider />
+                  </Box>
+                )}
+              </Box>
+            ))}
 
             {/* Clear Button */}
             <Button
