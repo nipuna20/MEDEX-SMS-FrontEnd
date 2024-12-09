@@ -202,7 +202,7 @@ export default function LMSApp() {
             <MenuItem
               icon={<Dashboard />}
               label="Exams"
-              onClick={() => navigate("/AddExam")}
+              onClick={() => navigate("/Results")}
               iconColor="teal"
             />
           </List>
