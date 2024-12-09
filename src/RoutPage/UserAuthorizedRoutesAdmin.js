@@ -14,6 +14,7 @@ import ResourcesAdmin from "../Pages/ResourcesAdmin";
 import ZoomOnlineSessionsAdmin from "../Pages/ZoomOnlineSessionsAdmin";
 import ZoomRecordingsAdmin from "../Pages/ZoomRecordingsAdmin";
 import AuthorHeader from "./AuthorHeader";
+import AddExamDetails from "../Pages/AddExam"
 
 const UserAuthorizedRoutesAdmin = [
   {
@@ -83,6 +84,10 @@ const UserAuthorizedRoutesAdmin = [
       {
         path:"/AddPayedStudent",
         element:<AddPayedStudent/>
+      },
+      {
+        path: "/AddExam",
+        element: <AddExamDetails />
       },
 
       {

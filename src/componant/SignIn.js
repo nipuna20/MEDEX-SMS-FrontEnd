@@ -1,5 +1,55 @@
 import api from "./interceptor";
 
+
+// Add Exam Details
+export const addExam = (formData) => {
+  const jsonData = {
+    courseName: formData.courseName,
+    studentId: formData.studentId,
+    studentName: formData.studentName,
+    email: formData.email,
+    marks: formData.marks,
+    grade: formData.grade,
+  };
+
+  console.log("JSON data for adding exam details:", jsonData);
+
+  return api.post("/api/v1/users/exam-results/add", jsonData, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};
+
+// Get Exam Details
+export const getExams = () => {
+  return api.get("/api/v1/users/exam-results");
+};
+
+// Update Exam Details
+export const updateExam = (formData) => {
+  const jsonData = {
+    courseName: formData.courseName,
+    studentId: formData.studentId,
+    studentName: formData.studentName,
+    email: formData.email,
+    marks: formData.marks,
+    grade: formData.grade,
+  };
+
+  return api.put(`/api/v1/users/exam-results/update/${formData.examId}`, jsonData, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};
+
+// Delete Exam Details
+export const deleteExam = (examId) => {
+  return api.delete(`/api/v1/users/exam-results/delete/${examId}`);
+};
+
+
 ////// check admin////
 export const newUser = (formData) => {
   let postData = {

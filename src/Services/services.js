@@ -62,8 +62,53 @@ export const services = {
   createNewRecordingLink,
   lectureMaterialData,
   addPaidStudentInLectureMaterial,
-  addMaterialsForCourse
+  addMaterialsForCourse,
+  createExamDetails,
+  getExamDetails,
+  updateExamDetails,
+  deleteExamDetails,
 };
+
+
+// Service to add exam details
+async function createExamDetails(formData) {
+  try {
+    const result = await api.addExam(formData); // Ensure `api.addExam` is defined in your API component
+    return { isSuccess: true, result: result };
+  } catch (error) {
+    return { isSuccess: false, result: error };
+  }
+}
+
+// Service to get all exam details
+async function getExamDetails() {
+  try {
+    const { data } = await api.getExams(); // Ensure `api.getExams` is defined in your API component
+    return { isSuccess: true, data: data };
+  } catch (error) {
+    return { isSuccess: false, result: error };
+  }
+}
+
+// Service to update exam details
+async function updateExamDetails(formData) {
+  try {
+    const result = await api.updateExam(formData); // Ensure `api.updateExam` is defined in your API component
+    return { isSuccess: true, result: result };
+  } catch (error) {
+    return { isSuccess: false, result: error };
+  }
+}
+
+// Service to delete exam details
+async function deleteExamDetails(id) {
+  try {
+    const result = await api.deleteExam(id); // Ensure `api.deleteExam` is defined in your API component
+    return { isSuccess: true, result: result };
+  } catch (error) {
+    return { isSuccess: false, result: error };
+  }
+}
 
 ////User login
 async function newUserLogin(formData) {
