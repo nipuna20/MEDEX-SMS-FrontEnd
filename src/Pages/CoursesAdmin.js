@@ -9,33 +9,21 @@ import {
   CardMedia,
   Collapse,
   Container,
-  Divider,
   Grid,
   IconButton,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  Stack,
   Typography,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import { styled, useTheme } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import { red } from "@mui/material/colors";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import EBCM from "../componant/EBCM.png";
-import { Key } from "@mui/icons-material";
-import StarIcon from "@mui/icons-material/Star";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import { services } from "../Services/services";
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
+import UpdateIcon from "@mui/icons-material/Update";
+import Swal from "sweetalert2";
+import EBCM from "../componant/EBCM.png";
+import { services } from "../Services/services";
 import { useNavigate } from "react-router-dom";
-import AccountBoxIcon from "@mui/icons-material/AccountBox";
-import UpdateIcon from '@mui/icons-material/Update';
 
 // Styled component for ExpandMore button
 const ExpandMore = styled((props) => {
@@ -49,46 +37,19 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-
 export default function CoursesAdmin() {
   const navigate = useNavigate();
-  const [expandedCards, setExpandedCards] = useState({}); // State to track which cards are expanded
-  let [allEmpData, setAllEmpData] = useState([]);
-  let [coursesData, setCoursesData] = useState([]);
+  const [expandedCards, setExpandedCards] = useState({});
+  const [coursesData, setCoursesData] = useState([]);
 
-  const CoursesDtailsInDB = () => {
-    // setLoading(true);
+  useEffect(() => {
     services.CoursesData().then((Response) => {
       if (Response.isSuccess) {
         setCoursesData(Response.data);
-        setAllEmpData();
-        // checkData.filter((checkData) => checkData.delete_status == 0)
-        console.log("check responssssssss", Response.data);
       }
-      // setLoading(false);
     });
-  };
-  useEffect(() => {
-    CoursesDtailsInDB();
   }, []);
-  console.log("data is ", coursesData);
 
-  const couseDelete = async (values) => {
-    console.log("table value is ", values);
-    services.courseDataDelete(values).then((response) => {
-      if (response.isSuccess) {
-        console.log("check table data delete ", values);
-        alert("Services data Row Delete successfully");
-        window.location.reload();
-      } else {
-        console.log("delet row respons error");
-      }
-    });
-  };
-
-  
-
-  // Function to handle card expand toggle
   const handleExpandClick = (index) => {
     setExpandedCards((prev) => ({
       ...prev,
@@ -96,123 +57,107 @@ export default function CoursesAdmin() {
     }));
   };
 
-  // Card rendering function
-  const cardData = (item, index) => (
-    <Grid key={index} item xs={12} sm={12} md={8} lg={6} xl={4}>
+  const deleteCourse = async (id) => {
+    // Show SweetAlert confirmation dialog
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to delete this course? This action cannot be undone.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Call API to delete the course
+        services.courseDataDelete(id).then((response) => {
+          if (response.isSuccess) {
+            Swal.fire("Deleted!", "The course has been deleted.", "success");
+            setCoursesData(coursesData.filter((course) => course._id !== id));
+          } else {
+            Swal.fire("Error!", "Failed to delete the course.", "error");
+          }
+        });
+      }
+    });
+  };
+
+  const renderCard = (item, index) => (
+    <Grid key={index} item xs={12} sm={6} md={4}>
       <Card
-        sx={{ maxWidth: 345, minWidth: 290, borderRadius: 4 }}
-        elevation={20}
+        sx={{
+          maxWidth: 400,
+          borderRadius: 5,
+          transition: "transform 0.2s, box-shadow 0.2s",
+          "&:hover": {
+            transform: "scale(1.03)",
+            boxShadow: "0 8px 16px rgba(0, 0, 0, 0.2)",
+          },
+        }}
+        elevation={10}
       >
         <CardHeader
-          avatar={
-            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe"></Avatar>
-          }
+          avatar={<Avatar sx={{ bgcolor: red[500] }}>{item.CourseName[0]}</Avatar>}
           action={
             <>
-             <IconButton
-                aria-label="close"
+              <IconButton
+                aria-label="edit"
+                sx={{ color: "primary.main" }}
                 onClick={() => navigate(`/courseDataUpdate?cardId=${item._id}`)}
               >
                 <UpdateIcon />
               </IconButton>
               <IconButton
-                aria-label="close"
-                onClick={() => couseDelete(item._id)}
+                aria-label="delete"
+                sx={{ color: "error.main" }}
+                onClick={() => deleteCourse(item._id)}
               >
                 <CloseIcon />
               </IconButton>
-              {/* <IconButton
-              aria-label="close"
-              onClick={() => navigate(`/AddCourses/${item._id}`)} // Navigate to the update form
-            sx={{ marginRight: "auto" }} // Add styling as needed
-            >
-             <StarIcon />
-            </IconButton> */}
             </>
           }
           title={
-            <span style={{ fontWeight: "bold", fontSize: "1.2rem" }}>
+            <Typography variant="h6" fontWeight="bold">
               {item.CourseName}
-            </span>
+            </Typography>
           }
-          subheader={`Duration : ${item.CourseDuration}`}
+          subheader={`Duration: ${item.CourseDuration}`}
         />
         <CardMedia
           component="img"
-          height="194"
+          height="150"
           image={EBCM}
-          alt="Paella dish"
+          alt="Course Image"
         />
         <CardContent>
-          <ListItem disablePadding>
-            {/* <ListItemButton> */}
-            <ListItemIcon>
-              <StarIcon />
-            </ListItemIcon>
-            <ListItemText
-              primary={
-                <span style={{ fontWeight: "bold", fontSize: "1.2rem" }}>
-                  Course Fee
-                </span>
-              }
-            />
-            {/* </ListItemButton> */}
-          </ListItem>
-
-          <ListItem
-            disablePadding
-            // sx={{ justifyContent: "center", textAlign: "center" }}
-          >
-            <ListItemText primary={`Full Payment : ${item.FullPayment}`} />
-          </ListItem>
-          <ListItem
-            disablePadding
-            // sx={{ justifyContent: "center", textAlign: "center" }}
-          >
-            <ListItemText
-              primary={`Installment Wise : ${item.InstallmentWise}`}
-            />
-          </ListItem>
-          <ListItem
-            disablePadding
-            // sx={{ justifyContent: "center", textAlign: "center" }}
-          >
-            <ListItemText primary={`First Payment : ${item.FirstPayment}`} />
-          </ListItem>
-          <ListItem
-            disablePadding
-            // sx={{ justifyContent: 'center', textAlign: 'center' }}
-          >
-            <ListItemText
-              primary={`Registration Fee : ${item.RegistrationFee}`}
-            />
-          </ListItem>
+          <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
+            Course Fee
+          </Typography>
+          <Typography variant="body2">Full Payment: {item.FullPayment}</Typography>
+          <Typography variant="body2">
+            Installment Wise: {item.InstallmentWise}
+          </Typography>
+          <Typography variant="body2">
+            First Payment: {item.FirstPayment}
+          </Typography>
+          <Typography variant="body2">
+            Registration Fee: {item.RegistrationFee}
+          </Typography>
         </CardContent>
         <CardActions disableSpacing>
-          {/* <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton> */}
-
           <ExpandMore
-            expand={expandedCards[index] || false}
+            expand={expandedCards[index]}
             onClick={() => handleExpandClick(index)}
-            aria-expanded={expandedCards[index] || false}
+            aria-expanded={expandedCards[index]}
             aria-label="show more"
           >
             <ExpandMoreIcon />
           </ExpandMore>
         </CardActions>
-        <Collapse
-          in={expandedCards[index] || false}
-          timeout="auto"
-          unmountOnExit
-        >
+        <Collapse in={expandedCards[index]} timeout="auto" unmountOnExit>
           <CardContent>
-            <Typography sx={{ marginBottom: 2 }}>Other Details</Typography>
-            <Typography sx={{ marginBottom: 2 }}>
+            <Typography variant="body2" color="textSecondary">
               {item.OtherDetails}
             </Typography>
           </CardContent>
@@ -220,79 +165,52 @@ export default function CoursesAdmin() {
       </Card>
     </Grid>
   );
+
   return (
     <>
-      <Card
+      {/* Header Section */}
+      <Box
         sx={{
-          borderRadius: 10,
-          backgroundColor: "rgb(180, 180, 179, 0.5 )",
-          // margin: 3,
-          // marginLeft: 4,
-          // marginRight: 4,
-          paddingLeft: 20,
-          paddingRight: 20,
+          backgroundColor: "primary.main",
+          paddingY: 3,
+          textAlign: "center",
+          borderRadius: 2,
+          marginBottom: 4,
+          color: "white",
         }}
-        elevation={2}
       >
-        {/* <Box display="flex" justifyContent={"flex-start"} paddingTop={5}>
-          <Button
-            variant="contained"
-            startIcon={<AccountBoxIcon />}
-            sx={{ padding: 1 }}
-            onClick={() => navigate("/addNewUser")}
-          >
-            User Creation
-          </Button>
-        </Box> */}
-        <h2 style={{ textAlign: "center", marginTop: 30 }}>
-          <b>COURSES</b>
-        </h2>
+        <Typography variant="h4" fontWeight="bold">
+          Courses Management
+        </Typography>
+        <Typography variant="subtitle1">
+          Manage and update course details easily
+        </Typography>
+      </Box>
 
-        <Box display="flex" justifyContent="flex-end" style={{ width: "100%" }}>
-          <IconButton
-            size="large"
-            sx={{
-              borderRadius: "50%",
-              backgroundColor: "#007BFF",
-              padding: 1.5,
-              color: "#FFFFFF",
-              transition: "transform 0.2s, background-color 0.2s",
-              "&:hover": {
-                transform: "scale(1.1)",
-                backgroundColor: "#0056b3",
-              },
-            }}
-            onClick={() => navigate("/AddCourses")}
-          >
-            <AddIcon />
-          </IconButton>
-        </Box>
-
-        <Box
-          component="main"
+      {/* Add Courses Button */}
+      <Box display="flex" justifyContent="flex-end" marginBottom={2}>
+        <Button
+          variant="contained"
+          startIcon={<AddIcon />}
           sx={{
-            flexGrow: 1,
-            // py: 8,
+            textTransform: "none",
+            fontSize: "1rem",
+            borderRadius: 3,
+            backgroundColor: "#007BFF",
+            "&:hover": { backgroundColor: "#0056b3" },
           }}
+          onClick={() => navigate("/AddCourses")}
         >
-          <Container maxWidth="lg" sx={{ padding: 0 }}>
-            <Stack spacing={2}>
-              <Box
-                sx={{
-                  alignItems: "center",
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                <Grid container spacing={6} marginTop={3} marginBottom={3}>
-                  {/* {CardData.map((card, key) => cardData(card, key))} */}
-                  {coursesData.map((card, key) => cardData(card, key))}
-                </Grid>
-              </Box>
-            </Stack>
-          </Container>
-        </Box>
-      </Card>
+          Add New Course
+        </Button>
+      </Box>
+
+      {/* Courses List */}
+      <Container maxWidth="lg">
+        <Grid container spacing={4}>
+          {coursesData.map((item, index) => renderCard(item, index))}
+        </Grid>
+      </Container>
     </>
   );
 }

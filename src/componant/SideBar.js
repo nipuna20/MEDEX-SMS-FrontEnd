@@ -25,7 +25,7 @@ import {
 import { useNavigate, Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { LOGOUT } from "./const";
-import FinalLogo from './FinalLogo.png'
+import FinalLogo from "./FinalLogo.png";
 
 const drawerWidth = 280;
 
@@ -41,12 +41,13 @@ export default function LMSApp() {
     navigate("/");
   };
 
-  // Reusable MenuItem Component with Icon Color
+  // Reusable MenuItem Component with Left-Aligned Icon and Text
   const MenuItem = ({ icon, label, onClick, iconColor }) => (
     <Card
       sx={{
         borderRadius: 3,
         margin: 1,
+        width: "90%", // Adjust width for alignment
         ":hover": {
           boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
         },
@@ -54,10 +55,11 @@ export default function LMSApp() {
     >
       <CardActionArea
         sx={{
-          padding: 1.5,
           display: "flex",
           alignItems: "center",
-          gap: 2,
+          justifyContent: "flex-start", // Align all content to the left
+          padding: 1.5,
+          gap: 2, // Space between icon and text
         }}
         onClick={onClick}
       >
@@ -81,11 +83,7 @@ export default function LMSApp() {
         }}
       >
         <Toolbar>
-          <Avatar
-            sx={{ height: 55, width: 55 }}
-            alt="Logo"
-            src={FinalLogo}
-          />
+          <Avatar sx={{ height: 55, width: 55 }} alt="Logo" src={FinalLogo} />
           <Typography
             variant="h6"
             component="div"
@@ -95,7 +93,7 @@ export default function LMSApp() {
               fontFamily: "'Great Vibes', cursive",
             }}
           >
-            LMS
+            MEDEX Academy of Pharmacy
           </Typography>
           <Typography>Welcome, {user}</Typography>
           <Button
@@ -141,8 +139,17 @@ export default function LMSApp() {
         }}
       >
         <Toolbar />
-        <Box sx={{ overflow: "auto", padding: 2 }}>
-          <List>
+        <Box
+          sx={{
+            overflow: "auto",
+            padding: 2,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start", // Align sidebar content to the left
+            gap: 2,
+          }}
+        >
+          <List sx={{ width: "100%" }}>
             {/* Main Menu Items */}
             <MenuItem
               icon={<Dashboard />}
@@ -151,7 +158,7 @@ export default function LMSApp() {
               iconColor="blue"
             />
 
-            <Divider sx={{ my: 2 }} />
+            <Divider sx={{ my: 2, width: "100%" }} />
 
             {/* Zoom Sessions Menu */}
             <MenuItem
@@ -177,7 +184,7 @@ export default function LMSApp() {
               </>
             )}
 
-            <Divider sx={{ my: 2 }} />
+            <Divider sx={{ my: 2, width: "100%" }} />
 
             {/* Other Sections */}
             <MenuItem
@@ -195,7 +202,7 @@ export default function LMSApp() {
             <MenuItem
               icon={<Dashboard />}
               label="Exams"
-              onClick={() => navigate("/EXAMS")}
+              onClick={() => navigate("/Results")}
               iconColor="teal"
             />
           </List>

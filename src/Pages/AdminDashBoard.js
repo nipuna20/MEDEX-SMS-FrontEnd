@@ -10,36 +10,27 @@ import {
   Stack,
   Typography,
   useMediaQuery,
+  CircularProgress,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
+import EditIcon from "@mui/icons-material/Edit";
 import MEDEXLogo from "../componant/MEDEXLogo.jpg";
 import { useSelector } from "react-redux";
 import { ModifiedTextField } from "../Theam/Theam";
 import { useNavigate } from "react-router-dom";
 import { services } from "../Services/services";
-import Loade from "../componant/Loader";
 
 export default function AdminDashBoard() {
   const navigate = useNavigate();
   const theme = useTheme();
-  const matchDownSM = useMediaQuery(theme.breakpoints.down("md"));
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
   const user = useSelector((state) => state.auth.authData?.email);
-  const [showPasswordForm, setShowPasswordForm] = useState(false); // Visibility state
+  const [showPasswordForm, setShowPasswordForm] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  const paperStyle = {
-    padding: 5,
-    maxWidth: { xs: 500, lg: 575 },
-    margin: { xs: 2.5, md: 3 },
-    borderRadius: 8,
-    "& > *": {
-      flexGrow: 1,
-      flexBasis: "50%",
-    },
-  };
 
   const validationSchema = Yup.object().shape({
     password: Yup.string()
@@ -47,7 +38,7 @@ export default function AdminDashBoard() {
       .required("Password is required")
       .matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
-        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+        "Must contain 8 characters, one uppercase, one lowercase, one number, and one special character."
       ),
   });
 
@@ -55,177 +46,195 @@ export default function AdminDashBoard() {
     password: "",
   };
 
-  const handleCreating = (values) => {
+  const handleCreating = async (values) => {
     setLoading(true);
-    console.log("Values:", values);
-    const updatedValues = {
-      ...values,
-      user,
-    };
-    console.log("updatedValues:", updatedValues);
+    const updatedValues = { ...values, user };
 
-    services.updateUserPassword(updatedValues).then((response) => {
+    try {
+      const response = await services.updateUserPassword(updatedValues);
       if (response.isSuccess) {
-        console.log("valuse in respons : ", updatedValues);
-        window.location.reload();
-        alert("Update New Password successfully");
+        alert("Password updated successfully");
+        setShowPasswordForm(false);
       } else {
-        console.log("add Course respons error");
+        alert("Failed to update password");
       }
+    } catch (error) {
+      alert("An error occurred. Please try again.");
+    } finally {
       setLoading(false);
-    });
+    }
   };
 
   return (
-    <Box sx={{ marginLeft: 60, marginRight: 60 }}>
+    <Box sx={{ paddingX: { xs: 3, sm: 6, lg: 10 }, paddingY: 5 }}>
+      {/* Profile Header */}
       <Card
         sx={{
-          borderRadius: 10,
-          backgroundColor: "rgb(180, 180, 179, 0.5 )",
-          paddingLeft: 20,
-          paddingRight: 20,
+          borderRadius: 5,
+          backgroundColor: theme.palette.background.paper,
+          textAlign: "center",
+          padding: 4,
+          boxShadow: theme.shadows[5],
         }}
-        elevation={2}
       >
-        <h2 style={{ textAlign: "center", marginTop: 30, marginBottom: 30 }}>
-          <b>ADMIN PROFILE</b>
-        </h2>
+        <Typography variant="h4" fontWeight="bold" color="primary.main">
+          Admin Profile
+        </Typography>
+        <Typography variant="body1" color="textSecondary" sx={{ marginTop: 1 }}>
+          Manage your profile and admin activities
+        </Typography>
       </Card>
-      <Box display="flex" justifyContent={"flex-start"} paddingTop={5}>
-        <Grid item sx={{ m: { xs: 1, sm: 3 }, mb: 0 }}>
-          <Paper elevation={10} sx={paperStyle}>
-            <Grid align={"center"} marginTop={4}>
-              <img alt="" src={MEDEXLogo} height={70} width={110} />
+
+      {/* Main Content */}
+      <Box display="flex" justifyContent="center" paddingTop={5}>
+        <Paper
+          elevation={6}
+          sx={{
+            padding: 4,
+            maxWidth: 600,
+            borderRadius: 5,
+            backgroundColor: theme.palette.background.default,
+          }}
+        >
+          <Grid container spacing={3} justifyContent="center">
+            {/* Logo and Welcome Section */}
+            <Grid item xs={12} textAlign="center">
+              <img alt="Medex Logo" src={MEDEXLogo} height={80} width={120} />
               <Typography
-                variant="h4"
-                gutterBottom
-                sx={{
-                  display: "flex",
-                  marginTop: 5,
-                  fontSize: {
-                    xs: "1.25rem",
-                    sm: "1.5rem",
-                    md: "1.75rem",
-                  },
-                  wordWrap: "break-word",
-                  textAlign: "center",
-                  justifyContent: "center",
-                }}
+                variant="h5"
+                fontWeight="bold"
+                sx={{ marginTop: 2, wordWrap: "break-word" }}
               >
                 {user}
               </Typography>
-              <Grid item>
-                <Stack alignItems="center" justifyContent="center" spacing={1}>
-                  <Typography
-                    fontWeight="bold"
-                    color={theme.palette.primary.main}
-                    gutterBottom
-                    variant={matchDownSM ? "h3" : "h2"}
-                  >
-                    Welcome
-                  </Typography>
-                  <Typography
-                    variant="caption"
-                    fontSize="18px"
-                    textAlign={matchDownSM ? "center" : "inherit"}
-                  >
-                    To Medex Institute
-                  </Typography>
-                  <br />
-                  <Button
-                    color="secondary"
-                    sx={{
-                      display: "flex",
-                      marginTop: 5,
-                      fontSize: "1.1rem",
-                      wordWrap: "break-word",
-                      textAlign: "center",
-                    }}
-                    onClick={() => setShowPasswordForm(!showPasswordForm)}
-                  >
-                    Edit User Password
-                  </Button>
-
-                  {/* Conditionally Render Password Form */}
-                  {showPasswordForm && (
-                    <Formik
-                      initialValues={initialValues}
-                      validationSchema={validationSchema}
-                      onSubmit={(values) => handleCreating(values)}
-                    >
-                      {({
-                        errors,
-                        touched,
-                        values,
-                        isSubmitting,
-                        handleBlur,
-                        handleChange,
-                        handleSubmit,
-                        isValid,
-                      }) => (
-                        <form noValidate onSubmit={handleSubmit}>
-                          <Box>
-                            <Grid container spacing={1}>
-                              <Grid item xs={12} md={12} padding={1}>
-                                <ModifiedTextField
-                                  fullWidth
-                                  label="New Password"
-                                  name="password"
-                                  value={values.password}
-                                  onBlur={handleBlur}
-                                  helperText={errors.password}
-                                  onChange={handleChange}
-                                  error={Boolean(
-                                    touched.password && errors.password
-                                  )}
-                                />
-                              </Grid>
-                              <Divider />
-                              <Button
-                                type="submit"
-                                variant="contained"
-                                disabled={!(isValid || isSubmitting)}
-                                sx={{
-                                  flexDirection: "column",
-                                  justifyContent: "center",
-                                  textAlign: "center",
-                                  margin: "auto",
-                                  borderRadius: 3,
-                                }}
-                              >
-                                Create New Password
-                              </Button>
-                            </Grid>
-                          </Box>
-                        </form>
-                      )}
-                    </Formik>
-                  )}
-                  {loading && <Loade />}
-                  <br />
-
-                  <br />
-
-                  <Button
-                    variant="contained"
-                    startIcon={<AccountBoxIcon />}
-                    sx={{ padding: 1.5 }}
-                    onClick={() => navigate("/addNewUser")}
-                  >
-                    User Creation
-                  </Button>
-                  <br/>
-                  <br/>
-                  <Button variant="outlined" color="error"
-                  onClick={() => navigate("/deleteUser")} >
-                    Delete User
-                  </Button>
-                </Stack>
-              </Grid>
-              <br />
+              <Typography
+                variant="h6"
+                color={theme.palette.primary.main}
+                sx={{ marginTop: 1 }}
+              >
+                Welcome
+              </Typography>
+              <Typography
+                variant="body1"
+                color="textSecondary"
+                sx={{ marginTop: 1 }}
+              >
+                To Medex Institute
+              </Typography>
             </Grid>
-          </Paper>
-        </Grid>
+
+            <Divider sx={{ width: "100%", marginY: 3 }} />
+
+            {/* Buttons Section */}
+            <Grid item xs={12}>
+              <Stack direction="column" spacing={2} alignItems="center">
+                <Button
+                  variant="contained"
+                  startIcon={<EditIcon />}
+                  sx={{
+                    width: { xs: "100%", sm: "auto" },
+                    textTransform: "none",
+                    fontSize: "1rem",
+                    paddingX: 3,
+                    borderRadius: 5,
+                  }}
+                  onClick={() => setShowPasswordForm(!showPasswordForm)}
+                >
+                  Edit User Password
+                </Button>
+                <Button
+                  variant="contained"
+                  color="success"
+                  startIcon={<AccountBoxIcon />}
+                  sx={{
+                    width: { xs: "100%", sm: "auto" },
+                    textTransform: "none",
+                    fontSize: "1rem",
+                    paddingX: 3,
+                    borderRadius: 5,
+                  }}
+                  onClick={() => navigate("/addNewUser")}
+                >
+                  User Creation
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="error"
+                  startIcon={<PersonRemoveIcon />}
+                  sx={{
+                    width: { xs: "100%", sm: "auto" },
+                    textTransform: "none",
+                    fontSize: "1rem",
+                    paddingX: 3,
+                    borderRadius: 5,
+                  }}
+                  onClick={() => navigate("/deleteUser")}
+                >
+                  Delete User
+                </Button>
+              </Stack>
+            </Grid>
+
+            {/* Password Form */}
+            {showPasswordForm && (
+              <Grid item xs={12}>
+                <Formik
+                  initialValues={initialValues}
+                  validationSchema={validationSchema}
+                  onSubmit={(values) => handleCreating(values)}
+                >
+                  {({
+                    errors,
+                    touched,
+                    values,
+                    handleBlur,
+                    handleChange,
+                    handleSubmit,
+                    isValid,
+                  }) => (
+                    <form noValidate onSubmit={handleSubmit}>
+                      <Stack spacing={2}>
+                        <ModifiedTextField
+                          fullWidth
+                          label="New Password"
+                          name="password"
+                          value={values.password}
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          helperText={
+                            touched.password && errors.password
+                              ? errors.password
+                              : "Enter a strong password"
+                          }
+                          error={Boolean(touched.password && errors.password)}
+                        />
+                        <Button
+                          type="submit"
+                          variant="contained"
+                          color="primary"
+                          disabled={!isValid || loading}
+                          sx={{
+                            width: "100%",
+                            textTransform: "none",
+                            padding: 1.5,
+                            fontSize: "1rem",
+                            borderRadius: 5,
+                          }}
+                        >
+                          {loading ? (
+                            <CircularProgress size={24} sx={{ color: "white" }} />
+                          ) : (
+                            "Update Password"
+                          )}
+                        </Button>
+                      </Stack>
+                    </form>
+                  )}
+                </Formik>
+              </Grid>
+            )}
+          </Grid>
+        </Paper>
       </Box>
     </Box>
   );
