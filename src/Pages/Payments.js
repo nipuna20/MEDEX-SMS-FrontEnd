@@ -13,6 +13,7 @@ import {
   Alert,
 } from "@mui/material";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
+import { services } from "../Services/services";
 
 const steps = [
   "Select a Course",
@@ -45,18 +46,27 @@ const PaymentForm = () => {
 
     if (activeStep === steps.length - 1) {
       // Display collected data in the console
-      const courseDetails = {
-        courseName: selectedCourse,
-        paymentPlans: selectedPlan,
-        studentId: studentId,
-        file: paySlip ? paySlip.name : "No file uploaded"
-    };
-      console.log("Selected Course:", courseDetails);
-      // console.log("Selected Payment Plan:", selectedPlan);
-      // console.log("Student ID:", studentId);
-      // console.log("Uploaded Pay Slip:", paySlip ? paySlip.name : "No file uploaded");
+      const formData = new FormData();
+      formData.append("courseName", selectedCourse);
+      formData.append("paymentPlans", selectedPlan);
+      formData.append("studentId", studentId);
+      if (paySlip) {
+        formData.append("file", paySlip);
+      }
+      
 
-      // Display success message
+    services.createNewPayment(formData).then((response) => {
+      if (response.isSuccess) {
+        console.log("valuse in response : ",formData);
+      //  window.location.reload()
+        // alert("your Course create successfully");
+      } else {
+        console.log("add Course respons error");
+      }
+      // setLoading(false);
+    });
+      console.log("Selected Course:", formData);
+      
       setIsSubmitted(true);
 
       // Reset the form after submission

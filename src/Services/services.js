@@ -67,6 +67,7 @@ export const services = {
   getExamDetails,
   updateExamDetails,
   deleteExamDetails,
+  createNewPayment
 };
 
 
@@ -352,6 +353,20 @@ async function addPaidStudentInLectureMaterial(formData){
   }
 }
 
+/////////////////////////////////////////
+/////////create new payment
+async function createNewPayment(formData){
+  
+  try {
+    const result = await api.addNewPayment(formData);
+    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaassssssssssssssssssssssssssssss",formData)
+    return {isSuccess: true, result:result };
+  } catch (error) {
+    return { isSuccess: false, result:error}
+  }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////
 ///employee///
 

@@ -395,6 +395,7 @@ export const lectureResources = () => {
 //   return api.post("/api/v1/users/resources/upload", postData);
 // };
 
+//////// Add paid student is lecture resources
 export const addLectureMaterialUpdatingResources = (formData) => {
   console.log("form data is:", [...formData.entries()]);
   return api.post("/api/v1/users/resources/upload", formData, {
@@ -406,7 +407,7 @@ export const addLectureMaterialUpdatingResources = (formData) => {
 
 
 //////// Add paid student is lecture resources
-////create new Zoom Subject
+////create new payed student
 export const addStudentInResources = (formData) => {
   console.log("sample course is", formData);
 
@@ -425,6 +426,22 @@ export const addStudentInResources = (formData) => {
   });
 };
 
+
+
+ ////////////////////////////////////////////////
+ /////////// creat new payment
+ export const addNewPayment = (formData) => {
+  console.log("form data is:", [...formData.entries()]);
+  return api.post("/api/v1/users/Payment/upload", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////6745ea9df06793442ed80457
 
