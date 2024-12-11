@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Typography,
@@ -31,6 +31,41 @@ const PaymentForm = () => {
   const [studentId, setStudentId] = useState("");
   const [error, setError] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [coursesData, setCoursesData] = useState([]);
+  const [paymentPlansData, setPaymentPlansData] = useState([]);
+  const [filteredPlans, setFilteredPlans] = useState([]);
+
+  const fetchCoursesData = () => {
+    services.CoursesData().then((response) => {
+      if (response.isSuccess) {
+        setCoursesData(response.data);
+      }
+    });
+  };
+
+  const fetchPaymentPlans = () => {
+    services.paymentPlansData().then((response) => {
+      if (response.isSuccess) {
+        setPaymentPlansData(response.data);
+      }
+    });
+  };
+
+  useEffect(() => {
+    fetchCoursesData();
+    fetchPaymentPlans();
+  }, []);
+
+  useEffect(() => {
+    if (selectedCourse) {
+      const filtered = paymentPlansData.filter(
+        (plan) => plan.CourseName === selectedCourse
+      );
+      setFilteredPlans(filtered);
+    } else {
+      setFilteredPlans([]);
+    }
+  }, [selectedCourse, paymentPlansData]);
 
   const handleNext = () => {
     if (
@@ -45,7 +80,6 @@ const PaymentForm = () => {
     setError("");
 
     if (activeStep === steps.length - 1) {
-      // Display collected data in the console
       const formData = new FormData();
       formData.append("courseName", selectedCourse);
       formData.append("paymentPlans", selectedPlan);
@@ -53,23 +87,16 @@ const PaymentForm = () => {
       if (paySlip) {
         formData.append("file", paySlip);
       }
-      
 
-    services.createNewPayment(formData).then((response) => {
-      if (response.isSuccess) {
-        console.log("valuse in response : ",formData);
-      //  window.location.reload()
-        // alert("your Course create successfully");
-      } else {
-        console.log("add Course respons error");
-      }
-      // setLoading(false);
-    });
-      console.log("Selected Course:", formData);
-      
+      services.createNewPayment(formData).then((response) => {
+        if (response.isSuccess) {
+          console.log("Values in response:", formData);
+        } else {
+          console.log("Add course response error");
+        }
+      });
+
       setIsSubmitted(true);
-
-      // Reset the form after submission
       setActiveStep(0);
       setSelectedCourse("");
       setSelectedPlan("");
@@ -142,7 +169,6 @@ const PaymentForm = () => {
           </Typography>
         ) : (
           <>
-            {/* Step 0: Select Course */}
             {activeStep === 0 && (
               <TextField
                 select
@@ -152,13 +178,14 @@ const PaymentForm = () => {
                 fullWidth
                 margin="normal"
               >
-                <MenuItem value="Course 1">Course 1</MenuItem>
-                <MenuItem value="Course 2">Course 2</MenuItem>
-                <MenuItem value="Course 3">Course 3</MenuItem>
+                {coursesData.map((course, index) => (
+                  <MenuItem key={index} value={course.CourseName}>
+                    {course.CourseName}
+                  </MenuItem>
+                ))}
               </TextField>
             )}
 
-            {/* Step 1: View Payment Plans */}
             {activeStep === 1 && (
               <Typography
                 sx={{
@@ -172,14 +199,13 @@ const PaymentForm = () => {
               >
                 Available Payment Plans:
                 <ul>
-                  <li>Plan 1 - $200 per month</li>
-                  <li>Plan 2 - $500 upfront</li>
-                  <li>Plan 3 - $100 per week</li>
+                  {filteredPlans.map((plan, index) => (
+                    <li key={index}>{plan.PaymentPlansName} - {plan.PaymentAmountForDuration} {plan.TmeDuration}</li>
+                  ))}
                 </ul>
               </Typography>
             )}
 
-            {/* Step 2: Select a Plan */}
             {activeStep === 2 && (
               <TextField
                 select
@@ -189,13 +215,14 @@ const PaymentForm = () => {
                 fullWidth
                 margin="normal"
               >
-                <MenuItem value="Plan 1">Plan 1</MenuItem>
-                <MenuItem value="Plan 2">Plan 2</MenuItem>
-                <MenuItem value="Plan 3">Plan 3</MenuItem>
+                {filteredPlans.map((plan, index) => (
+                  <MenuItem key={index} value={plan.PaymentPlansName}>
+                    {plan.PaymentPlansName}
+                  </MenuItem>
+                ))}
               </TextField>
             )}
 
-            {/* Step 3: Attach Pay Slip */}
             {activeStep === 3 && (
               <>
                 <TextField
@@ -231,7 +258,6 @@ const PaymentForm = () => {
               </>
             )}
 
-            {/* Navigation Buttons */}
             <Box display="flex" justifyContent="space-between" marginTop={4}>
               <Button
                 disabled={activeStep === 0}
@@ -259,6 +285,7 @@ const PaymentForm = () => {
       </Paper>
     </Container>
   );
-};
+}
+
 
 export default PaymentForm;

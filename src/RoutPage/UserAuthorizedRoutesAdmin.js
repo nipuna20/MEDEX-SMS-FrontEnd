@@ -17,6 +17,7 @@ import AuthorHeader from "./AuthorHeader";
 import AddExamDetails from "../Pages/AddExam"
 import ExamDetails from "../Pages/ExamList"
 import PaymentsAdmin from "../Pages/PaymentsAdmin";
+import AddPaymentPlan from "../Pages/AddPaymentPlan";
 
 const UserAuthorizedRoutesAdmin = [
   {
@@ -98,6 +99,10 @@ const UserAuthorizedRoutesAdmin = [
       {
         path: "/payments",
         element: <PaymentsAdmin />
+      },
+      {
+        path: "/PaymentPlan",
+        element:<AddPaymentPlan/>
       },
 
       {

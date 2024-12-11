@@ -68,7 +68,8 @@ export const services = {
   updateExamDetails,
   deleteExamDetails,
   createNewPayment,
-  paymentPlansData
+  paymentPlansData,
+  createPaymentPlan
 };
 
 
@@ -375,6 +376,16 @@ async function paymentPlansData(){
     return{isSuccess: true, data: data.CoursesData}
   } catch (error) {
     console.log(error)
+  }
+}
+
+//////////////create new payment plan
+async function createPaymentPlan(formData){
+  try {
+    const result = await api.createNewPaymentPlan(formData);
+    return {isSuccess: true, result:result };
+  } catch (error) {
+    return { isSuccess: false, result:error}
   }
 }
 

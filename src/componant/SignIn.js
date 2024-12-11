@@ -444,7 +444,25 @@ export const addStudentInResources = (formData) => {
     },
   });
 };
+////////create new payment plan
+export const createNewPaymentPlan = (formData) => {
+  console.log("sample plan is", formData);
 
+  const jsonData = {
+    CourseName: formData.CourseName,
+    PaymentPlansName: formData.PaymentPlansName,
+    PaymentAmountForDuration: formData.PaymentAmountForDuration,
+    TmeDuration: formData.TmeDuration,
+  };
+
+  console.log("JSON data sample is:", jsonData);
+
+  return api.post("/api/v1/users/Payment/Plans", jsonData, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////

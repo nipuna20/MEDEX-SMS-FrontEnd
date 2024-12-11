@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import { services } from "../Services/services";
+import { useNavigate } from "react-router-dom";
 
 const steps = [
   "Select a Course",
@@ -24,6 +25,7 @@ const steps = [
 ];
 
 export default function PaymentsAdmin() {
+  const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(0);
   const [selectedCourse, setSelectedCourse] = useState("");
   const [selectedPlan, setSelectedPlan] = useState("");
@@ -200,7 +202,10 @@ export default function PaymentsAdmin() {
                 Available Payment Plans:
                 <ul>
                   {filteredPlans.map((plan, index) => (
-                    <li key={index}>{plan.PaymentPlansName} - {plan.PaymentAmountForDuration} {plan.TmeDuration}</li>
+                    <li key={index}>
+                      {plan.PaymentPlansName} - {plan.PaymentAmountForDuration}{" "}
+                      {plan.TmeDuration}
+                    </li>
                   ))}
                 </ul>
               </Typography>
@@ -282,6 +287,17 @@ export default function PaymentsAdmin() {
             </Box>
           </>
         )}
+     <Box mt={4} textAlign="center">
+    <Button
+      variant="contained"
+      color="primary"
+      onClick={() => {
+        navigate("/PaymentPlan");
+      }}
+    >
+      Add New Payment Plan
+    </Button>
+  </Box>
       </Paper>
     </Container>
   );
