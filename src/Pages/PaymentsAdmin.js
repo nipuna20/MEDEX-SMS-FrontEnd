@@ -205,9 +205,14 @@ export default function PaymentsAdmin() {
                 >
                   Available Payment Plans:
                   <ul>
-                    <li>Plan 1 - $200 per month</li>
+                  {paymentPlansData.map((course, index) => (
+                      <li key={index} value={course.PaymentPlansName}>
+                        {course.PaymentPlansName}
+                      </li>
+                    ))}
+                    {/* <li>Plan 1 - $200 per month</li>
                     <li>Plan 2 - $500 upfront</li>
-                    <li>Plan 3 - $100 per week</li>
+                    <li>Plan 3 - $100 per week</li> */}
                   </ul>
                 </Typography>
               )}
@@ -221,10 +226,14 @@ export default function PaymentsAdmin() {
                   onChange={(e) => setSelectedPlan(e.target.value)}
                   fullWidth
                   margin="normal"
-                >
-                  <MenuItem value="Plan 1">Plan 1</MenuItem>
+                > {paymentPlansData.map((course, index) => (
+                  <MenuItem key={index} value={course.PaymentPlansName}>
+                    {course.PaymentPlansName}
+                  </MenuItem>
+                ))}
+                  {/* <MenuItem value="Plan 1">Plan 1</MenuItem>
                   <MenuItem value="Plan 2">Plan 2</MenuItem>
-                  <MenuItem value="Plan 3">Plan 3</MenuItem>
+                  <MenuItem value="Plan 3">Plan 3</MenuItem> */}
                 </TextField>
               )}
   
