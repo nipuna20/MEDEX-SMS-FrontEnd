@@ -21,20 +21,20 @@ import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { handleLogin } from "./handleLogin";
 import Loade from "../componant/Loader";
-import { services } from "../Services/services"
+import { services } from "../Services/services";
 import { AUTH } from "../componant/const";
-import MEDEXLogo from "../componant/MEDEXLogo.jpg"
+import FinalLogo from "../componant/FinalLogo.png";
 
 export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const {role} = location.state || {role : "Error"}
+  const { role } = location.state || { role: "Error" };
   const [loading, setLoading] = useState(false);
-  // const setLoading = (false)
 
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down("md"));
+
   const paperStyle = {
     padding: 5,
     maxWidth: { xs: 400, lg: 475 },
@@ -53,37 +53,23 @@ export default function Login() {
   };
 
   const handleCreating = (values) => {
-    // setLoading(true);
     console.log("login Data:  11  :", values);
     services.newUserLogin(values).then((response) => {
       if (response.isSuccess) {
         console.log("login Data:", values);
         dispatch({
           type: AUTH,
-          payload:response.result.data
-
-        })
+          payload: response.result.data,
+        });
         navigate("/");
-        // alert("your login successfully");
-
       } else {
-        console.log("user loging respons error");
+        console.log("user login response error");
       }
-
-      // setLoading(false);
     });
   };
 
-
-
-  // const handleLogin = (values, setSubmitting) => {
-  //   setSubmitting(false);
-  //   console.log("User Data:", values);
-  //   // navigate("/Cards");
-  // };
-
   const validationSchema = Yup.object().shape({
-    username: Yup.string().max(255).required("User mail is required"),
+    username: Yup.string().max(255).required("User email is required"),
     password: Yup.string()
       .max(255)
       .required("Password is required")
@@ -102,7 +88,6 @@ export default function Login() {
           setSubmitting(false);
           setLoading(true);
           dispatch(handleCreating(values, setSubmitting, navigate, setLoading));
-    
         }}
       >
         {({
@@ -115,11 +100,22 @@ export default function Login() {
           values,
         }) => (
           <form noValidate onSubmit={handleSubmit}>
-            <Grid container justifyContent="center" alignItems="center">
+            <Grid
+              container
+              justifyContent="center"
+              alignItems="center"
+              sx={{
+                minHeight: "100vh",
+                backgroundImage: `url('https://cdn.prod.website-files.com/648a830e8b95457fb1b564c7/64cc929bbbc64e65658a82c1_business-partners-working-together-at-office-2022-10-11-20-08-21-utc%201.png')`, // Properly set the background image
+                backgroundSize: "cover", // Ensures the image covers the whole container
+                backgroundPosition: "center", // Centers the image
+                backgroundRepeat: "no-repeat", // Prevents the image from repeating
+              }}
+            >
               <Grid item sx={{ m: { xs: 1, sm: 3 }, mb: 0 }}>
                 <Paper elevation={10} sx={paperStyle}>
                   <Grid align={"center"} marginTop={4}>
-                    <img alt="" src={MEDEXLogo} height={70} width={110} />
+                    <img alt="" src={FinalLogo} height={70} width={110} />
                     <Typography fontSize="40px">{role}</Typography>
                     <Grid item>
                       <Stack
@@ -146,7 +142,7 @@ export default function Login() {
                     </Grid>
                     <br />
                     <ModifiedTextField
-                    type="email"
+                      type="email"
                       id="outlined-basic"
                       label="User Email"
                       name="username"

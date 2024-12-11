@@ -9,13 +9,14 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import ReactPlayer from "react-player";
 import { services } from "../Services/services";
 import { useNavigate } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
 
 export default function ZoomRecordingsAdmin() {
-  const [record, setRecordings] = useState([]);
+  const [record, setRecordings] = useState([]); // Default to an empty array
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -23,8 +24,11 @@ export default function ZoomRecordingsAdmin() {
     try {
       const response = await services.ZoomRecordingsData();
       if (response.isSuccess) {
-        console.log("Response data:aaaaaaaaaaaaaaa", response.data);
-        return response.data;
+        console.log("Sample data:", response.data);
+        return response.data.map((item) => ({
+          ...item,
+          links: Array.isArray(item.links) ? item.links : [], // Ensure links is an array
+        }));
       } else {
         console.error("Failed to fetch course details");
         return [];
@@ -35,51 +39,74 @@ export default function ZoomRecordingsAdmin() {
     }
   };
 
-  const subjectDelete = async (values) => {
-    console.log("table value is ", values);
-    services.recordingSubjectDelete(values).then((response) => {
+  const subjectDelete = async (subjectId) => {
+    try {
+      const response = await services.recordingSubjectDelete(subjectId);
       if (response.isSuccess) {
-        console.log("check table data delete ", values);
-        alert("Services data Row Delete successfully");
-        window.location.reload();
+        alert("Subject deleted successfully");
+        setRecordings((prev) =>
+          prev.filter((item) => item._id !== subjectId)
+        );
       } else {
-        console.log("delet row respons error");
+        console.error("Failed to delete subject");
       }
-    });
+    } catch (error) {
+      console.error("Error deleting subject:", error);
+    }
   };
 
   const lectureDelete = async (subjectId, lectureId) => {
     const value = {
       subjectId: subjectId,
-      lectureId:lectureId
-  };
-    console.log("table value is ", value);
-    services.recordingLectureDelete(value).then((response) => {
+      lectureId: lectureId,
+    };
+    try {
+      const response = await services.recordingLectureDelete(value);
       if (response.isSuccess) {
-        console.log("check table data delete ", value);
-        alert("Services data Row Delete successfully");
-        window.location.reload();
+        alert("Lecture deleted successfully");
+        setRecordings((prev) =>
+          prev.map((item) =>
+            item._id === subjectId
+              ? {
+                ...item,
+                links: item.links.filter((link) => link._id !== lectureId),
+              }
+              : item
+          )
+        );
       } else {
-        console.log("delet row respons error");
+        console.error("Failed to delete lecture");
       }
-    });
+    } catch (error) {
+      console.error("Error deleting lecture:", error);
+    }
   };
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       const zoomData = await fetchZoomLinksData();
-      console.log("sample zoom data ???",zoomData)
       setRecordings(zoomData);
       setLoading(false);
     };
 
-
     fetchData();
   }, []);
 
+  const ReactPlayerComponent = ({ url }) => {
+    return (
+      <ReactPlayer
+        url={url}
+        controls
+        width="100%"
+        height="360px"
+        onError={(e) => console.error("Error loading video. Check URL or format.", e)}
+      />
+    );
+  };
+
   if (loading) {
-    return <div style={{ textAlign: "center" }}>Loading Recordings..</div>;
+    return <div style={{ textAlign: "center" }}>Loading Recordings...</div>;
   }
 
   if (record.length === 0) {
@@ -87,7 +114,7 @@ export default function ZoomRecordingsAdmin() {
       <Card
         sx={{
           borderRadius: 3,
-          backgroundColor: "rgb(180, 180, 179, 0.5 )",
+          backgroundColor: "rgb(180, 180, 179, 0.5)",
           margin: 3,
           paddingTop: 1,
           paddingBottom: 1,
@@ -102,7 +129,7 @@ export default function ZoomRecordingsAdmin() {
   }
 
   const subjectCards = (item, index) => (
-    <Grid key={index} item xs={7} sm={8} md={10} lg={10} xl={10}>
+    <Grid key={index} item xs={12} sm={10} md={8}>
       <Card
         sx={{
           borderRadius: 3,
@@ -126,58 +153,47 @@ export default function ZoomRecordingsAdmin() {
         <Typography sx={{ fontSize: "32px" }}>{item.subject}</Typography>
         <ul>
           <Stack spacing={2} key={index}>
-            {item.links.map((link, linkIndex) => (
-              <ul key={linkIndex}>
-                {/* <a href={link.url} target="_blank" rel="noopener noreferrer">
+            {Array.isArray(item.links) && item.links.length > 0 ? (
+              item.links.map((link, linkIndex) => (
+                <ul key={linkIndex}>
+                  <Typography sx={{ fontSize: 20, color: "rgb(61, 59, 243)" }}>
                     {link.title}
-                  </a> */}
-                <Typography sx={{ fontSize: 20, color: "rgb(61, 59, 243)" }}>
-                  {link.title}
-                </Typography>
-
-                <iframe
-                  width="50%"
-                  height="315"
-                  src={link.url}
-                  title={link.title}
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
-                <Button
-                  variant="outlined"
-                  color="error"
-                  sx={{
-                    marginLeft: "20px",
-                    height: "fit-content", // Align height with the iframe
-                  }}
-                  onClick={() => lectureDelete(item._id, link._id)}
-                >
-                  Delete
-                </Button>
-
-                <li>
-                  <Typography
-                    sx={{
-                      fontSize: "13px",
-                      color: "grey",
-                      marginTop: "2px",
-                    }}
-                  >
-                    {link.description}
                   </Typography>
-                  <Divider />
-                </li>
-              </ul>
-            ))}
+                  <ReactPlayerComponent url={link.url} />
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    sx={{
+                      marginLeft: "20px",
+                      height: "fit-content",
+                      marginTop: "10px",
+                    }}
+                    onClick={() => lectureDelete(item._id, link._id)}
+                  >
+                    Delete Lecture
+                  </Button>
+                  <li>
+                    <Typography
+                      sx={{
+                        fontSize: "13px",
+                        color: "grey",
+                        marginTop: "2px",
+                      }}
+                    >
+                      {link.description}
+                    </Typography>
+                    <Divider />
+                  </li>
+                </ul>
+              ))
+            ) : (
+              <Typography>No links available</Typography>
+            )}
           </Stack>
         </ul>
         <Button
           variant="outlined"
           sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
             marginTop: 2,
             width: "100%",
             maxWidth: "200px",
@@ -197,12 +213,13 @@ export default function ZoomRecordingsAdmin() {
       <Card
         sx={{
           borderRadius: 3,
-          backgroundColor: "rgb(180, 180, 179, 0.5 )",
-          margin: "1rem",
+          backgroundColor: "rgb(180, 180, 179, 0.5)",
+          margin: "1rem auto", // Center the card horizontally
           padding: "1rem",
-          width: "75vw", // Set a reasonable width to avoid overflow
-          float: "left", // Align the Card to the left
-          boxSizing: "border-box", // Ensures padding is included in width and height
+          width: "90vw", // Increase the width
+          maxWidth: "1200px", // Set a max-width for responsiveness
+          boxSizing: "border-box",
+          textAlign: "center", // Center all text inside
         }}
         elevation={2}
       >
@@ -210,36 +227,36 @@ export default function ZoomRecordingsAdmin() {
           <h2 style={{ textAlign: "center", marginTop: 10, marginBottom: 30 }}>
             <b>LECTURE RECORDINGS</b>
           </h2>
-
-          <Grid
-            sx={{
-              margin: "1rem",
-              padding: "1rem",
-            }}
-          >
+          <Grid container spacing={3} justifyContent="center">
             {record.map((card, key) => subjectCards(card, key))}
-            <Box display="flex" justifyContent="center" marginTop={8} style={{ width: "100%" }}>
-          <IconButton
-            size="large"
-            sx={{
-              borderRadius: "50%",
-              backgroundColor: "#007BFF",
-              padding: 1.5,
-              color: "#FFFFFF",
-              transition: "transform 0.2s, background-color 0.2s",
-              "&:hover": {
-                transform: "scale(1.1)",
-                backgroundColor: "#0056b3",
-              },
-            }}
-            onClick={() => navigate("/AddZoomRecordingSubject")}
-          >
-            <AddIcon />
-          </IconButton>
-        </Box>
           </Grid>
+          <Box
+            display="flex"
+            justifyContent="center"
+            marginTop={8}
+            style={{ width: "100%" }}
+          >
+            <IconButton
+              size="large"
+              sx={{
+                borderRadius: "50%",
+                backgroundColor: "#007BFF",
+                padding: 1.5,
+                color: "#FFFFFF",
+                transition: "transform 0.2s, background-color 0.2s",
+                "&:hover": {
+                  transform: "scale(1.1)",
+                  backgroundColor: "#0056b3",
+                },
+              }}
+              onClick={() => navigate("/AddZoomRecordingSubject")}
+            >
+              <AddIcon />
+            </IconButton>
+          </Box>
         </div>
       </Card>
+
     </>
   );
 }

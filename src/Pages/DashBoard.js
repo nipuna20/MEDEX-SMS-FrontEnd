@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 import {
-  Box,
   Button,
   Card,
   Divider,
   Grid,
-  Paper,
-  Stack,
   Typography,
   CircularProgress,
   useMediaQuery,
@@ -60,14 +57,28 @@ export default function Payments() {
   };
 
   return (
-    <Box sx={{ marginX: { xs: 2, sm: 6, lg: 12 }, marginTop: 4 }}>
+    <div
+      style={{
+        width: "100%",
+        height: "100vh", // Full height of the viewport
+        backgroundColor: theme.palette.background.default, // Set background color
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "20px",
+      }}
+    >
       {/* Header Card */}
       <Card
         sx={{
+          width: "100%",
+          maxWidth: 1200,
           borderRadius: 8,
           backgroundColor: theme.palette.background.paper,
           textAlign: "center",
-          padding: 3,
+          padding: { xs: 3, sm: 4, md: 5 },
+          marginBottom: 4,
         }}
         elevation={3}
       >
@@ -80,131 +91,130 @@ export default function Payments() {
       </Card>
 
       {/* Main Content */}
-      <Box display="flex" justifyContent="center" paddingTop={5}>
-        <Paper
-          elevation={4}
-          sx={{
-            padding: { xs: 3, sm: 4, md: 5 },
-            maxWidth: 600,
-            borderRadius: 5,
-            backgroundColor: theme.palette.background.default,
-          }}
-        >
-          <Grid container spacing={3}>
-            {/* Logo and Welcome Section */}
-            <Grid item xs={12} textAlign="center">
-              <img alt="Medex Logo" src={MEDEXLogo} height={80} width={120} />
-              <Typography
-                variant="h5"
-                fontWeight="bold"
-                sx={{ marginTop: 2, wordWrap: "break-word" }}
-              >
-                {user}
-              </Typography>
-              <Typography
-                variant="h6"
-                color={theme.palette.primary.main}
-                sx={{ marginTop: 1 }}
-              >
-                Welcome
-              </Typography>
-              <Typography
-                variant="body1"
-                color="textSecondary"
-                sx={{ marginTop: 1 }}
-              >
-                To Medex Institute
-              </Typography>
-            </Grid>
-
-            <Divider sx={{ width: "100%", marginY: 2 }} />
-
-            {/* Edit Password Button */}
-            <Grid item xs={12} textAlign="center">
-              <Button
-                variant="contained"
-                color="secondary"
-                sx={{
-                  fontSize: "1rem",
-                  textTransform: "none",
-                  paddingX: 3,
-                  borderRadius: 5,
-                }}
-                onClick={() => setShowPasswordForm(!showPasswordForm)}
-              >
-                Edit User Password
-              </Button>
-            </Grid>
-
-            {/* Password Form */}
-            {showPasswordForm && (
-              <Grid item xs={12}>
-                <Formik
-                  initialValues={initialValues}
-                  validationSchema={validationSchema}
-                  onSubmit={(values) => handleCreating(values)}
-                >
-                  {({
-                    errors,
-                    touched,
-                    values,
-                    handleBlur,
-                    handleChange,
-                    handleSubmit,
-                    isValid,
-                  }) => (
-                    <form noValidate onSubmit={handleSubmit}>
-                      <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                          <ModifiedTextField
-                            fullWidth
-                            label="New Password"
-                            name="password"
-                            value={values.password}
-                            onBlur={handleBlur}
-                            onChange={handleChange}
-                            helperText={
-                              touched.password && errors.password
-                                ? errors.password
-                                : "Must be at least 8 characters."
-                            }
-                            error={Boolean(touched.password && errors.password)}
-                          />
-                        </Grid>
-                        <Grid item xs={12} textAlign="center">
-                          <Button
-                            type="submit"
-                            variant="contained"
-                            color="primary"
-                            sx={{
-                              borderRadius: 5,
-                              paddingX: 4,
-                              paddingY: 1.2,
-                              textTransform: "none",
-                              fontSize: "1rem",
-                              width: { xs: "100%", sm: "auto" },
-                            }}
-                            disabled={!isValid || loading}
-                          >
-                            {loading ? (
-                              <CircularProgress
-                                size={24}
-                                sx={{ color: "white" }}
-                              />
-                            ) : (
-                              "Update Password"
-                            )}
-                          </Button>
-                        </Grid>
-                      </Grid>
-                    </form>
-                  )}
-                </Formik>
-              </Grid>
-            )}
+      <Card
+        elevation={4}
+        sx={{
+          padding: { xs: 4, sm: 5, md: 6 },
+          width: "100%",
+          maxWidth: 600,
+          borderRadius: 5,
+          backgroundColor: theme.palette.background.paper,
+        }}
+      >
+        <Grid container spacing={3}>
+          {/* Logo and Welcome Section */}
+          <Grid item xs={12} textAlign="center">
+            <img alt="Medex Logo" src={MEDEXLogo} height={100} width={140} />
+            <Typography
+              variant="h5"
+              fontWeight="bold"
+              sx={{ marginTop: 2, wordWrap: "break-word" }}
+            >
+              {user}
+            </Typography>
+            <Typography
+              variant="h6"
+              color={theme.palette.primary.main}
+              sx={{ marginTop: 1 }}
+            >
+              Welcome
+            </Typography>
+            <Typography
+              variant="body1"
+              color="textSecondary"
+              sx={{ marginTop: 1 }}
+            >
+              To Medex Institute
+            </Typography>
           </Grid>
-        </Paper>
-      </Box>
-    </Box>
+
+          <Divider sx={{ width: "100%", marginY: 2 }} />
+
+          {/* Edit Password Button */}
+          <Grid item xs={12} textAlign="center">
+            <Button
+              variant="contained"
+              color="secondary"
+              sx={{
+                fontSize: "1rem",
+                textTransform: "none",
+                paddingX: 4,
+                borderRadius: 5,
+              }}
+              onClick={() => setShowPasswordForm(!showPasswordForm)}
+            >
+              Edit User Password
+            </Button>
+          </Grid>
+
+          {/* Password Form */}
+          {showPasswordForm && (
+            <Grid item xs={12}>
+              <Formik
+                initialValues={initialValues}
+                validationSchema={validationSchema}
+                onSubmit={(values) => handleCreating(values)}
+              >
+                {({
+                  errors,
+                  touched,
+                  values,
+                  handleBlur,
+                  handleChange,
+                  handleSubmit,
+                  isValid,
+                }) => (
+                  <form noValidate onSubmit={handleSubmit}>
+                    <Grid container spacing={3}>
+                      <Grid item xs={12}>
+                        <ModifiedTextField
+                          fullWidth
+                          label="New Password"
+                          name="password"
+                          value={values.password}
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          helperText={
+                            touched.password && errors.password
+                              ? errors.password
+                              : "Must be at least 8 characters."
+                          }
+                          error={Boolean(touched.password && errors.password)}
+                        />
+                      </Grid>
+                      <Grid item xs={12} textAlign="center">
+                        <Button
+                          type="submit"
+                          variant="contained"
+                          color="primary"
+                          sx={{
+                            borderRadius: 5,
+                            paddingX: 4,
+                            paddingY: 1.2,
+                            textTransform: "none",
+                            fontSize: "1rem",
+                            width: { xs: "100%", sm: "auto" },
+                          }}
+                          disabled={!isValid || loading}
+                        >
+                          {loading ? (
+                            <CircularProgress
+                              size={24}
+                              sx={{ color: "white" }}
+                            />
+                          ) : (
+                            "Update Password"
+                          )}
+                        </Button>
+                      </Grid>
+                    </Grid>
+                  </form>
+                )}
+              </Formik>
+            </Grid>
+          )}
+        </Grid>
+      </Card>
+    </div>
   );
 }
