@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Typography,
@@ -31,6 +31,23 @@ export default function PaymentsAdmin() {
     const [studentId, setStudentId] = useState("");
     const [error, setError] = useState("");
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [coursesData, setCoursesData] = useState([]);
+
+
+    const fetchCoursesData = () => {
+      services.CoursesData().then((response) => {
+        if (response.isSuccess) {
+          setCoursesData(response.data);
+        }
+      });
+    };
+  
+    useEffect(() => {
+      fetchCoursesData();
+      
+    }, []);
+
+    console.log("cose data :", coursesData)
   
     const handleNext = () => {
       if (
