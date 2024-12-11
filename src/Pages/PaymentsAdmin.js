@@ -32,6 +32,7 @@ export default function PaymentsAdmin() {
     const [error, setError] = useState("");
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [coursesData, setCoursesData] = useState([]);
+    const [paymentPlansData, setPaymentPlansData] = useState([]);
 
 
     const fetchCoursesData = () => {
@@ -41,13 +42,23 @@ export default function PaymentsAdmin() {
         }
       });
     };
+
+    const fetchPaymentPlans = () => {
+      services.paymentPlansData().then((response) => {
+        if (response.isSuccess) {
+          console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaa",response)
+          setPaymentPlansData(response.data);
+        }
+      });
+    };
   
     useEffect(() => {
       fetchCoursesData();
-      
+      fetchPaymentPlans()
     }, []);
 
-    console.log("cose data :", coursesData)
+    // console.log("cose data :", coursesData)
+    console.log("payment Plans Data",paymentPlansData)
   
     const handleNext = () => {
       if (
@@ -169,9 +180,14 @@ export default function PaymentsAdmin() {
                   fullWidth
                   margin="normal"
                 >
-                  <MenuItem value="Course 1">Course 1</MenuItem>
+                {coursesData.map((course, index) => (
+                      <MenuItem key={index} value={course.CourseName}>
+                        {course.CourseName}
+                      </MenuItem>
+                    ))}
+                  {/* <MenuItem value="Course 1">Course 1</MenuItem>
                   <MenuItem value="Course 2">Course 2</MenuItem>
-                  <MenuItem value="Course 3">Course 3</MenuItem>
+                  <MenuItem value="Course 3">Course 3</MenuItem> */}
                 </TextField>
               )}
   

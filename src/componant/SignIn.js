@@ -378,7 +378,13 @@ export const lectureResources = () => {
   console.log("check matirial respons")
   return api.get("api/v1/users/resources");
 };
-
+  
+/////////////////////////////////////
+////////// get payment plans
+export const paymentPlans = () => {
+  console.log("check material response")
+  return api.get("api/v1/users/Payment/Plans");
+}; 
 
 
 ////////// material creation update resources
