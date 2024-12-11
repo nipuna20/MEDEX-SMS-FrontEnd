@@ -35,6 +35,7 @@ export default function PaymentsAdmin() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [coursesData, setCoursesData] = useState([]);
   const [paymentPlansData, setPaymentPlansData] = useState([]);
+  const [paidStudentData, setPaidStudentData] = useState([]);
   const [filteredPlans, setFilteredPlans] = useState([]);
 
   const fetchCoursesData = () => {
@@ -53,10 +54,21 @@ export default function PaymentsAdmin() {
     });
   };
 
+  const fetchPaidStudent = () => {
+    services.paymentStudentData().then((response) => {
+      if (response.isSuccess) {
+        setPaidStudentData(response.data);
+      }
+    });
+  };
+
   useEffect(() => {
     fetchCoursesData();
     fetchPaymentPlans();
+    fetchPaidStudent()
   }, []);
+
+  console.log("paidStudentData : ",paidStudentData)
 
   useEffect(() => {
     if (selectedCourse) {

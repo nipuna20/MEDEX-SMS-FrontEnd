@@ -432,6 +432,12 @@ export const addStudentInResources = (formData) => {
   });
 };
 
+////////// get payment plans
+export const paidStudentData = () => {
+  console.log("check material response")
+  return api.get("api/v1/users/Payment/upload");
+}; 
+
 
 
  ////////////////////////////////////////////////

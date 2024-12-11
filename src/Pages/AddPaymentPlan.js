@@ -109,7 +109,7 @@ export default function AddPaymentPlan() {
                     border: "1px solid red",
                   }}
                   onClick={() => {
-                    navigate("/Courses");
+                    navigate("/payments");
                   }}
                 >
                   <b> {" < "} back </b>
