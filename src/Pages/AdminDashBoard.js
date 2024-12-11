@@ -66,7 +66,19 @@ export default function AdminDashBoard() {
   };
 
   return (
-    <Box sx={{ paddingX: { xs: 3, sm: 6, lg: 10 }, paddingY: 5 }}>
+    <Box
+      sx={{
+        height: "100vh", // Ensures the height of the box covers the full viewport height
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        paddingX: { xs: 3, sm: 6, lg: 10 }, // Existing padding for responsiveness
+        paddingY: 5, // Existing vertical padding
+        backgroundColor: theme.palette.background.default, // Optional: Background color for the full page
+      }}
+    >
+
       {/* Profile Header */}
       <Card
         sx={{
