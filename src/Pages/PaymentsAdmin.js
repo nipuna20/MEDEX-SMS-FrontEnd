@@ -65,10 +65,10 @@ export default function PaymentsAdmin() {
   useEffect(() => {
     fetchCoursesData();
     fetchPaymentPlans();
-    fetchPaidStudent()
+    fetchPaidStudent();
   }, []);
 
-  console.log("paidStudentData : ",paidStudentData)
+  console.log("paidStudentData : ", paidStudentData);
 
   useEffect(() => {
     if (selectedCourse) {
@@ -299,17 +299,18 @@ export default function PaymentsAdmin() {
             </Box>
           </>
         )}
-     <Box mt={4} textAlign="center">
-    <Button
-      variant="contained"
-      color="primary"
-      onClick={() => {
-        navigate("/PaymentPlan");
-      }}
-    >
-      Add New Payment Plan
-    </Button>
-  </Box>
+        <Box mt={4} textAlign="center">
+          <Button
+            variant="contained"
+            color="primary"
+            sx={{ mt: 2, borderRadius: 3 }}
+            onClick={() => {
+              navigate("/PaymentPlan");
+            }}
+          >
+            Add New Payment Plan
+          </Button>
+        </Box>
       </Paper>
     </Container>
   );
