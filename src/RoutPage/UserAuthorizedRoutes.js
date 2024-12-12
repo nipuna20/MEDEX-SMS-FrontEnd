@@ -58,7 +58,7 @@ const UserAuthorizedRoutes = [
         element: <Payments />,
       },
       {
-        path: "/EXAMS",
+        path: "/Results",
         element: <ExamResultViewer />,
       },
       {

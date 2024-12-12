@@ -106,7 +106,7 @@ export default function AddExamDetails() {
                                     border: "1px solid red",
                                 }}
                                 onClick={() => {
-                                    navigate("/Exams");
+                                    navigate("/Results");
                                 }}
                             >
                                 <b> {" < "} Back </b>

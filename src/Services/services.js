@@ -67,6 +67,10 @@ export const services = {
   getExamDetails,
   updateExamDetails,
   deleteExamDetails,
+  createNewPayment,
+  paymentStudentData,
+  paymentPlansData,
+  createPaymentPlan
 };
 
 
@@ -352,6 +356,53 @@ async function addPaidStudentInLectureMaterial(formData){
   }
 }
 
+/////////////////////////////////////////
+/////////create new payment
+async function createNewPayment(formData){
+  
+  try {
+    const result = await api.addNewPayment(formData);
+    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaassssssssssssssssssssssssssssss",formData)
+    return {isSuccess: true, result:result };
+  } catch (error) {
+    return { isSuccess: false, result:error}
+  }
+}
+//////////////Get Payment Plans
+async function paymentPlansData(){
+  try {
+    const {data} = await api.paymentPlans();
+    console.log("sampleeeeeee", data);
+    return{isSuccess: true, data: data.CoursesData}
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+///////////////////////////////////
+//////////////Get Payment Plans
+async function paymentStudentData(){
+  try {
+    const {data} = await api.paidStudentData();
+    console.log("sampleeeeeee", data);
+    return{isSuccess: true, data: data.CoursesData}
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+//////////////create new payment plan
+async function createPaymentPlan(formData){
+  try {
+    const result = await api.createNewPaymentPlan(formData);
+    return {isSuccess: true, result:result };
+  } catch (error) {
+    return { isSuccess: false, result:error}
+  }
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////
 ///employee///
 

@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import { services } from "../Services/services";
+import { useNavigate } from "react-router-dom";
 
 const steps = [
   "Select a Course",
@@ -23,7 +24,8 @@ const steps = [
   "Submit",
 ];
 
-const PaymentForm = () => {
+export default function PaymentsAdmin() {
+  const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(0);
   const [selectedCourse, setSelectedCourse] = useState("");
   const [selectedPlan, setSelectedPlan] = useState("");
@@ -33,6 +35,7 @@ const PaymentForm = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [coursesData, setCoursesData] = useState([]);
   const [paymentPlansData, setPaymentPlansData] = useState([]);
+  const [paidStudentData, setPaidStudentData] = useState([]);
   const [filteredPlans, setFilteredPlans] = useState([]);
 
   const fetchCoursesData = () => {
@@ -51,10 +54,21 @@ const PaymentForm = () => {
     });
   };
 
+  const fetchPaidStudent = () => {
+    services.paymentStudentData().then((response) => {
+      if (response.isSuccess) {
+        setPaidStudentData(response.data);
+      }
+    });
+  };
+
   useEffect(() => {
     fetchCoursesData();
     fetchPaymentPlans();
+    fetchPaidStudent()
   }, []);
+
+  console.log("paidStudentData : ",paidStudentData)
 
   useEffect(() => {
     if (selectedCourse) {
@@ -200,7 +214,10 @@ const PaymentForm = () => {
                 Available Payment Plans:
                 <ul>
                   {filteredPlans.map((plan, index) => (
-                    <li key={index}>{plan.PaymentPlansName} - {plan.PaymentAmountForDuration} {plan.TmeDuration}</li>
+                    <li key={index}>
+                      {plan.PaymentPlansName} - {plan.PaymentAmountForDuration}{" "}
+                      {plan.TmeDuration}
+                    </li>
                   ))}
                 </ul>
               </Typography>
@@ -282,10 +299,18 @@ const PaymentForm = () => {
             </Box>
           </>
         )}
+     <Box mt={4} textAlign="center">
+    <Button
+      variant="contained"
+      color="primary"
+      onClick={() => {
+        navigate("/PaymentPlan");
+      }}
+    >
+      Add New Payment Plan
+    </Button>
+  </Box>
       </Paper>
     </Container>
   );
 }
-
-
-export default PaymentForm;
