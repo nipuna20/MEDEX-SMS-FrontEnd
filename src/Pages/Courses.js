@@ -22,7 +22,7 @@ import { red } from "@mui/material/colors";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import StarIcon from "@mui/icons-material/Star";
 import { services } from "../Services/services";
-import EBCM from "../componant/EBCM.png";
+import EBCM from "../componant/phrm.jpg";
 
 // Styled component for ExpandMore button
 const ExpandMore = styled((props) => {
@@ -141,7 +141,11 @@ export default function Courses() {
             {coursesData.map((card, index) => cardData(card, index))}
           </Grid>
         </Container>
+        <br></br>
+         <br></br>
+        <br></br>
       </Box>
+     
       
     );
   }

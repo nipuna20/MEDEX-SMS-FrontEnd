@@ -2,8 +2,10 @@ import React, { lazy } from "react";
 import Loadable from "./Loadable";
 import UnAthor from "./unAthor";
 import MainLogin from "../Pages/MainLogin";
+import StudentCertificate from "../Pages/StudentCertificate";
 
 const Login = Loadable(lazy(()=>import("../Pages/Login"))) ;
+
 // const DigiBill = Loadable(lazy (()=>import("../Pages/DigiBill")));
 // const SmartPose = Loadable(lazy(()=>import("../Pages/SmartPose")));
 // const SmartMsg = Loadable(lazy(()=>import( "../Pages/SmartMsg")));
@@ -27,7 +29,12 @@ const unAuthorizedRoutes = [
       {
         path:"/Login",
         element:<Login/>
+      },
+      {
+        path: "/Certi",
+        element: <StudentCertificate />
       }
+      
       
     ]
 },

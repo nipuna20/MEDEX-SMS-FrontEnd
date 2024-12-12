@@ -71,6 +71,26 @@ export default function LMSApp() {
     </Card>
   );
 
+  // Footer Component
+  const Footer = () => (
+    <Toolbar
+      sx={{
+        position: "fixed",
+        bottom: 0,
+        width: "100%",
+        backgroundColor: "primary.main",
+        color: "white",
+        justifyContent: "center",
+        borderTop: "1px solid rgba(255, 255, 255, 0.2)",
+      }}
+    >
+      <Typography variant="body2">
+        © {new Date().getFullYear()} MEDEX Academy of Pharmacy. All rights
+        reserved.
+      </Typography>
+    </Toolbar>
+  );
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -205,6 +225,12 @@ export default function LMSApp() {
               onClick={() => navigate("/Results")}
               iconColor="teal"
             />
+            <MenuItem
+              icon={<Dashboard />}
+              label="Certificate"
+              onClick={() => navigate("/Certificate")}
+              iconColor="teal"
+            />
           </List>
         </Box>
       </Drawer>
@@ -224,6 +250,12 @@ export default function LMSApp() {
         {/* Content Rendered by React Router */}
         <Outlet />
       </Box>
+<br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      {/* Footer */}
+      <Footer />
     </Box>
   );
 }
