@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../Style/Style.css";
 import MEDEXLogo from "../componant/MEDEXLogo.jpg";
-import BackgroundImage from "../componant/background.jpg";
+import BackgroundImage from "../componant/background2.jpg";
 import {
   Grid,
   Paper,
