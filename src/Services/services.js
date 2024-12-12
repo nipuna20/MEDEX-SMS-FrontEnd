@@ -70,7 +70,8 @@ export const services = {
   createNewPayment,
   paymentStudentData,
   paymentPlansData,
-  createPaymentPlan
+  createPaymentPlan,
+  ResultsData
 };
 
 
@@ -400,6 +401,19 @@ async function createPaymentPlan(formData){
     return { isSuccess: false, result:error}
   }
 }
+/////////////////////////////////////////////////////////////////////////////////
+/////////////////////Result Data Get
+////Courses
+async function ResultsData(){
+  try {
+    const {data} = await api.Result();
+    console.log("sampleeeeeee", data.CoursesData);
+    return{isSuccess: true, data: data.CoursesData}
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
