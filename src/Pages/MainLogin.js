@@ -63,12 +63,6 @@ export default function MainLogin() {
                   To Medex Institute
                 </Typography>
                 <br />
-
-                <br />
-                <br />
-                <br />
-
-                <br />
                 <br />
                 <Button
                   variant="outlined"
@@ -98,7 +92,6 @@ export default function MainLogin() {
                 >
                   Student
                 </Button>
-                <br />
                 <Button
                   variant="outlined"
                   fullWidth
