@@ -1,4 +1,5 @@
 import * as api from "../componant/SignIn";
+import QRCode from "qrcode";
 
 export const services = {
   employeeDetails,
@@ -67,8 +68,57 @@ export const services = {
   getExamDetails,
   updateExamDetails,
   deleteExamDetails,
+  // Existing methods...
+  uploadCertificate,
+  getCertificates,
+  downloadCertificate,
+  generateQRCode
 };
 
+
+// Generate QR Code
+export async function generateQRCode(filename) {
+  try {
+    const filename = "MedexCertificate.pdf";
+    const url = `http://localhost:9000/certificate/download/${filename}`; // Replace with your backend's base URL
+    const qrCode = await QRCode.toDataURL(url); // Generate QR code as a base64 image
+    return qrCode; // Return QR code image URL
+  } catch (error) {
+    console.error("Error generating QR code:", error);
+    throw error;
+  }
+}
+
+
+// Upload a Certificate
+async function uploadCertificate(formData) {
+  try {
+    const result = await api.uploadCertificate(formData); // Make sure `api.uploadCertificate` exists
+    return { isSuccess: true, result: result };
+  } catch (error) {
+    return { isSuccess: false, result: error };
+  }
+}
+
+// Get All Certificates
+async function getCertificates() {
+  try {
+    const { data } = await api.getCertificates(); // Ensure `api.getCertificates` exists
+    return { isSuccess: true, data: data.certificates };
+  } catch (error) {
+    return { isSuccess: false, result: error };
+  }
+}
+
+// Download Certificate by Filename
+async function downloadCertificate(filename) {
+  try {
+    const result = await api.downloadCertificate(filename); // Make sure `api.downloadCertificate` exists
+    return { isSuccess: true, result: result };
+  } catch (error) {
+    return { isSuccess: false, result: error };
+  }
+}
 
 // Service to add exam details
 async function createExamDetails(formData) {
