@@ -1,6 +1,27 @@
 import api from "./interceptor";
 
 
+
+
+// Upload Certificate API
+export const uploadCertificate = (formData) => {
+  return api.post("/api/v1/users/upload", formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+};
+
+
+// Fetch Certificate by ID (download link)
+export const downloadCertificate = (filename) => {
+  return `${process.env.REACT_APP_API_URL}/api/v1/users/certificate/download/${filename}`;
+};
+
+export const getCertificates = () => {
+  return api.get("/api/v1/users"); // Replace the endpoint with the correct API route
+};
+
+
+
 // Add Exam Details
 export const addExam = (formData) => {
   const jsonData = {

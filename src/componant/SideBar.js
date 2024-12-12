@@ -205,6 +205,12 @@ export default function LMSApp() {
               onClick={() => navigate("/Results")}
               iconColor="teal"
             />
+            <MenuItem
+              icon={<Dashboard />}
+              label="Certificate"
+              onClick={() => navigate("/Certificate")}
+              iconColor="teal"
+            />
           </List>
         </Box>
       </Drawer>
