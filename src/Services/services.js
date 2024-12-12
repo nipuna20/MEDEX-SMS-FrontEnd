@@ -72,9 +72,67 @@ export const services = {
   uploadCertificate,
   getCertificates,
   downloadCertificate,
-  generateQRCode
+  generateQRCode,
+
+  createNewPayment,
+  paymentStudentData,
+  paymentPlansData,
+  createPaymentPlan,
+  ResultsData
 };
 
+
+async function ResultsData() {
+  try {
+    const { data } = await api.Result();
+    console.log("sampleeeeeee", data.CoursesData);
+    return { isSuccess: true, data: data.CoursesData }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+//////////////Get Payment Plans
+async function paymentPlansData() {
+  try {
+    const { data } = await api.paymentPlans();
+    console.log("sampleeeeeee", data);
+    return { isSuccess: true, data: data.CoursesData }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+//////////////Get Payment Plans
+async function paymentStudentData() {
+  try {
+    const { data } = await api.paidStudentData();
+    console.log("sampleeeeeee", data);
+    return { isSuccess: true, data: data.CoursesData }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+async function createPaymentPlan(formData) {
+  try {
+    const result = await api.createNewPaymentPlan(formData);
+    return { isSuccess: true, result: result };
+  } catch (error) {
+    return { isSuccess: false, result: error }
+  }
+}
+
+async function createNewPayment(formData) {
+
+  try {
+    const result = await api.addNewPayment(formData);
+    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaassssssssssssssssssssssssssssss", formData)
+    return { isSuccess: true, result: result };
+  } catch (error) {
+    return { isSuccess: false, result: error }
+  }
+}
 
 // Generate QR Code
 export async function generateQRCode(filename) {

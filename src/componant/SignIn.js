@@ -1,8 +1,5 @@
 import api from "./interceptor";
 
-
-
-
 // Upload Certificate API
 export const uploadCertificate = (formData) => {
   return api.post("/api/v1/users/upload", formData, {
@@ -19,9 +16,6 @@ export const downloadCertificate = (filename) => {
 export const getCertificates = () => {
   return api.get("/api/v1/users"); // Replace the endpoint with the correct API route
 };
-
-
-
 // Add Exam Details
 export const addExam = (formData) => {
   const jsonData = {
@@ -400,6 +394,12 @@ export const lectureResources = () => {
   return api.get("api/v1/users/resources");
 };
 
+/////////////////////////////////////
+////////// get payment plans
+export const paymentPlans = () => {
+  console.log("check material response")
+  return api.get("api/v1/users/Payment/Plans");
+};
 
 
 ////////// material creation update resources
@@ -416,6 +416,7 @@ export const lectureResources = () => {
 //   return api.post("/api/v1/users/resources/upload", postData);
 // };
 
+//////// Add paid student is lecture resources
 export const addLectureMaterialUpdatingResources = (formData) => {
   console.log("form data is:", [...formData.entries()]);
   return api.post("/api/v1/users/resources/upload", formData, {
@@ -427,7 +428,7 @@ export const addLectureMaterialUpdatingResources = (formData) => {
 
 
 //////// Add paid student is lecture resources
-////create new Zoom Subject
+////create new payed student
 export const addStudentInResources = (formData) => {
   console.log("sample course is", formData);
 
@@ -446,6 +447,53 @@ export const addStudentInResources = (formData) => {
   });
 };
 
+////////// get payment plans
+export const paidStudentData = () => {
+  console.log("check material response")
+  return api.get("api/v1/users/Payment/upload");
+};
+
+
+
+////////////////////////////////////////////////
+/////////// creat new payment
+export const addNewPayment = (formData) => {
+  console.log("form data is:", [...formData.entries()]);
+  return api.post("/api/v1/users/Payment/upload", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
+////////create new payment plan
+export const createNewPaymentPlan = (formData) => {
+  console.log("sample plan is", formData);
+
+  const jsonData = {
+    CourseName: formData.CourseName,
+    PaymentPlansName: formData.PaymentPlansName,
+    PaymentAmountForDuration: formData.PaymentAmountForDuration,
+    TmeDuration: formData.TmeDuration,
+  };
+
+  console.log("JSON data sample is:", jsonData);
+
+  return api.post("/api/v1/users/Payment/Plans", jsonData, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};
+
+/////////////////////////////////////////////////////////
+//////////////////////Get result
+////courses get
+export const Result = () => {
+  return api.get("/api/v1/users/courses/subjects/studentResult");
+};
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////6745ea9df06793442ed80457
 
