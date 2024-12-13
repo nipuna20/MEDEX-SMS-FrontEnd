@@ -12,8 +12,10 @@ import {
 import { services } from "../Services/services";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import { useNavigate } from "react-router-dom";
 
 export default function ExamList() {
+    const navigate = useNavigate()
     const [resultData, setResultsData] = useState([]);
     const [result, setResult] = useState(null);
 
@@ -73,6 +75,7 @@ export default function ExamList() {
         selectedSubject: "",
     };
 
+
     return (
         <Container maxWidth="sm">
             <Paper
@@ -80,7 +83,7 @@ export default function ExamList() {
                 sx={{
                     padding: 4,
                     mt: 4,
-                    backgroundColor: "rgb(180, 180, 179, 0.1 )",
+                    backgroundColor: "rgba(240, 240, 240, 0.8)",
                     borderRadius: 3,
                 }}
             >
@@ -231,9 +234,9 @@ export default function ExamList() {
                     color="primary"
                     sx={{ margin: 2, mt: 2, borderRadius: 3 }}
 
-                //   onClick={() => {
-                //     navigate("/PaymentPlan");
-                //   }}
+                    onClick={() => {
+                        navigate("/AddNewSubject");
+                    }}
                 >
                     Add New Subject
                 </Button>
@@ -242,9 +245,9 @@ export default function ExamList() {
                     variant="contained"
                     color="primary"
                     sx={{ margin: 2, mt: 2, borderRadius: 3 }}
-                //   onClick={() => {
-                //     navigate("/PaymentPlan");
-                //   }}
+                    onClick={() => {
+                        navigate("/AddStudentResult");
+                    }}
                 >
                     Add Student Result
                 </Button>

@@ -27,7 +27,6 @@ import AddCourses from "../Pages/AddCourses";
 import ExamResultViewer from "../Pages/EXAMS";
 import DashBoard from '../Pages/DashBoard';
 import Courses from "../Pages/Courses";
-import StudentCertificate from "../Pages/StudentCertificate";
 
 
 
@@ -41,16 +40,15 @@ import StudentCertificate from "../Pages/StudentCertificate";
 // const EBCM = Loadable(lazy(()=>import( "../Pages/EBCM")));
 // const VCard = Loadable(lazy(()=>import( "../Pages/VCard")));
 // const SmartCnt = Loadable(lazy(()=>import( "../Pages/SmartCnt")));
-const Employee = Loadable(lazy(()=>import( "../Pages/Employee")));
-const AddEmployee = Loadable(lazy(()=>import("../Pages/AddEmployee")));
-
+const Employee = Loadable(lazy(() => import("../Pages/Employee")));
+const AddEmployee = Loadable(lazy(() => import("../Pages/AddEmployee")));
 
 
 const UserAuthorizedRoutes = [
   {
     path: "/",
-    element: <AuthorHeader/>,
-    children:[
+    element: <AuthorHeader />,
+    children: [
       {
         path: "/",
         element: <DashBoard />,
@@ -60,12 +58,12 @@ const UserAuthorizedRoutes = [
         element: <Payments />,
       },
       {
-        path: "/EXAMS",
+        path: "/Results",
         element: <ExamResultViewer />,
       },
       {
         path: "/ZoomRecordings",
-        element: <ZoomRecordings/>,
+        element: <ZoomRecordings />,
       },
       {
         path: "/ZoomOnlineSessions",
@@ -79,23 +77,18 @@ const UserAuthorizedRoutes = [
         path: "/Courses",
         element: <Courses />,
       },
-      {
-        path: "/Certi",
-        element: <StudentCertificate />,
-      },
       // {
       //   path: "/AddCourses",
       //   element: <AddCourses/>,
       // },
-      
+
       {
-        path:"*",
-        element:<DashBoard />
+        path: "*",
+        element: <DashBoard />
       }
     ]
   }
-  
+
 ];
 
 export default UserAuthorizedRoutes;
-

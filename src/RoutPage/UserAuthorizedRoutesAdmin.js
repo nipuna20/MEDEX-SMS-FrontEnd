@@ -16,7 +16,10 @@ import ZoomRecordingsAdmin from "../Pages/ZoomRecordingsAdmin";
 import AuthorHeader from "./AuthorHeader";
 import AddExamDetails from "../Pages/AddExam"
 import ExamDetails from "../Pages/ExamList"
-import Certificate from "../Pages/Certificate"
+import PaymentsAdmin from "../Pages/PaymentsAdmin";
+import AddPaymentPlan from "../Pages/AddPaymentPlan";
+import ExamAddNewSubject from "../Pages/ExamAddNewSubject";
+import ExamAddStudentResult from "../Pages/ExamAddStudentResult";
 
 const UserAuthorizedRoutesAdmin = [
   {
@@ -80,12 +83,12 @@ const UserAuthorizedRoutesAdmin = [
         element: <ResourcesAdmin />,
       },
       {
-        path:"/AddLectureMaterial",
-        element:<AddLectureMaterial/>
+        path: "/AddLectureMaterial",
+        element: <AddLectureMaterial />
       },
       {
-        path:"/AddPayedStudent",
-        element:<AddPayedStudent/>
+        path: "/AddPayedStudent",
+        element: <AddPayedStudent />
       },
       {
         path: "/AddExam",
@@ -96,8 +99,20 @@ const UserAuthorizedRoutesAdmin = [
         element: <ExamDetails />
       },
       {
-        path: "/Certificate",
-        element: <Certificate />
+        path: "/payments",
+        element: <PaymentsAdmin />
+      },
+      {
+        path: "/PaymentPlan",
+        element: <AddPaymentPlan />
+      },
+      {
+        path: "/AddNewSubject",
+        element: <ExamAddNewSubject />
+      },
+      {
+        path: "/AddStudentResult",
+        element: <ExamAddStudentResult />
       },
 
       {

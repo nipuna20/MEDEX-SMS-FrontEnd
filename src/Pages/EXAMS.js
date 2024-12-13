@@ -17,12 +17,20 @@ const ExamResultViewer = () => {
   const [resultData, setResultsData] = useState([]);
   const [result, setResult] = useState(null);
 
-  const fetchResultsData = () => {
-    services.ResultsData().then((response) => {
-      if (response.isSuccess) {
-        setResultsData(response.data); // Use the data directly as it is
+  const fetchResultsData = async () => {
+    try {
+      const response = await services.ResultsData();
+      console.log("API Response:", response);
+      if (response?.isSuccess && response?.data) {
+        setResultsData(response.data);
+      } else {
+        console.error("Invalid or failed response:", response);
+        setResultsData([]);
       }
-    });
+    } catch (error) {
+      console.error("Error fetching results data:", error);
+      setResultsData([]);
+    }
   };
 
   useEffect(() => {
@@ -30,12 +38,11 @@ const ExamResultViewer = () => {
   }, []);
 
   const handleClear = () => {
-    setResult(null); // Reset result only
-    window.location.reload()
+    setResult(null);
+    window.location.reload();
   };
 
   const handleCreating = (values) => {
-    // Handle the result fetching or any logic to get the result for the selected course/subject
     const course = resultData.find(
       (course) => course.courseName === values.selectedCourse
     );
@@ -151,8 +158,11 @@ const ExamResultViewer = () => {
                       )}
                     >
                       {resultData
-                        .find((course) => course.courseName === values.selectedCourse)
-                        ?.Subjects.map((subject, index) => (
+                        .find(
+                          (course) =>
+                            course.courseName === values.selectedCourse
+                        )
+                        ?.Subjects?.map((subject, index) => (
                           <MenuItem key={index} value={subject.subjectName}>
                             {subject.subjectName}
                           </MenuItem>
@@ -198,9 +208,15 @@ const ExamResultViewer = () => {
 
         {result && (
           <>
-            <Box sx={{ mt: 4, p: 2, border: "1px solid #ddd", borderRadius: 1 }}>
-              <Typography variant="subtitle1">Exam: {result.courseName}</Typography>
-              <Typography variant="subtitle2">Subject: {result.subjectName}</Typography>
+            <Box
+              sx={{ mt: 4, p: 2, border: "1px solid #ddd", borderRadius: 1 }}
+            >
+              <Typography variant="subtitle1">
+                Exam: {result.courseName}
+              </Typography>
+              <Typography variant="subtitle2">
+                Subject: {result.subjectName}
+              </Typography>
               <Typography variant="h6">Result: {result.result}</Typography>
             </Box>
 
