@@ -11,10 +11,17 @@ import {
     Paper,
     Box,
     Alert,
+    TableContainer,
+    Table,
+    TableHead,
+    TableRow,
+    TableCell,
+    TableBody,
 } from "@mui/material";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import { services } from "../Services/services";
 import { useNavigate } from "react-router-dom";
+import { borderRadius } from "@mui/system";
 
 const steps = [
     "Select a Course",
@@ -127,6 +134,13 @@ export default function PaymentsAdmin() {
 
     const handleFileUpload = (event) => {
         setPaySlip(event.target.files[0]);
+    };
+
+    const cellStyle = {
+        border: '1px solid rgba(83, 81, 81, 0.8)',
+        padding: '8px',
+        textAlign: 'center',
+
     };
 
     return (
@@ -312,6 +326,46 @@ export default function PaymentsAdmin() {
                     </Button>
                 </Box>
             </Paper>
+
+            <TableContainer component={Paper} sx={{ marginTop: 10, borderRadius: 8 }} elevation={5}>
+                <Table sx={{ minWidth: 650, marginBottom: 1 }} aria-label="courses table">
+                    <TableHead>
+                        <TableRow sx={{ backgroundColor: '#1976d2', borderRadius: 5 }}>
+                            <TableCell align="center" sx={{ color: 'white', fontWeight: 'bold', fontSize: '16px' }}>
+                                Name
+                            </TableCell>
+                            <TableCell align="center" sx={{ color: 'white', fontWeight: 'bold', fontSize: '16px' }}>
+                                Student ID
+                            </TableCell>
+                            <TableCell align="center" sx={{ color: 'white', fontWeight: 'bold', fontSize: '16px' }}>
+                                Payment Plan
+                            </TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {paidStudentData.map((course) =>
+                            course.paidStudents.map((student) => (
+                                <TableRow
+                                    key={student._id}
+                                    sx={{
+                                        '&:last-child td, &:last-child th': { border: 0 },
+                                        '&:hover': { backgroundColor: '#f5f5f5' }, // Hover effect
+                                    }}
+                                >
+                                    <TableCell align="center" component="th" scope="row">
+                                        {course.courseName}
+                                    </TableCell>
+                                    <TableCell align="center">{student.studentId}</TableCell>
+                                    <TableCell align="center">{student.paymentPlans}</TableCell>
+                                </TableRow>
+                            ))
+                        )}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+
+
+
         </Container>
     );
 }
