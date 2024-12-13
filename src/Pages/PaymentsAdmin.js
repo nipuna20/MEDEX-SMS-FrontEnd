@@ -21,7 +21,6 @@ import {
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import { services } from "../Services/services";
 import { useNavigate } from "react-router-dom";
-import { borderRadius } from "@mui/system";
 
 const steps = [
     "Select a Course",
@@ -46,27 +45,43 @@ export default function PaymentsAdmin() {
     const [filteredPlans, setFilteredPlans] = useState([]);
 
     const fetchCoursesData = () => {
-        services.CoursesData().then((response) => {
-            if (response.isSuccess) {
-                setCoursesData(response.data);
-            }
-        });
+        services.CoursesData()
+            .then((response) => {
+                if (response?.isSuccess && response?.data) {
+                    setCoursesData(response.data);
+                }
+            })
+            .catch((error) => {
+                console.error("Error fetching courses data:", error);
+            });
     };
 
     const fetchPaymentPlans = () => {
-        services.paymentPlansData().then((response) => {
-            if (response.isSuccess) {
-                setPaymentPlansData(response.data);
-            }
-        });
+        services.paymentPlansData()
+            .then((response) => {
+                if (response?.isSuccess && response?.data) {
+                    setPaymentPlansData(response.data);
+                } else {
+                    console.error("Failed to fetch payment plans.");
+                    setPaymentPlansData([]);
+                }
+            })
+            .catch((error) => {
+                console.error("Error fetching payment plans:", error);
+                setPaymentPlansData([]);
+            });
     };
 
     const fetchPaidStudent = () => {
-        services.paymentStudentData().then((response) => {
-            if (response.isSuccess) {
-                setPaidStudentData(response.data);
-            }
-        });
+        services.paymentStudentData()
+            .then((response) => {
+                if (response?.isSuccess && response?.data) {
+                    setPaidStudentData(response.data);
+                }
+            })
+            .catch((error) => {
+                console.error("Error fetching paid student data:", error);
+            });
     };
 
     useEffect(() => {
@@ -75,10 +90,8 @@ export default function PaymentsAdmin() {
         fetchPaidStudent();
     }, []);
 
-    console.log("paidStudentData : ", paidStudentData);
-
     useEffect(() => {
-        if (selectedCourse) {
+        if (selectedCourse && paymentPlansData?.length) {
             const filtered = paymentPlansData.filter(
                 (plan) => plan.CourseName === selectedCourse
             );
@@ -109,15 +122,19 @@ export default function PaymentsAdmin() {
                 formData.append("file", paySlip);
             }
 
-            services.createNewPayment(formData).then((response) => {
-                if (response.isSuccess) {
-                    console.log("Values in response:", formData);
-                } else {
-                    console.log("Add course response error");
-                }
-            });
+            services.createNewPayment(formData)
+                .then((response) => {
+                    if (response?.isSuccess) {
+                        console.log("Payment submission successful:", formData);
+                        setIsSubmitted(true);
+                    } else {
+                        console.error("Failed to submit payment:", response);
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error submitting payment:", error);
+                });
 
-            setIsSubmitted(true);
             setActiveStep(0);
             setSelectedCourse("");
             setSelectedPlan("");
@@ -136,12 +153,6 @@ export default function PaymentsAdmin() {
         setPaySlip(event.target.files[0]);
     };
 
-    const cellStyle = {
-        border: '1px solid rgba(83, 81, 81, 0.8)',
-        padding: '8px',
-        textAlign: 'center',
-
-    };
 
     return (
         <Container maxWidth="md">
