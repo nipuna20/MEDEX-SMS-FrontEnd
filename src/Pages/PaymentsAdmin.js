@@ -153,6 +153,12 @@ export default function PaymentsAdmin() {
         setPaySlip(event.target.files[0]);
     };
 
+    const cellStyle = {
+        border: '1px solid rgba(83, 81, 81, 0.8)',
+        padding: '8px',
+        textAlign: 'center',
+
+    };
 
     return (
         <Container maxWidth="md">
