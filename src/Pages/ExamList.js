@@ -74,6 +74,7 @@ export default function ExamList() {
     selectedCourse: "",
     selectedSubject: "",
   };
+  
 
   return (
     <Container maxWidth="sm">
@@ -82,7 +83,7 @@ export default function ExamList() {
         sx={{
           padding: 4,
           mt: 4,
-          backgroundColor: "rgb(180, 180, 179, 0.1 )",
+          backgroundColor: "rgba(240, 240, 240, 0.8)",
           borderRadius: 3,
         }}
       >
