@@ -18,6 +18,8 @@ import AddExamDetails from "../Pages/AddExam"
 import ExamDetails from "../Pages/ExamList"
 import PaymentsAdmin from "../Pages/PaymentsAdmin";
 import AddPaymentPlan from "../Pages/AddPaymentPlan";
+import ExamAddNewSubject from "../Pages/ExamAddNewSubject";
+import ExamAddStudentResult from "../Pages/ExamAddStudentResult";
 
 const UserAuthorizedRoutesAdmin = [
   {
@@ -103,6 +105,14 @@ const UserAuthorizedRoutesAdmin = [
       {
         path: "/PaymentPlan",
         element:<AddPaymentPlan/>
+      },
+      {
+        path: "/AddNewSubject",
+        element: <ExamAddNewSubject/>
+      },
+      {
+        path: "/AddStudentResult",
+        element: <ExamAddStudentResult/>
       },
 
       {

@@ -472,10 +472,49 @@ export const createNewPaymentPlan = (formData) => {
 
 /////////////////////////////////////////////////////////
 //////////////////////Get result
-////courses get
 export const Result = () => {
   return api.get("/api/v1/users/courses/subjects/studentResult");
 };
+
+
+////////create Exam Subject
+export const createNewExamSubject = (formData) => {
+  console.log("sample plan is", formData);
+
+  const jsonData = {
+    courseName: formData.courseName,
+    subjectName: formData.subjectName,
+  };
+
+  console.log("JSON data sample is:", jsonData);
+
+  return api.post("/api/v1/users/courses/subjects", jsonData, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};
+
+////////create Exam Student Result
+export const createNewExamSubjectResult = (formData) => {
+  console.log("sample plan is", formData);
+
+  const jsonData = {
+    courseName: formData.courseName,
+    subjectName: formData.subjectName,
+    studentId: formData.studentId,
+    result: formData.result,
+  };
+
+  console.log("JSON data sample is:", jsonData);
+
+  return api.post("/api/v1/users/courses/subjects/studentResult", jsonData, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};
+
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////

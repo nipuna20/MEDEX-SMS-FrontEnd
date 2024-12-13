@@ -1,42 +1,44 @@
 import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  Container,
-  Divider,
-  FormControl,
-  Grid,
-  InputAdornment,
-  InputLabel,
-  MenuItem,
-  Select,
-  Stack,
-} from "@mui/material";
+    Box,
+    Button,
+    Card,
+    CardContent,
+    CardHeader,
+    Container,
+    Divider,
+    FormControl,
+    Grid,
+    InputAdornment,
+    InputLabel,
+    MenuItem,
+    Select,
+    Stack,
+  } from "@mui/material";
+  
+  import React, { useEffect, useState } from "react";
+  import { ModifiedTextField } from "../Theam/Theam";
+  import { Formik } from "formik";
+  import * as Yup from "yup";
+  import { useNavigate, useParams } from "react-router-dom";
+  import { services } from "../Services/services";
+  import Loade from "../componant/Loader";
 
-import React, { useEffect, useState } from "react";
-import { ModifiedTextField } from "../Theam/Theam";
-import { Formik } from "formik";
-import * as Yup from "yup";
-import { useNavigate, useParams } from "react-router-dom";
-import { services } from "../Services/services";
-import Loade from "../componant/Loader";
 
-export default function AddPayedStudent() {
-  const navigate = useNavigate();
+
+export default function ExamAddNewSubject() {
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
-    const { courseId } = useParams();
+    // const { courseId } = useParams();
     // const [initialValues, setInitialValues] = useState(null);
   
     const handleCreating = (values) => {
       setLoading(true);
       console.log("valuse : ", values);
   
-      services.addPaidStudentInLectureMaterial(values).then((response) => {
+      services.createExamSubject(values).then((response) => {
         if (response.isSuccess) {
           console.log("valuse in respons : ", values);
-          navigate("/Resources");
+          navigate("/Results");
           alert("your Course create successfully");
         } else {
           console.log("add Course response error");
@@ -48,14 +50,14 @@ export default function AddPayedStudent() {
   
     const validationSchema = Yup.object().shape({
       courseName: Yup.string().required("Course Name is required"),
-      studentId: Yup.string().required("StudentId is required"),
-      email: Yup.string().required("email is required"),
+      subjectName: Yup.string().required("Subject Name is required"),
+      
     });
   
     const initialValues = {
       courseName: "",
-      studentId: "",
-      email: "",
+      subjectName: "",
+      
       
     };
   
@@ -105,7 +107,7 @@ export default function AddPayedStudent() {
                     border: "1px solid red",
                   }}
                   onClick={() => {
-                    navigate("/Resources");
+                    navigate("/Results");
                   }}
                 >
                   <b> {" < "} back </b>
@@ -163,29 +165,14 @@ export default function AddPayedStudent() {
                                     <Grid item xs={12} md={12} padding={1}>
                                       <ModifiedTextField
                                         fullWidth
-                                        label="studentId"
-                                        name="studentId"
-                                        value={values.studentId}
+                                        label="Subject Name"
+                                        name="subjectName"
+                                        value={values.subjectName}
                                         onBlur={handleBlur}
-                                        helperText={errors.studentId}
+                                        helperText={errors.subjectName}
                                         onChange={handleChange}
                                         error={Boolean(
-                                          touched.studentId && errors.studentId
-                                        )}
-                                        // required
-                                      />
-                                    </Grid>
-                                    <Grid item xs={12} md={12} padding={1}>
-                                      <ModifiedTextField
-                                        fullWidth
-                                        label="student Email"
-                                        name="email"
-                                        value={values.email}
-                                        onBlur={handleBlur}
-                                        helperText={errors.email}
-                                        onChange={handleChange}
-                                        error={Boolean(
-                                          touched.email && errors.email
+                                          touched.subjectName && errors.subjectName
                                         )}
                                         // required
                                       />

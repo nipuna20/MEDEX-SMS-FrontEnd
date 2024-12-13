@@ -12,8 +12,10 @@ import {
 import { services } from "../Services/services";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import { useNavigate } from "react-router-dom";
 
 export default function ExamList() {
+ const navigate= useNavigate()
   const [resultData, setResultsData] = useState([]);
   const [result, setResult] = useState(null);
 
@@ -231,9 +233,9 @@ export default function ExamList() {
           color="primary"
           sx={{ margin: 2, mt: 2, borderRadius: 3 }}
 
-          //   onClick={() => {
-          //     navigate("/PaymentPlan");
-          //   }}
+            onClick={() => {
+              navigate("/AddNewSubject");
+            }}
         >
           Add New Subject
         </Button>
@@ -242,9 +244,9 @@ export default function ExamList() {
           variant="contained"
           color="primary"
           sx={{ margin: 2, mt: 2, borderRadius: 3 }}
-          //   onClick={() => {
-          //     navigate("/PaymentPlan");
-          //   }}
+            onClick={() => {
+              navigate("/AddStudentResult");
+            }}
         >
           Add Student Result
         </Button>

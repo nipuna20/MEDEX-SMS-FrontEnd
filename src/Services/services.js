@@ -71,7 +71,10 @@ export const services = {
   paymentStudentData,
   paymentPlansData,
   createPaymentPlan,
-  ResultsData
+  ResultsData,
+  createExamSubject,
+  createExamSubjectResult
+ 
 };
 
 
@@ -403,7 +406,6 @@ async function createPaymentPlan(formData){
 }
 /////////////////////////////////////////////////////////////////////////////////
 /////////////////////Result Data Get
-////Courses
 async function ResultsData(){
   try {
     const {data} = await api.Result();
@@ -413,6 +415,27 @@ async function ResultsData(){
     console.log(error)
   }
 }
+//////////////////////// create Exam Subject
+async function createExamSubject(formData){
+  try {
+    const result = await api.createNewExamSubject(formData);
+    return {isSuccess: true, result:result };
+  } catch (error) {
+    return { isSuccess: false, result:error}
+  }
+}
+
+//////////////////////// create Exam Student result
+
+async function createExamSubjectResult(formData){
+  try {
+    const result = await api.createNewExamSubjectResult(formData);
+    return {isSuccess: true, result:result };
+  } catch (error) {
+    return { isSuccess: false, result:error}
+  }
+}
+
 
 
 
