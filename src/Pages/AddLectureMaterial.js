@@ -7,9 +7,10 @@ import {
   Container,
   Divider,
   Grid,
+  MenuItem,
   Stack,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ModifiedTextField } from "../Theam/Theam";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -20,6 +21,19 @@ import { services } from "../Services/services";
 export default function AddLectureMaterial() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [coursesData, setCoursesData] = useState([]);
+
+  const fetchCoursesData = () => {
+    services.CoursesData().then((response) => {
+      if (response.isSuccess) {
+        setCoursesData(response.data);
+      }
+    });
+  };
+
+  useEffect(() => {
+    fetchCoursesData();
+  }, []);
 
   const handleCreating = (values) => {
     setLoading(true);
@@ -115,7 +129,7 @@ export default function AddLectureMaterial() {
               </Button>
 
               <Box component="main" sx={{ flexGrow: 1, py: 8 }}>
-                <Container maxWidth="lg" sx={{ padding: 2}}>
+                <Container maxWidth="lg" sx={{ padding: 2 }}>
                   <Stack spacing={2}>
                     <Grid
                       container
@@ -136,17 +150,32 @@ export default function AddLectureMaterial() {
                             <Grid container spacing={2}>
                               <Grid item xs={12}>
                                 <ModifiedTextField
-                                  fullWidth
-                                  label="Course Name"
-                                  name="courseName"
-                                  value={values.courseName}
-                                  onBlur={handleBlur}
-                                  helperText={errors.courseName}
+                                  select
+                                  label="Select Course"
+                                  name="courseName" // Update this to match initialValues and schema
+                                  value={values.courseName} // Update this to match initialValues
                                   onChange={handleChange}
+                                  onBlur={handleBlur}
+                                  fullWidth
+                                  margin="normal"
+                                  helperText={
+                                    touched.courseName && errors.courseName
+                                      ? errors.courseName
+                                      : ""
+                                  }
                                   error={Boolean(
                                     touched.courseName && errors.courseName
                                   )}
-                                />
+                                >
+                                  {coursesData.map((course, index) => (
+                                    <MenuItem
+                                      key={index}
+                                      value={course.CourseName}
+                                    >
+                                      {course.CourseName}
+                                    </MenuItem>
+                                  ))}
+                                </ModifiedTextField>
                               </Grid>
 
                               <Grid item xs={12}>
@@ -190,7 +219,7 @@ export default function AddLectureMaterial() {
                                   onChange={handleChange}
                                   error={Boolean(
                                     touched.materialDescription &&
-                                      errors.materialDescription
+                                    errors.materialDescription
                                   )}
                                 />
                               </Grid>
@@ -203,7 +232,7 @@ export default function AddLectureMaterial() {
                                 justifyContent="center"
                                 alignItems="center"
                                 flexDirection="column"
-                                // sx={{ minHeight: "200px" }}
+                              // sx={{ minHeight: "200px" }}
                               >
                                 <input
                                   id="file-upload"

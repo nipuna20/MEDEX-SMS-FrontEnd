@@ -29,6 +29,20 @@ export default function AddPayedStudent() {
   const { courseId } = useParams();
   // const [initialValues, setInitialValues] = useState(null);
 
+  const [coursesData, setCoursesData] = useState([]);
+
+  const fetchCoursesData = () => {
+    services.CoursesData().then((response) => {
+      if (response.isSuccess) {
+        setCoursesData(response.data);
+      }
+    });
+  };
+
+  useEffect(() => {
+    fetchCoursesData();
+  }, []);
+
   const handleCreating = (values) => {
     setLoading(true);
     console.log("valuse : ", values);
@@ -145,20 +159,34 @@ export default function AddPayedStudent() {
                                 }}
                               >
                                 <Grid container spacing={1}>
-                                  <Grid item xs={12} md={12} padding={1}>
+                                  <Grid item xs={12}>
                                     <ModifiedTextField
-                                      fullWidth
-                                      label="Course Name"
-                                      name="courseName"
-                                      value={values.courseName}
-                                      onBlur={handleBlur}
-                                      helperText={errors.courseName}
+                                      select
+                                      label="Select Course"
+                                      name="courseName" // Update this to match initialValues and schema
+                                      value={values.courseName} // Update this to match initialValues
                                       onChange={handleChange}
+                                      onBlur={handleBlur}
+                                      fullWidth
+                                      margin="normal"
+                                      helperText={
+                                        touched.courseName && errors.courseName
+                                          ? errors.courseName
+                                          : ""
+                                      }
                                       error={Boolean(
                                         touched.courseName && errors.courseName
                                       )}
-                                    // required
-                                    />
+                                    >
+                                      {coursesData.map((course, index) => (
+                                        <MenuItem
+                                          key={index}
+                                          value={course.CourseName}
+                                        >
+                                          {course.CourseName}
+                                        </MenuItem>
+                                      ))}
+                                    </ModifiedTextField>
                                   </Grid>
                                   <Grid item xs={12} md={12} padding={1}>
                                     <ModifiedTextField

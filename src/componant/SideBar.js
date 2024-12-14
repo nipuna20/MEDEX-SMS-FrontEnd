@@ -47,7 +47,7 @@ export default function LMSApp() {
       sx={{
         borderRadius: 3,
         margin: 1,
-        width: "90%", // Adjust width for alignment
+        width: "90%",
         ":hover": {
           boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
         },
@@ -57,9 +57,9 @@ export default function LMSApp() {
         sx={{
           display: "flex",
           alignItems: "center",
-          justifyContent: "flex-start", // Align all content to the left
+          justifyContent: "flex-start",
           padding: 1.5,
-          gap: 2, // Space between icon and text
+          gap: 2,
         }}
         onClick={onClick}
       >
@@ -69,26 +69,6 @@ export default function LMSApp() {
         </Typography>
       </CardActionArea>
     </Card>
-  );
-
-  // Footer Component
-  const Footer = () => (
-    <Toolbar
-      sx={{
-        position: "fixed",
-        bottom: 0,
-        width: "100%",
-        backgroundColor: "primary.main",
-        color: "white",
-        justifyContent: "center",
-        borderTop: "1px solid rgba(255, 255, 255, 0.2)",
-      }}
-    >
-      <Typography variant="body2">
-        © {new Date().getFullYear()} MEDEX Academy of Pharmacy. All rights
-        reserved.
-      </Typography>
-    </Toolbar>
   );
 
   return (
@@ -165,22 +145,18 @@ export default function LMSApp() {
             padding: 2,
             display: "flex",
             flexDirection: "column",
-            alignItems: "flex-start", // Align sidebar content to the left
+            alignItems: "flex-start",
             gap: 2,
           }}
         >
           <List sx={{ width: "100%" }}>
-            {/* Main Menu Items */}
             <MenuItem
               icon={<Dashboard />}
               label="Courses"
               onClick={() => navigate("/Courses")}
               iconColor="blue"
             />
-
             <Divider sx={{ my: 2, width: "100%" }} />
-
-            {/* Zoom Sessions Menu */}
             <MenuItem
               icon={<VideoLibrary />}
               label="Zoom Sessions"
@@ -203,10 +179,7 @@ export default function LMSApp() {
                 />
               </>
             )}
-
             <Divider sx={{ my: 2, width: "100%" }} />
-
-            {/* Other Sections */}
             <MenuItem
               icon={<Payment />}
               label="Payments"
@@ -225,12 +198,6 @@ export default function LMSApp() {
               onClick={() => navigate("/Results")}
               iconColor="teal"
             />
-            {/* <MenuItem
-              icon={<Dashboard />}
-              label="Certificate"
-              onClick={() => navigate("/Certificate")}
-              iconColor="teal"
-            /> */}
           </List>
         </Box>
       </Drawer>
@@ -243,19 +210,39 @@ export default function LMSApp() {
           padding: 3,
           backgroundColor: (theme) =>
             theme.palette.mode === "dark" ? "grey.900" : "grey.100",
-          minHeight: "100vh",
+          minHeight: "calc(100vh - 64px)", // Exclude header height
         }}
       >
         <Toolbar />
-        {/* Content Rendered by React Router */}
         <Outlet />
       </Box>
-<br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      {/* Footer */}
-      <Footer />
+
+      {/* Footer (Full Width) */}
+      {/* Footer (Full Width) */}
+      <Box
+        component="footer"
+        sx={{
+          width: "100%",
+          height: 50,
+          position: "fixed",
+          bottom: 0,
+          left: 0,
+          backgroundColor: "primary.main",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between", // Space between left and right content
+          padding: "0 16px", // Add some padding on the sides
+          color: "white",
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+        }}
+      >
+        <Typography variant="body2" sx={{ marginLeft: 10 }}>
+          © 2024 MEDEX Institute. All Rights Reserved.
+        </Typography>
+        <Typography variant="body2" sx={{ marginRight: 10 }}>
+          Version 1.0
+        </Typography>
+      </Box>
     </Box>
   );
 }
