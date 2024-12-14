@@ -21,6 +21,7 @@ import {
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import { services } from "../Services/services";
 import { useNavigate } from "react-router-dom";
+import { borderRadius } from "@mui/system";
 
 const steps = [
     "Select a Course",
@@ -45,43 +46,28 @@ export default function PaymentsAdmin() {
     const [filteredPlans, setFilteredPlans] = useState([]);
 
     const fetchCoursesData = () => {
-        services.CoursesData()
-            .then((response) => {
-                if (response?.isSuccess && response?.data) {
-                    setCoursesData(response.data);
-                }
-            })
-            .catch((error) => {
-                console.error("Error fetching courses data:", error);
-            });
+        services.CoursesData().then((response) => {
+            if (response.isSuccess) {
+                setCoursesData(response.data);
+            }
+        });
     };
 
     const fetchPaymentPlans = () => {
-        services.paymentPlansData()
-            .then((response) => {
-                if (response?.isSuccess && response?.data) {
-                    setPaymentPlansData(response.data);
-                } else {
-                    console.error("Failed to fetch payment plans.");
-                    setPaymentPlansData([]);
-                }
-            })
-            .catch((error) => {
-                console.error("Error fetching payment plans:", error);
-                setPaymentPlansData([]);
-            });
+        services.paymentPlansData().then((response) => {
+            if (response.isSuccess) {
+                setPaymentPlansData(response.data);
+                console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxx", response)
+            }
+        });
     };
 
     const fetchPaidStudent = () => {
-        services.paymentStudentData()
-            .then((response) => {
-                if (response?.isSuccess && response?.data) {
-                    setPaidStudentData(response.data);
-                }
-            })
-            .catch((error) => {
-                console.error("Error fetching paid student data:", error);
-            });
+        services.paymentStudentData().then((response) => {
+            if (response.isSuccess) {
+                setPaidStudentData(response.data);
+            }
+        });
     };
 
     useEffect(() => {
@@ -90,8 +76,10 @@ export default function PaymentsAdmin() {
         fetchPaidStudent();
     }, []);
 
+    console.log("paidStudentData : ", paidStudentData);
+
     useEffect(() => {
-        if (selectedCourse && paymentPlansData?.length) {
+        if (selectedCourse) {
             const filtered = paymentPlansData.filter(
                 (plan) => plan.CourseName === selectedCourse
             );
@@ -122,19 +110,15 @@ export default function PaymentsAdmin() {
                 formData.append("file", paySlip);
             }
 
-            services.createNewPayment(formData)
-                .then((response) => {
-                    if (response?.isSuccess) {
-                        console.log("Payment submission successful:", formData);
-                        setIsSubmitted(true);
-                    } else {
-                        console.error("Failed to submit payment:", response);
-                    }
-                })
-                .catch((error) => {
-                    console.error("Error submitting payment:", error);
-                });
+            services.createNewPayment(formData).then((response) => {
+                if (response.isSuccess) {
+                    console.log("Values in response:", formData);
+                } else {
+                    console.log("Add course response error");
+                }
+            });
 
+            setIsSubmitted(true);
             setActiveStep(0);
             setSelectedCourse("");
             setSelectedPlan("");

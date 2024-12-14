@@ -1,13 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Grid, Stack, Typography } from "@mui/material";
-import videojs from "video.js";
-import "video.js/dist/video-js.css"; // Import Video.js styles
+import ReactPlayer from "react-player";
 import { services } from "../Services/services";
 
 export default function ZoomRecordings() {
   const [recordings, setRecordings] = useState([]);
   const [loading, setLoading] = useState(true);
-  const playerRefs = useRef([]); // Store references to video players
 
   const fetchZoomLinksData = async () => {
     try {
@@ -34,37 +32,6 @@ export default function ZoomRecordings() {
 
     fetchData();
   }, []);
-
-  useEffect(() => {
-    // Clean up video.js players when the component unmounts
-    return () => {
-      playerRefs.current.forEach((player) => {
-        if (player) {
-          player.dispose(); // Dispose of the video.js player instance
-        }
-      });
-    };
-  }, []);
-
-  const initializePlayer = (el, index, url) => {
-    if (el && !playerRefs.current[index]) {
-      playerRefs.current[index] = videojs(el, {
-        autoplay: false,
-        controls: true,
-        responsive: true,
-        fluid: true,
-        sources: [
-          {
-            src: url,
-            type: "video/mp4",
-          },
-        ],
-        controlBar: {
-          volumePanel: { inline: false },
-        },
-      });
-    }
-  };
 
   if (loading) {
     return <div style={{ textAlign: "center" }}>Loading Recordings...</div>;
@@ -126,16 +93,18 @@ export default function ZoomRecordings() {
               >
                 {link.title}
               </Typography>
-              <iframe
+              {/* ReactPlayer for video playback */}
+              <ReactPlayer
+                url={link.url}
+                controls
                 width="100%"
-                height="315"
-                src={link.url}
-                title={link.title}
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                style={{ marginTop: "10px", borderRadius: "8px" }}
-              ></iframe>
+                height="360px"
+                style={{
+                  marginTop: "10px",
+                  borderRadius: "8px",
+                  overflow: "hidden",
+                }}
+              />
               <Typography variant="body2" color="text.secondary" mt={1}>
                 {link.description}
               </Typography>
@@ -145,7 +114,6 @@ export default function ZoomRecordings() {
       </Card>
     </Grid>
   );
-  
 
   return (
     <div>
@@ -174,6 +142,6 @@ export default function ZoomRecordings() {
           {recordings.map((card, index) => subjectCards(card, index))}
         </Grid>
       </Card>
-    </div>
-  );
+    </div>
+  );
 }

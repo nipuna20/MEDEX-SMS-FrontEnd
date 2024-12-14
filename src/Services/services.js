@@ -376,8 +376,8 @@ async function createNewPayment(formData) {
 async function paymentPlansData() {
   try {
     const { data } = await api.paymentPlans();
-    console.log("sampleeeeeee", data);
-    return { isSuccess: true, data: data.CoursesData }
+    console.log("paymentPlansData services data", data);
+    return { isSuccess: true, data: data.paymentPlans }
   } catch (error) {
     console.log(error)
   }
