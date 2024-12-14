@@ -207,9 +207,9 @@ export default function CoursesAdmin() {
 
       {/* Courses List */}
       <Container maxWidth="lg">
-        <Grid container spacing={4}>
+        <Grid container spacing={4} sx={{marginBottom:20}}>
           {coursesData.map((item, index) => renderCard(item, index))}
-        </Grid>
+        </Grid >
       </Container>
     </>
   );

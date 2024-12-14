@@ -137,7 +137,7 @@ export default function Courses() {
           </Typography>
         </Card>
         <Container>
-          <Grid container spacing={4}>
+          <Grid container spacing={4} sx={{marginBottom:20}}>
             {coursesData.map((card, index) => cardData(card, index))}
           </Grid>
         </Container>

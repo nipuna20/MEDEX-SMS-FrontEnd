@@ -218,6 +218,7 @@ export default function LMSApp() {
       </Box>
 
       {/* Footer (Full Width) */}
+      {/* Footer (Full Width) */}
       <Box
         component="footer"
         sx={{
@@ -229,12 +230,18 @@ export default function LMSApp() {
           backgroundColor: "primary.main",
           display: "flex",
           alignItems: "center",
-          justifyContent: "center",
+          justifyContent: "space-between", // Space between left and right content
+          padding: "0 16px", // Add some padding on the sides
           color: "white",
           zIndex: (theme) => theme.zIndex.drawer + 1,
         }}
       >
-        <Typography variant="body2">© 2024 MEDEX Academy of Pharmacy</Typography>
+        <Typography variant="body2" sx={{ marginLeft: 10 }}>
+          © 2024 MEDEX Institute. All Rights Reserved.
+        </Typography>
+        <Typography variant="body2" sx={{ marginRight: 10 }}>
+          Version 1.0
+        </Typography>
       </Box>
     </Box>
   );

@@ -123,7 +123,10 @@ const ResourcesPage = () => {
 
   return (
     <Container maxWidth="xl">
-      <Paper elevation={3} sx={{ padding: 4, mt: 4 }}>
+      <Paper
+        elevation={3}
+        sx={{ padding: 4, mt: 4, backgroundColor: "rgba(240, 240, 240, 0.8)" }}
+      >
         <Typography variant="h5" align="center" gutterBottom>
           View Available Resources
         </Typography>

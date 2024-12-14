@@ -328,7 +328,7 @@ export default function PaymentsAdmin() {
         </Box>
       </Paper>
 
-      <TableContainer component={Paper} sx={{ marginTop: 10, borderRadius: 8 }} elevation={5}>
+      <TableContainer component={Paper} sx={{ marginTop: 10, marginBottom:10, borderRadius: 8 }} elevation={5}>
   <Table sx={{ minWidth: 650, marginBottom: 1 }} aria-label="courses table">
     <TableHead>
       <TableRow sx={{ backgroundColor: '#1976d2', borderRadius: 5 }}>
