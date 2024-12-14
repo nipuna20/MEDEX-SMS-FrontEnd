@@ -84,6 +84,7 @@ export default function ZoomOnlineSessionsAdmin() {
 
   if (recordings.length === 0) {
     return (
+      <>
       <Card
         sx={{
           borderRadius: 3,
@@ -97,7 +98,30 @@ export default function ZoomOnlineSessionsAdmin() {
         elevation={2}
       >
         <div style={{ textAlign: "center" }}>No online sessions available.</div>
+        
       </Card>
+
+      <Box display="flex" justifyContent="center" marginTop={8} style={{ width: "100%" }}>
+          <IconButton
+            size="large"
+            sx={{
+              borderRadius: "50%",
+              backgroundColor: "#007BFF",
+              padding: 1.5,
+              color: "#FFFFFF",
+              transition: "transform 0.2s, background-color 0.2s",
+              "&:hover": {
+                transform: "scale(1.1)",
+                backgroundColor: "#0056b3",
+              },
+            }}
+            onClick={() => navigate("/AddZoomSessionSubject")}
+          >
+            <AddIcon />
+          </IconButton>
+        </Box>
+      
+      </>
     );
   }
 

@@ -47,7 +47,7 @@ export default function LMSApp() {
       sx={{
         borderRadius: 3,
         margin: 1,
-        width: "90%", // Adjust width for alignment
+        width: "90%",
         ":hover": {
           boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
         },
@@ -57,9 +57,9 @@ export default function LMSApp() {
         sx={{
           display: "flex",
           alignItems: "center",
-          justifyContent: "flex-start", // Align all content to the left
+          justifyContent: "flex-start",
           padding: 1.5,
-          gap: 2, // Space between icon and text
+          gap: 2,
         }}
         onClick={onClick}
       >
@@ -145,22 +145,18 @@ export default function LMSApp() {
             padding: 2,
             display: "flex",
             flexDirection: "column",
-            alignItems: "flex-start", // Align sidebar content to the left
+            alignItems: "flex-start",
             gap: 2,
           }}
         >
           <List sx={{ width: "100%" }}>
-            {/* Main Menu Items */}
             <MenuItem
               icon={<Dashboard />}
               label="Courses"
               onClick={() => navigate("/Courses")}
               iconColor="blue"
             />
-
             <Divider sx={{ my: 2, width: "100%" }} />
-
-            {/* Zoom Sessions Menu */}
             <MenuItem
               icon={<VideoLibrary />}
               label="Zoom Sessions"
@@ -183,10 +179,7 @@ export default function LMSApp() {
                 />
               </>
             )}
-
             <Divider sx={{ my: 2, width: "100%" }} />
-
-            {/* Other Sections */}
             <MenuItem
               icon={<Payment />}
               label="Payments"
@@ -217,12 +210,31 @@ export default function LMSApp() {
           padding: 3,
           backgroundColor: (theme) =>
             theme.palette.mode === "dark" ? "grey.900" : "grey.100",
-          minHeight: "100vh",
+          minHeight: "calc(100vh - 64px)", // Exclude header height
         }}
       >
         <Toolbar />
-        {/* Content Rendered by React Router */}
         <Outlet />
+      </Box>
+
+      {/* Footer (Full Width) */}
+      <Box
+        component="footer"
+        sx={{
+          width: "100%",
+          height: 50,
+          position: "fixed",
+          bottom: 0,
+          left: 0,
+          backgroundColor: "primary.main",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          color: "white",
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+        }}
+      >
+        <Typography variant="body2">© 2024 MEDEX Academy of Pharmacy</Typography>
       </Box>
     </Box>
   );
