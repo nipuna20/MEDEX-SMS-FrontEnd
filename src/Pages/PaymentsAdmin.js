@@ -57,6 +57,7 @@ export default function PaymentsAdmin() {
     services.paymentPlansData().then((response) => {
       if (response.isSuccess) {
         setPaymentPlansData(response.data);
+        console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxx",response)
       }
     });
   };
